@@ -1,0 +1,107 @@
+// Custom style patches
+@import "src/assets/sass/black-dashboard/custom/patches";
+
+// Core
+@import "src/assets/sass/black-dashboard/custom/functions";
+@import "src/assets/sass/black-dashboard/bootstrap/functions";
+
+@import "src/assets/sass/black-dashboard/custom/variables";
+@import "src/assets/sass/black-dashboard/bootstrap/variables";
+
+@import "src/assets/sass/black-dashboard/custom/mixins";
+@import "src/assets/sass/black-dashboard/bootstrap/mixins";
+
+// Bootstrap components
+@import "src/assets/sass/black-dashboard/bootstrap/root";
+@import "src/assets/sass/black-dashboard/bootstrap/reboot";
+@import "src/assets/sass/black-dashboard/bootstrap/type";
+@import "src/assets/sass/black-dashboard/bootstrap/images";
+@import "src/assets/sass/black-dashboard/bootstrap/code";
+@import "src/assets/sass/black-dashboard/bootstrap/grid";
+@import "src/assets/sass/black-dashboard/bootstrap/tables";
+@import "src/assets/sass/black-dashboard/bootstrap/forms";
+@import "src/assets/sass/black-dashboard/bootstrap/buttons";
+@import "src/assets/sass/black-dashboard/bootstrap/transitions";
+@import "src/assets/sass/black-dashboard/bootstrap/dropdown";
+@import "src/assets/sass/black-dashboard/bootstrap/button-group";
+@import "src/assets/sass/black-dashboard/bootstrap/input-group";
+@import "src/assets/sass/black-dashboard/bootstrap/custom-forms";
+@import "src/assets/sass/black-dashboard/bootstrap/nav";
+@import "src/assets/sass/black-dashboard/bootstrap/navbar";
+@import "src/assets/sass/black-dashboard/bootstrap/card";
+@import "src/assets/sass/black-dashboard/bootstrap/breadcrumb";
+@import "src/assets/sass/black-dashboard/bootstrap/pagination";
+@import "src/assets/sass/black-dashboard/bootstrap/badge";
+@import "src/assets/sass/black-dashboard/bootstrap/jumbotron";
+@import "src/assets/sass/black-dashboard/bootstrap/alert";
+@import "src/assets/sass/black-dashboard/bootstrap/progress";
+@import "src/assets/sass/black-dashboard/bootstrap/media";
+@import "src/assets/sass/black-dashboard/bootstrap/list-group";
+@import "src/assets/sass/black-dashboard/bootstrap/close";
+@import "src/assets/sass/black-dashboard/bootstrap/modal";
+@import "src/assets/sass/black-dashboard/bootstrap/tooltip";
+@import "src/assets/sass/black-dashboard/bootstrap/popover";
+@import "src/assets/sass/black-dashboard/bootstrap/carousel";
+@import "src/assets/sass/black-dashboard/bootstrap/utilities";
+@import "src/assets/sass/black-dashboard/bootstrap/print";
+
+// Custom components
+@import "src/assets/sass/black-dashboard/custom/utilities/floating";
+@import "src/assets/sass/black-dashboard/custom/pagination";
+@import "src/assets/sass/black-dashboard/custom/alerts";
+@import "src/assets/sass/black-dashboard/custom/buttons";
+@import "src/assets/sass/black-dashboard/custom/dropdown";
+@import "src/assets/sass/black-dashboard/custom/footer";
+@import "src/assets/sass/black-dashboard/custom/forms";
+@import "src/assets/sass/black-dashboard/custom/images";
+@import "src/assets/sass/black-dashboard/custom/modal";
+@import "src/assets/sass/black-dashboard/custom/navbar";
+@import "src/assets/sass/black-dashboard/custom/type";
+@import "src/assets/sass/black-dashboard/custom/tables";
+@import "src/assets/sass/black-dashboard/custom/checkboxes-radio";
+@import "src/assets/sass/black-dashboard/custom/fixed-plugin";
+@import "src/assets/sass/black-dashboard/custom/sidebar-and-main-panel";
+@import "src/assets/sass/black-dashboard/custom/misc";
+@import "src/assets/sass/black-dashboard/custom/input-group";
+@import "src/assets/sass/black-dashboard/custom/tooltip";
+@import "src/assets/sass/black-dashboard/custom/vue-sidebar-menu";
+
+// Vendor / Plugins
+@import "src/assets/sass/black-dashboard/custom/vendor/multiselect";                    // TODO We had to use the new version of vueform/multiselect (its JS stop working with the new version of vue) so the css we had in the code doesn't work anymore. So we copied the content of the original css file from the new version of multiselect
+@import "src/assets/sass/black-dashboard/custom/vendor/plugin-perfect-scrollbar";
+@import "src/assets/sass/black-dashboard/custom/vendor/plugin-animate-bootstrap-notify";
+@import "src/assets/sass/black-dashboard/custom/vendor/slider-bars";
+
+// light mode
+@import "src/assets/sass/black-dashboard/custom/white-content";
+
+// Cards
+@import "src/assets/sass/black-dashboard/custom/card";
+@import "src/assets/sass/black-dashboard/custom/cards/card-chart";
+@import "src/assets/sass/black-dashboard/custom/cards/card-map";
+@import "src/assets/sass/black-dashboard/custom/cards/card-user";
+@import "src/assets/sass/black-dashboard/custom/cards/card-task";
+@import "src/assets/sass/black-dashboard/custom/cards/card-plain";
+
+// Transitions
+@import "src/assets/sass/black-dashboard/custom/transitions";
+
+// Notifications
+@import "src/assets/sass/black-dashboard/custom/notifications";
+
+// Toast
+@import "src/assets/sass/black-dashboard/custom/toast/variables";
+@import "src/assets/sass/black-dashboard/custom/toast/toast";
+@import "src/assets/sass/black-dashboard/custom/toast/progressBar";
+
+// SweetAlert2
+@import "src/assets/sass/black-dashboard/custom/sweetalert/variables";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/body";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/theming";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/polyfills";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/animations";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/core";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/mixins";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/toasts";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/toasts-animations";
+@import "src/assets/sass/black-dashboard/custom/sweetalert/toasts-body";

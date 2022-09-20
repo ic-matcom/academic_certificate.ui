@@ -1,0 +1,73 @@
+// main panel n-progress bar friendly
+.mp-4-nprogress {
+    border-top: 2px solid transparent;
+}
+
+// normal main panel
+.mp-stylized {
+    border-top: 2px solid $primary;
+}
+
+.main-panel {
+    position: relative;
+    float: right;
+    width: $full-width;
+    min-height: 100vh;
+    background: linear-gradient($background-black, $background-states-black);
+    z-index: 1;
+    @include transitions(0.50s, cubic-bezier(0.685, 0.0473, 0.346, 1));
+
+    &[data="primary"] {
+        border-top: 2px solid $primary;
+    }
+
+    > .content {
+        padding: 78px 30px 30px 30px !important;
+        min-height: calc(100vh - 70px);
+    }
+
+    > .content-page {
+        padding: 78px 30px 30px 30px !important;
+        min-height: calc(100vh - 70px);
+    }
+}
+
+
+@media (min-width: 991px) {
+    .main-panel {
+        -webkit-transition-property: top, bottom, width;
+        transition-property: top, bottom, width;
+        -webkit-transition-duration: .2s, .2s, .35s;
+        transition-duration: .2s, .2s, .35s;
+        -webkit-transition-timing-function: linear, linear, ease;
+        transition-timing-function: linear, linear, ease;
+        -webkit-overflow-scrolling: touch;
+    }
+
+}
+
+
+@media screen and (max-width: 991px) {
+
+    .main-panel {
+        width: 100%;
+
+        .content {
+            padding: 78px 15px 0 15px !important;
+        }
+    }
+    .v-sidebar-menu {
+        z-index: 10;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .main-panel .content {
+        padding: 78px 15px 0 15px !important;
+    }
+    .v-sidebar-menu {
+        z-index: 10;
+    }
+
+}
