@@ -1,0 +1,90 @@
+.c-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.c-tooltip .caption {
+    font-size: $font-size-lg;
+    visibility: hidden;
+    width: 280px;
+    background-color: $gray-700;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px 8px;
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0 5px 10px #1e1e2e;
+}
+
+.c-tooltip .caption::after {
+    content: "";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    align-content: center;
+}
+
+.c-tooltip:hover .caption {
+    visibility: visible;
+}
+
+.c-tooltip.top .caption {
+    margin-left: -60px;
+    bottom: 115%;
+    left: 50%;
+}
+
+.c-tooltip.top .caption::after {
+    margin-left: -5px;
+    top: 100%;
+    left: 50%;
+    border-color: $gray-700 transparent transparent transparent;
+}
+
+.c-tooltip.bottom .caption {
+    margin-left: -60px;
+    top: 115%;
+    left: 50%;
+}
+
+.c-tooltip.bottom .caption::after {
+    margin-left: -5px;
+    bottom: 100%;
+    left: 50%;
+    border-color: transparent transparent $gray-700 transparent;
+}
+
+.c-tooltip.left .caption {
+    top: 5px;
+    right: 120%;
+}
+
+.c-tooltip.left .caption::after {
+    margin-top: -5px;
+    top: 50%;
+    left: 100%;
+    border-color: transparent transparent transparent $gray-700;
+}
+
+.c-tooltip.right .caption {
+    top: 5px;
+    left: 120%;
+}
+
+.c-tooltip.right .caption::after {
+    margin-top: -5px;
+    top: 50%;
+    right: 100%;
+    border-color: transparent $gray-700 transparent transparent;
+}
+
+.c-tooltip-question-mark {
+    color         : $primary !important;
+    font-size     : 12px;
+    padding-right : 7px;
+    border-radius : 50%;
+    width         : 20px;
+    height        : 20px;
+    @include btn-styles($default, $default-states);
+}
