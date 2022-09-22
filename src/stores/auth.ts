@@ -66,6 +66,36 @@ export const useAuthStore = defineStore({
 
                 }).catch(error => { reject(error) })
             })
+        },
+
+        /**
+         * Trys to log out in the backend the given user with the JWT Authentication token, with the help of a defined axios apis
+         * to make the actual request
+         *
+         */
+        async reqLogout (): Promise<void> {
+            return await new Promise<void>((resolve, reject) => {
+                ApiAuth.reqLogOut()
+                .then(() => {
+                    /**
+                     * Revoking the JWT Authentication token
+                    */
+                    this.$reset()
+                    resolve()
+
+                }).catch(error => { reject(error) })
+
+            })
+
+        },
+
+        /**
+         * Trys to get the logged user in the backend with the JWT Authentication token, with the help of a defined axios apis
+         * to make the actual request
+         *
+         */
+         async reqUser (): Promise<any> {
+            return await ApiAuth.reqGetUser()
         }
     }
 })

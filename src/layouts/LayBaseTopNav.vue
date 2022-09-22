@@ -72,14 +72,14 @@
                         <!-- Notifications -->
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item"
-                            >Mike John responded to your email</a
+                            >10 certificados validados satisfactoriamente</a
                             >
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">You have 5 more tasks</a>
+                            <a href="#" class="nav-item dropdown-item">Tienes 100 certificados por validar</a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Another notification</a>
+                            <a href="#" class="nav-item dropdown-item">Más notificaciones</a>
                         </li>
                     </CmpDropdown>
 
@@ -113,7 +113,7 @@
                             <a href="#"
                                class="nav-item dropdown-item"
                                @click="hLogOutIntent">
-                                {{ common.cap( 'routes.logout' ) }}
+                                {{ common.cap( 'logout' ) }}
                             </a>
                         </li>
                     </CmpDropdown>
@@ -130,7 +130,6 @@ import { useAuthStore } from '@/stores/auth'
 import { CmpModal, CmpDropdown } from '../components'
 import { RoutePaths } from '@/services/definitions'
 import useCommon from '@/services/composables/useCommon'
-
 
 interface INavData {
     // TODO Pass this state data to the general store / state manager code. See data below.
@@ -173,15 +172,24 @@ export default defineComponent({
         //region ======== FROM STORE ============================================================
 
         // ...mapActions(useAuthStore, { callLogOut: 'setLoggedOut' }),
-        ...mapActions(useAuthStore, ['setLoggedOut']),
+        ...mapActions(useAuthStore, ['reqLogout']),
 
+        //endregion =============================================================================
+
+        //region ======== Actions ============================================================
+
+        aReqLogout(): void {
+            this.reqLogout()
+            .then(() => { this.$router.push(RoutePaths.login) })
+            .catch(error => {  })
+        },
+        
         //endregion =============================================================================
 
         //region ======== EVENTS HANDLERS =======================================================
 
         hLogOutIntent(): void {
-            this.setLoggedOut()
-            this.$router.push(RoutePaths.login)
+            this.aReqLogout()
         },
         hMenuToggle(): void {
             this.showMenu = !this.showMenu

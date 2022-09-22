@@ -1,7 +1,7 @@
 <template>
     <div class="label-container">
-        <h1 class="label-justify main-title">HAIKO</h1>
-        <h5 class="label-justify main-title-description" style="font-style: italic">Sistema de Administración</h5>
+        <h1 class="label-justify main-title">Certificados Académicos </h1>
+        <h5 class="label-justify main-title-description" style="font-style: italic">Plataforma de Credenciales Digitales</h5>
     </div>
 
     <CmpCard card-type="auto-margin">

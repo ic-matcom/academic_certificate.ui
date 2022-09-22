@@ -8,7 +8,8 @@ import type { IAuthResponse } from '../definitions/types-api'
 
 
 const version = config.site.current_version
-const url = `v${ version }/cauth`
+//const url = `v${ version }/cauth`
+const url = `auth`
 
 
 export class ApiAuth {
@@ -19,9 +20,23 @@ export class ApiAuth {
      */
     public static reqAuth( formData: IAuthFormData ): AxiosPromise<IAuthResponse> {
 
-        return axios.post(`${ url }`, qs.stringify(formData), {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        return axios.post(`${ url }`, JSON.stringify(formData), {
+            headers: { 'Content-Type': 'application/json' }
         })
+    }
+
+    /**
+     * Request logout to the backend
+     */
+    public static reqLogOut(): AxiosPromise<void>{
+        return axios.get(`${ url }/logout`)
+    }
+
+    /**
+     * Request logged user to the backend
+     */
+     public static reqGetUser(): AxiosPromise<any>{
+        return axios.get(`${ url }/user`)
     }
 
     public static setAccessToken( at: string ) {
@@ -37,4 +52,5 @@ export class ApiAuth {
         // @ts-ignore
         delete axios.defaults.headers[ 'Authorization' ]                         // Removing Bearer Token
     }
+
 }
