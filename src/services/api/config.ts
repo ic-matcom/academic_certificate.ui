@@ -14,7 +14,7 @@ interface IConfig {
 function getConfig (): IConfig {
     return {
         site: {
-            api: 'http://127.0.0.1:7001/',
+            api: 'http://localhost:7001/',
             name: 'Dapp',
             current_version: 1,
         },

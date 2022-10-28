@@ -38,6 +38,10 @@ export interface IColumnHeader {
     multi?: Array<{ value: any, label: string }>
     title: string
     /**
+     * To be uses as tips / hints / help right int the UI. Right now, we have not components making uses of that.
+     */
+    hint: string
+    /**
      * So v-for can navigate in the data array. if isn't present, lower-cased title be use then. It comes in handy when we have a user friendly title different from the real key
      */
     navKey: string | undefined
@@ -84,14 +88,22 @@ export type IShell<T> = {
  */
 export type OPSKind = 'deletion' | 'addition' | 'update' | 'enable' | 'disable' | 'request'
 
-export type ActionKind = 'delete' | 'create' | 'update' | 'activate'
+/***
+ * Definition for UI actions that requieres a dialog confirmations or UI feedback
+ */
+export type ActionKind = 'delete' | 'create' | 'update' | 'activate' | 'deactivate'
 
 /**
  * Definition for entities forms view mode
  */
 export type FormMode = 'edit' | 'create' | 'details'
 
-export type EntityGenericNames = 'item' | 'items' | 'store' | 'stores' | 'menu' | 'menus'
+/**
+ * This mostly used in the dialog (Dialogfy) custom composable, as constraint type of actual business entities names
+ * when those names will be pases as parameters of some kind
+ */
+export type EntityGenericNames = 'staff'
+// export type EntityGenericNames = 'item' | 'items' | 'store' | 'stores' | 'menu' | 'menus'
 
 /***
  * Table Top Buttons Action Bar (BULK ACTION) clicked action

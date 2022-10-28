@@ -8,7 +8,7 @@
                 <CmpBaseButton
                         icon
                         buttonType="primary"
-                        :title="'btn.tip-create-new'"
+                        :title="$t('btn.tip-create-new')"
                         @doClick="$emit('navCreateIntent')">
                     <i class="tim-icons icon-simple-add"></i>
                 </CmpBaseButton>
@@ -25,7 +25,7 @@
                             icon
                             class="mr-1"
                             buttonType="success"
-                            :title="'btn.tip-enable-sel'"
+                            :title="$t('btn.tip-enable-sel', {subject:  pSubject})"
                             @doClick="$emit('enableChkCollIntent')">
                         <i class="tim-icons icon-check-2"></i>
                     </CmpBaseButton>
@@ -33,7 +33,7 @@
                             icon
                             class="ml-1 mr-1"
                             buttonType="warning"
-                            :title="'btn.tip-disable-sel'"
+                            :title="$t('btn.tip-disable-sel', {subject:  pSubject})"
                             @doClick="$emit('disableChkCollIntent')">
                         <i class="tim-icons icon-simple-remove"></i>
                     </CmpBaseButton>
@@ -41,7 +41,7 @@
                             icon
                             class="ml-1"
                             buttonType="danger"
-                            :title="'btn.tip-remove-sel'"
+                            :title="$t('btn.tip-remove-sel', {subject:  pSubject})"
                             @doClick="$emit('removeChkCollIntent')">
                         <i class="tim-icons icon-trash-simple"></i>
                     </CmpBaseButton>
@@ -54,7 +54,7 @@
                 <CmpBaseButton
                         icon
                         buttonType="primary"
-                        :title="'btn.tip-create-new'"
+                        :title="$t('btn.tip-create-new')"
                         @doClick="$emit('navCreateIntent')">
                     <i class="tim-icons icon-simple-add"></i>
                 </CmpBaseButton>
@@ -65,9 +65,12 @@
 </template>
 
 <script lang="ts">
+import { i18n } from '@/services/i18n'
 import { defineComponent } from 'vue'
 import { CmpBaseButton } from '@/components'
 import { EntityTypes } from '@/services/definitions'
+
+
 
 import type { SetupContext } from 'vue'
 
@@ -76,24 +79,32 @@ import type { SetupContext } from 'vue'
         components: { CmpBaseButton },
         props: {
 
+            subject:    {
+                type:        String,
+                description: 'This should be the translation (❗means the translated string) value string for a specific entity of the business. This value could be used for contextualization in the actions button bar.',
+                required:    false
+            },
             entityMode: {
-                type: Number,
-                default: 0,
-                description: "The mode (sets of buttons) to show in the table top action bar according to the specified entity type",
+                type:        Number,
+                default:     0,
+                description: 'The mode (sets of buttons) to show in the table top action bar according to the specified entity type'
                 // see more comments in enums-entities.ts file
             },
-
-            chkCount: {
-                type: Number,
-                default: 0,
-                description: "The count of the selected/checked items to show the action bar buttons",
-            },
+            chkCount:   {
+                type:        Number,
+                default:     0,
+                description: 'The count of the selected/checked items to show the action bar buttons'
+            }
         },
         emits: ['navCreateIntent', 'enableChkCollIntent', 'disableChkCollIntent', 'removeChkCollIntent'],
 
-        setup( _: any, __: SetupContext ) {
+        setup( props: any, __: SetupContext ) {
+
+            const { t } = i18n.global
 
             return {
+
+                pSubject: props.subject === '' || props.subject === undefined ? t('entities.default') : props.subject,                        // processed subject
                 entityTypes: EntityTypes
             }
         }

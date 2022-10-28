@@ -3,7 +3,6 @@
     <div class="row">
         <div class="col-12">
             <h2>{{info}}</h2>
-            <h3>Id : {{id}}</h3>
             <h3>Username : {{username}}</h3>
             <h3>Name : {{name}}</h3>
         </div>
@@ -24,7 +23,6 @@
         data(): any {
             return {
                 info: "This is the dashboard",
-                id: "",
                 username: "",
                 user: ""
             }        
@@ -40,7 +38,7 @@
 
         //region ======== Actions ============================================================
             aReqUser(): void {
-            this.reqUser().then((response : any) => { this.id = response.data.user.id, this.username = response.data.user.username, this.name = response.data.user.name})
+            this.reqUser().then((response : any) => {this.username = response.data.username, this.name = response.data.firstname})
             }
         //endregion =============================================================================
 

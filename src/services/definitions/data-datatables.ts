@@ -28,42 +28,50 @@ export const HStaffTable: Partial<IColumnHeader>[] = [
     },
 
     {
-        title:  'Id',
+        title:  'id',
         hidden: true
     },
 
     {
-        title:   'Img',
-        navKey:  'avatarPath'
+        title:  'avatar',
+        navKey: 'avatarPath'
     },
 
     {
-        title:   'Nombre',
+        title:   'name',
         sorting: '',
         navKey:  'firstName'
     },
 
     {
-        title:    'Usuario',
+        title:    'user',
         toCenter: true,
         sorting:  '',
         navKey:   'username'
     },
 
     {
-        title:    'Contacto',
+        title:   'contact',
         sorting: '',
-        navKey:   'cell'
+        navKey:  'cell'
     },
 
     {
-        title:    'Rol',
+        title:    'role',
         toCenter: true,
         navKey:   'roleId'
     },
 
     {
-        title:   'Actions',
+        title:    'active',
+        toCenter: true,
+        sorting:  '',
+        navKey:   'isActive',
+        switch:   true
+    },
+
+    {
+        title:   '',            // actions buttons
         toRight: true,
         width:   40
     }

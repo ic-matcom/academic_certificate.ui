@@ -12,18 +12,18 @@ export const RoutePaths = {
 }
 
 export const RoutePathNames = {
-    login:     'Login',
-    dashboard: 'Dashboard',
+    login:     'login',
+    dashboard: 'dashboard',
 
     // PEOPLE section
 
-    staff:       'Staff',
-    staffForm:   'Editar Staff',
-    staffCreate: 'Crear Staff',
+    staff:       'staff',
+    staffForm:   'staff-edit',
+    staffCreate: 'staff-create',
 
 
-    clients: 'Clientes',
-    auth:    'Autorización'
+    clients: 'clients',
+    auth:    'authorization'
 
     // ...
 }
