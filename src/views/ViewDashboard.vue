@@ -2,46 +2,56 @@
     <transition appear name="page-fade">
     <div class="row">
         <div class="col-12">
-            <h2>{{info}}</h2>
-            <h3>Username : {{username}}</h3>
-            <h3>Name : {{name}}</h3>
+            <h2>This is the dashboard</h2>
         </div>
-        <div><a href="#" class="button" @click="aReqUser">Get User</a></div>
     </div>
     </transition>
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue'
+    import { defineComponent, onMounted, onBeforeMount } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { useToast } from 'vue-toastification'
+    import { RoutePathNames } from '@/services/definitions/route-paths'
     import { useAuthStore } from '@/stores/auth'
-    import { mapActions } from 'pinia'
+
+    import useToastify from '@/services/composables/useToastify'
+    import useCommon from '@/services/composables/useCommon'
+
 
     export default defineComponent({
         name: 'ViewDashboard',
         components: {},
 
-        data(): any {
-            return {
-                info: "This is the dashboard",
-                username: "",
-                user: ""
-            }        
-        },
+        setup(){
+        //region ======== DECLARATIONS & LOCAL STATE ============================================
 
-        methods:{
-            //region ======== FROM STORE ============================================================
+        const authStore = useAuthStore()
+        const router = useRouter()
+        const toast = useToast() // The toast lib interface
 
-            // ...mapActions(useAuthStore, { callLogOut: 'reqUser' }),
-            ...mapActions(useAuthStore, ['reqUser']),
+        const { tfyAuthFail, tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
+        const { cap } = useCommon() 
 
-        //endregion =============================================================================
+        //#endregion ==========================================================================
 
-        //region ======== Actions ============================================================
-            aReqUser(): void {
-            this.reqUser().then((response : any) => {this.username = response.data.username, this.name = response.data.firstname})
-            }
-        //endregion =============================================================================
+        //region ======== HOOKS ===============================================================
 
+        /**
+         * setup is called before component creation, so the onMounted hook is a good time / place to
+         * invoke data population method through web API request.
+         */
+         onMounted(() => {
+            // populate staff datatable
+            authStore.reqUserInfo().catch(err => tfyBasicFail(err, 'User', 'request'))
+        })
+
+        //endregion ===========================================================================
+        return {
+            authStore
         }
+
+    }
+
     })
 </script>

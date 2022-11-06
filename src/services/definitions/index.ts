@@ -6,6 +6,7 @@ import { EntityTypes } from '@/services/definitions/enums-entities'
 import type { Problem, ErrorDictionary } from '@/services/definitions/types-errors'
 import type { OPSKind, Function0, Function1, IColumnHeader, IDataTableQuery, ITableChkEmit, BULK_ACTION, ById, IIndexable, IChecked, Filter, IBasicPageState, IDataListBasicResponse, FormMode, ActionKind, EntityGenericNames, IdsArray, IBulkData  } from './types-common'
 import type { IStaffPage, IStaffRow } from '@/services/definitions/entities/types-staff'
+import type { IUsersPage, IUsersRow, UserInfo } from '@/services/definitions/entities/types-users'
 
 
 export {
@@ -35,6 +36,9 @@ export {
     // =====  ENTITIES =====
 
     // staff
-    IStaffPage,  IStaffRow
+    IStaffPage,  IStaffRow,
+
+    // users
+    IUsersPage, IUsersRow, UserInfo
 
 }

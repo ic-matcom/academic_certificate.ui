@@ -102,23 +102,31 @@
             "reset-filters": "Restablecer filtros",
             "user":          "usuario",
             "pass":          "contraseña",
-            "search":        "buscar"
+            "search":        "buscar",
+            "firstname":     "nombre",
+            "lastname":      "apellido",
+            "email":         "correo"
         }
     },
     "table-headers": {
-        "name":    "Nombre",
-        "avatar":  "Avatar",
-        "id":      "Id",
-        "user":    "Usuario",
-        "contact": "Contacto",
-        "role":    "Rol",
-        "active": "está activo?"
+        "name":     "Nombre",
+        "avatar":   "Avatar",
+        "id":       "Id",
+        "user":     "Usuario",
+        "lastname": "Apellido",
+        "contact":  "Contacto",
+        "role":     "Rol",
+        "active":   "está activo?"
     },
     "entities":     {
         "default": "entidades",
         "staff": {
             "name": "Staff",
             "section-name": "@:entities.staff.name"
+        },
+        "users": {
+            "name": "Usuarios",
+            "section-name": "@:entities.users.name"
         }
     }
 }

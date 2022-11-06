@@ -20,6 +20,43 @@ export const HCatalogsTable: Partial<IColumnHeader>[] = [
     { title: 'Actions', toRight: true, width: 40 }
 ]
 
+export const HUsersTable: Partial<IColumnHeader>[] = [
+    {
+        title: '',
+        chk:   true,
+        width: 2
+    },
+
+    {
+        title:  'email',
+        hidden: true
+    },
+
+    {
+        title:    'user',
+        sorting:  '',
+        navKey:   'username'
+    },
+
+    {
+        title:   'name',
+        sorting: '',
+        navKey:  'firstname'
+    },
+
+    {
+        title:    'lastname',
+        sorting:  '',
+        navKey:   'lastname'
+    },
+
+    {
+        title:   '',            // actions buttons
+        toRight: true,
+        width:   40
+    }
+]
+
 export const HStaffTable: Partial<IColumnHeader>[] = [
     {
         title: '',

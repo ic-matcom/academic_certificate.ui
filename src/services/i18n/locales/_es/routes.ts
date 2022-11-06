@@ -14,7 +14,9 @@ export default {
     //endregion =============================================================================
 
     //region ======== USERS =================================================================
-    // [ RoutePathNames.users ]: 'Usuarios',
+    [ RoutePathNames.users ]: "@:{'entities.users.section-name'}",
+    [ RoutePathNames.usersCreate ]: '@:crud-actions.create @:entities.users.section-name',
+    [ RoutePathNames.usersForm ]: '@:crud-actions.edition @:entities.users.section-name',
     // [ RoutePathNames.roles ]: RoutePathNames.roles,
     //endregion =============================================================================
 

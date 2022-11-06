@@ -184,8 +184,8 @@
 
                 <!-- checkbox cell -->
                 <td v-if="header.chk === true" rowspan="1" colspan="1" :style="[{ width: header.width + '%' }]">
-                    <CmpTableChkbox :identifier="rowObj['id']"
-                                       :checked="ls_selections.selected[rowObj['id']]"
+                    <CmpTableChkbox :identifier="rowObj['username']"
+                                       :checked="ls_selections.selected[rowObj['username']]"
                                        v-on:checkIntent="h_ChkObject"
                     />
                 </td>
@@ -197,7 +197,7 @@
                     :style="[{ width: header.width + '%' }]"
                 >
                     <!-- main role -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -205,7 +205,7 @@
                     />
 
                     <!-- secondary role | when we need two switches in the data-grid -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntentSecond', $event)"
                                    v-on:disableIntent="$emit('disableIntentSecond', $event)"
@@ -213,7 +213,7 @@
                     />
 
                     <!-- default switch -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -245,7 +245,7 @@
 
                 <!--<CmpTableRowActions v-if="entityTypes.Store === entityMode || entityTypes.Menu === entityMode"-->
                 <CmpTableRowActions :mode="eMode"
-                                    :identifier="rowObj['id']"
+                                    :identifier="rowObj['username']"
                                     v-on:deleteIntent="$emit('deleteIntent', $event)"
                                     v-on:detailsIntent="$emit('detailsIntent', $event)"
                                     v-on:editIntent="$emit('editIntent', {...rowObj})"
@@ -609,7 +609,7 @@ export default defineComponent({
 
             if (status)
                 return data!.reduce<ById<IChecked>>(( accumulator, obj ) => {
-                    accumulator[ obj.id ] = { chked: true }
+                    accumulator[ obj.username ] = { chked: true }
 
                     return accumulator
                 }, {})
@@ -661,7 +661,7 @@ export default defineComponent({
          * @param obj row object
          */
         const chkHasId = ( obj: any ): boolean => {
-            return obj[ 'id' ] !== undefined
+            return true//obj[ 'id' ] !== undefined
         }
 
         /***

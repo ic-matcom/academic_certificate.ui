@@ -34,8 +34,8 @@
             </button>
         </template>
 
-        <!-- Staff  -->
-        <template v-else-if="mode === entityTypes.Staff">
+        <!-- Users  -->
+        <template v-else-if="mode === entityTypes.Users">
 
             <!--btn edit meuns-->
             <button @click.prevent="$emit('detailsIntent', identifier)"
@@ -79,7 +79,7 @@ export default defineComponent({
     props: {
 
         identifier: {
-            type: Number,
+            type: String,
             description: "Row object identifier / id",
         },
 

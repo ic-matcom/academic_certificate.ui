@@ -15,7 +15,7 @@ const customInstance = axios.create({
     baseURL: config.site.api,
     headers: {
         Accept: 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
     },
     withCredentials: false
 })

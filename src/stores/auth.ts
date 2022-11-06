@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ApiAuth } from '@/services/api/api-auth'
 import type { IAuthFormData } from '@/services/definitions/types-forms'
+import type { UserInfo } from '@/services/definitions/entities/types-users'
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
 
@@ -11,10 +12,10 @@ export const useAuthStore = defineStore({
     persist: true,
     state: () : IAuthState => ({
         isLoggedIn: false,
-        authTk: ''
+        authTk: '',
 
         // userList: [] as UserInfo[],
-        // user:     null as UserInfo | null
+        user: null as UserInfo | null
     }),
 
     getters: {
@@ -42,6 +43,16 @@ export const useAuthStore = defineStore({
             this.$reset()
         },
 
+        /**
+         * Set the current user info in the system
+         * @param user The User Profile
+         */
+         setUserInfo( userInfo: UserInfo ) : void {
+            this.user = userInfo
+            console.log(userInfo)
+            console.log(this.user)
+        },
+
         // --- async calls actions ---
 
         /**
@@ -57,8 +68,9 @@ export const useAuthStore = defineStore({
                 .then((response:any) => {
 
                     const at = response.data
+                    console.log(response)
 
-                    if(at.length > 10){
+                    if(response.status == 200){
                         this.setLoggedIn(at)
                         ApiAuth.setAccessToken(at)
                     }
@@ -95,8 +107,22 @@ export const useAuthStore = defineStore({
          * to make the actual request
          *
          */
-         async reqUser (): Promise<any> {
-            return await ApiAuth.reqGetUser()
+         async reqUserInfo (): Promise<void> {
+            return await new Promise<void>((resolve, reject) => {
+                ApiAuth.reqGetUser()
+                .then((response:any) => {
+
+                    const at = response.data
+                    console.log(response)
+
+                    if(response.status == 200){
+                        this.setUserInfo(at as UserInfo)
+                    }
+
+                    resolve()
+
+                }).catch(error => { reject(error) })
+            })
         }
     }
 })
@@ -109,6 +135,7 @@ export const useAuthStore = defineStore({
 interface IAuthState {
     isLoggedIn: boolean
     authTk: string
+    user: UserInfo | null
 }
 
 //endregion =============================================================================

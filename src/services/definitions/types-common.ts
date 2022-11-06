@@ -1,5 +1,5 @@
 export interface IIndexable {
-    id: number
+    username: string
 }
 
 export type IdsArray = { ids: Array<number> }
@@ -102,7 +102,7 @@ export type FormMode = 'edit' | 'create' | 'details'
  * This mostly used in the dialog (Dialogfy) custom composable, as constraint type of actual business entities names
  * when those names will be pases as parameters of some kind
  */
-export type EntityGenericNames = 'staff'
+export type EntityGenericNames = 'users'
 // export type EntityGenericNames = 'item' | 'items' | 'store' | 'stores' | 'menu' | 'menus'
 
 /***

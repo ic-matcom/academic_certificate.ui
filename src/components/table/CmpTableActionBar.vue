@@ -17,7 +17,7 @@
 
         <!-- EDR MODE, enable disable remove, for now its the proper mode for STORE, MENUS entities -->
         <!--<template v-else-if="entityMode === entityTypes.Store || entityTypes.Menu">-->
-        <template v-else-if="entityMode === entityTypes.Staff">
+        <template v-else-if="entityMode === entityTypes.Users">
             <div class="col-11 p-0">
                 <transition name="slide-fade">
                     <div v-show="chkCount > 1" >

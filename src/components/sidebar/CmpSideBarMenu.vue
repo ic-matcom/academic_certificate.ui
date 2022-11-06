@@ -34,8 +34,8 @@ export default {
                     icon: 'fa fa-users',
                     child: [
                         {
-                            href: { path: RoutePaths.staffList },
-                            title: RoutePathNames.staff,
+                            href: { path: RoutePaths.usersList },
+                            title: RoutePathNames.users,
                             icon: 'tim-icons icon-single-02',
                         },
                         {
