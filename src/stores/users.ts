@@ -15,7 +15,8 @@ export const useUsersStore = defineStore({
         pageNumber:    0,
         pageSize:      0,
         totalRecords: 0,
-        entityPage:   [] as IUsersRow[]
+        entityPage:   [] as IUsersRow[],
+        user: {email:'',firstname:'',lastname:'',passphrase:'',username:''} 
     }),
 
     /**
@@ -86,13 +87,12 @@ export const useUsersStore = defineStore({
          * @param payload new user data 
          */
          async reqUserCreation (payload: IUserFormData) : Promise<void> {
-            console.log(payload)
+
             return await new Promise<void>((resolve, reject) => {
                ApiUsers.reqCreateUser(payload as IUserFormData)
                .then((response:any) => {
 
                    const at = response.data
-                   console.log(at)
 
                    resolve()
 
@@ -108,13 +108,12 @@ export const useUsersStore = defineStore({
          * @param payload new user data 
          */
         async reqUserUpdate (id: string, payload: IUserFormData) : Promise<void> {
-            console.log(payload)
+
             return await new Promise<void>((resolve, reject) => {
                ApiUsers.reqUpdateUser(id, payload as IUserFormData)
                .then((response:any) => {
 
                    const at = response.data
-                   console.log(at)
 
                    resolve()
 
@@ -126,15 +125,19 @@ export const useUsersStore = defineStore({
          * Tries to get a user by id
          * @param payload User identifier to be fetched
          */
-        async reqUserById( payload: string ): Promise<void> {
+        async reqUserById( payload: string ): Promise<any> {
 
-            return await new Promise<void>(( resolve, reject ) => {
-                ApiUsers.reqGetUserById(payload).then(( response: any ) => {
+            return await new Promise<void>((resolve, reject) => {
+                ApiUsers.reqGetUserById(payload).then((response: any) => {
+                    this.user.email = response.data.email
+                    this.user.firstname = response.data.firstname
+                    this.user.lastname = response.data.lastname
+                    this.user.username =  response.data.username
 
                     resolve()
-
+                    
                 }).catch(error => { reject(error) })
-            })
+            }) 
         },
 
         /**
@@ -185,7 +188,8 @@ export const useUsersStore = defineStore({
 //region ======== STATE INTERFACE =======================================================
 
 interface IUsersState extends IBasicPageState {
-    entityPage: Array<IUsersRow>
+    entityPage: Array<IUsersRow>,
+    user: IUserFormData
 }
 
 //endregion =============================================================================

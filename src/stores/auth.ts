@@ -49,8 +49,6 @@ export const useAuthStore = defineStore({
          */
          setUserInfo( userInfo: UserInfo ) : void {
             this.user = userInfo
-            console.log(userInfo)
-            console.log(this.user)
         },
 
         // --- async calls actions ---
@@ -68,7 +66,6 @@ export const useAuthStore = defineStore({
                 .then((response:any) => {
 
                     const at = response.data
-                    console.log(response)
 
                     if(response.status == 200){
                         this.setLoggedIn(at)
@@ -113,7 +110,6 @@ export const useAuthStore = defineStore({
                 .then((response:any) => {
 
                     const at = response.data
-                    console.log(response)
 
                     if(response.status == 200){
                         this.setUserInfo(at as UserInfo)

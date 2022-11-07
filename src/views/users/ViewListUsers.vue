@@ -89,7 +89,7 @@ export default defineComponent({
         }
 
         function a_reqUser( id: string ) {
-            console.log(id)
+
             usersStore.reqUserById(id).then(() => {
 
                 router.push({
@@ -105,7 +105,7 @@ export default defineComponent({
         }
 
         function a_reqDelete( id: string ) {
-            console.log(id)
+
             usersStore.reqUserDeletion(id).then(() => {
 
                 tfyBasicSuccess('User', 'deletion')
@@ -133,12 +133,10 @@ export default defineComponent({
         //#region ======= EVENTS HANDLERS =====================================================
 
         async function h_reqGetUserById( objectId: string ) {
-            console.log(objectId)
             a_reqUser(objectId)
         }
 
         async function h_reqDeleteUser( objectId: string ) {
-            console.log(objectId)
             const wasConfirmed = await dialogfyConfirmation('delete', 'users')
             if (wasConfirmed) a_reqDelete(objectId)
         }
@@ -154,20 +152,18 @@ export default defineComponent({
             })
         }
 
-        async function h_navEditUsers( objectId: string ) {
-            console.log(objectId)
+        async function h_navEditUsers( objectId: any ) {
             router.push({
                 name  : RoutePathNames.usersForm,
                 params: {
                     fmode: 'edit' as FormMode,
-                    id   : objectId,
+                    id   : objectId.username,
                     cname: RoutePathNames.usersForm                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
                 }
             })
         }
 
         function h_reqQuery( queryData: IDataTableQuery ) {
-            console.log(usersStore.entityPage)
             a_reqQuery(queryData)
         }
 
