@@ -5,8 +5,8 @@
     "btn":          {
         "val-yes":            "si",
         "val-no":             "no",
-        "val-login":          "entrar",
-        "val-guest-login":    "entrar como invitado",
+        "val-login":          "iniciar sesión",
+        "val-guest-login":    "continuar sin cuenta",
         "val-edit":           "Editar",
         "val-del":            "Eliminar",
         "val-save":           "Guardar",

@@ -38,7 +38,7 @@ export const useUsersStore = defineStore({
          * @param payload User identifier to be deleted
          */
         mutDeleteUser( payload: string ): void {
-            this.entityPage = this.entityPage.filter(userRow => payload != userRow.email)
+            this.entityPage = this.entityPage.filter(userRow => payload != userRow.username)
             this.totalRecords -= 1
             //this.pageSize -= payload.ids.length
         },

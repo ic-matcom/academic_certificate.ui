@@ -46,12 +46,6 @@
                                 />
                             </div>
                         </form>
-                    
-                        <template v-slot:footer>
-                            <CmpBaseButton block button-type="primary" @doClick.prevent="hCreateIntent">
-                                {{ cap($t("btn.val-save")) }}
-                            </CmpBaseButton>
-                        </template>
                     </template>
                     
                     <template v-else-if="fmode === 'edit'">
@@ -97,13 +91,12 @@
                                 />
                             </div>
                         </form>
-                    
-                        <template v-slot:footer>
+                    </template>
+                    <template v-slot:footer>
                             <CmpBaseButton block button-type="primary" @doClick.prevent="hCreateIntent">
                                 {{ cap($t("btn.val-save")) }}
                             </CmpBaseButton>
                         </template>
-                    </template>
                 </CmpCard>
 
             </div>
@@ -155,7 +148,6 @@ export default defineComponent({
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
         const aReqUserCreation = ( data: IUserFormData ) => {
-            console.log(data)
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
             .catch(error => { tfyAuthFail(error) })
@@ -171,12 +163,10 @@ export default defineComponent({
         //region ======= EVENTS HANDLERS ======================================================
 
         const hCreateIntent = handleSubmit(formData => {
-            console.log(fmode)
             aReqUserCreation(formData)
         })
 
         const h_Back = () => {
-            // router.back()
             router.push({ name: RoutePathNames.users });
         }
 

@@ -16,13 +16,13 @@ export const UsersRoutes: Array<RouteRecordRaw> = [
     {
         path: RoutePaths.usersForm,
         name: RoutePathNames.usersCreate,
-        component: () => import('../views/users/ViewCreateUser.vue'),
+        component: () => import('../views/users/ViewFormUsers.vue'),
         meta: { layout: LayBaseDashboard, reqAuth: true, }
     },
     {
         path: RoutePaths.usersForm,
         name: RoutePathNames.usersForm,
-        component: () => import('../views/users/ViewCreateUser.vue'),
+        component: () => import('../views/users/ViewFormUsers.vue'),
         meta: { layout: LayBaseDashboard, reqAuth: true, }
     },
 
