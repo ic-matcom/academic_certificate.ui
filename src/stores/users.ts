@@ -7,7 +7,6 @@ import type { IUserFormData } from '@/services/definitions/types-forms'
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
 
-// Sample of option store
 export const useUsersStore = defineStore({
     id: 'users',
 
@@ -47,10 +46,9 @@ export const useUsersStore = defineStore({
         // --- async calls actions ---
 
         /**
-         * Trys to log in in the backed the given user credential data as payload, with the help of a definid axios apis
+         * Tries to get the list of users, with the help of a definid axios apis
          * to make the actual request
          *
-         * @param payload user credential data for logged in
          */
         async reqUsersPages () : Promise<void> {
 

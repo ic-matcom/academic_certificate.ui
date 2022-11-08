@@ -96,11 +96,57 @@
                                         id="username"
                                         name="username"
                                         type="text"
-                                        :value="usersStore.user.username"
+                                        :value="user.username"
                                         :placeholder="$t('forms.placeholders.user')"
                                 />
                             </div>
                         </form>
+                    </template>
+                    <template v-else-if="fmode === 'details'">
+                        <fieldset disabled>
+                            <form>
+                                <div class="form-group">
+                                    <CmpBasicInput
+                                            :key="componentKey"
+                                            :label="$t('forms.placeholders.email')"
+                                            id="email"
+                                            name="email"
+                                            type="text"
+                                            :value="user.email"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <CmpBasicInput
+                                            :key="componentKey"
+                                            :label="$t('forms.placeholders.firstname')"
+                                            id="firstname"
+                                            name="firstname"
+                                            type="text"
+                                            :value="user.firstname"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <CmpBasicInput
+                                            :key="componentKey"
+                                            :label="$t('forms.placeholders.lastname')"
+                                            id="lastname"
+                                            name="lastname"
+                                            type="text"
+                                            :value="user.lastname"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <CmpBasicInput
+                                            :key="componentKey"
+                                            :label="$t('forms.placeholders.user')"
+                                            id="username"
+                                            name="username"
+                                            type="text"
+                                            :value="user.username"
+                                    />
+                                </div>
+                            </form>
+                        </fieldset>                       
                     </template>
                     <template v-slot:footer v-if="fmode === 'create'">
                             <CmpBaseButton block button-type="primary" @doClick.prevent="hCreateIntent">
@@ -113,14 +159,13 @@
                             </CmpBaseButton>
                     </template>
                 </CmpCard>
-
             </div>
         </div>
     </transition>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBaseButton, CmpBasicInput, CmpCard } from '@/components'
 import { RoutePathNames } from '@/services/definitions'
@@ -129,7 +174,7 @@ import { useToast } from 'vue-toastification'
 import { useUsersStore } from '@/stores/users'
 import { VSCHEMA } from '@/views/auth/validation'
 
-import type { IAuthFormData, IUserFormData } from '@/services/definitions/types-forms'
+import type { IUserFormData } from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
@@ -160,11 +205,7 @@ export default defineComponent({
         const { cap } = useCommon()
         const { handleSubmit } = useForm<IUserFormData>({ validationSchema: VSCHEMA })
 
-            const componentKey = ref(0);
-
-        const forceRerender = () => {
-                componentKey.value += 1;
-            };
+        const componentKey = ref(0);
 
         let user:any = null;
         
@@ -173,16 +214,10 @@ export default defineComponent({
             ({ user } = storeToRefs(usersStore))
         }
 
-        /*const user : IUserFormData = reactive({
-            email: '',
-            firstname: '',
-            lastname: '',
-            passphrase: '',
-            username: ''})*/
-
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
+
         const aReqUserCreation = ( data: IUserFormData ) => {
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
@@ -198,6 +233,11 @@ export default defineComponent({
         //#endregion ==========================================================================
 
         //region ======= HELPERS ==============================================================
+
+        const forceRerender = () => {
+                componentKey.value += 1;
+        };
+
         //endregion ===========================================================================
 
         //region ======= COMPUTATIONS & GETTERS ===============================================
@@ -205,7 +245,7 @@ export default defineComponent({
         
         //region ======== HOOKS ===============================================================
         
-        onBeforeMount(() => {            
+        onMounted(() => {            
             if(id)
             {
                 usersStore.reqUserById(id as string).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'User','request') })
@@ -237,7 +277,6 @@ export default defineComponent({
             cap,
             fmode,
             user,
-            usersStore,
             componentKey
         }
     }

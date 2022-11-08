@@ -1,6 +1,7 @@
 export const RoutePaths = {
     login:     '/',
     dashboard: '/dashboard',
+    profile:   '/profile',
 
     //Users section
 
@@ -19,11 +20,13 @@ export const RoutePaths = {
 export const RoutePathNames = {
     login:     'login',
     dashboard: 'dashboard',
+    profile:   'profile',
 
     // Users section
     users:       'users',
     usersForm:   'users-edit',
     usersCreate: 'users-create',
+    usersDetails:'users-details',
 
     // PEOPLE section
 

@@ -3,6 +3,7 @@ import { RoutePathNames } from '@/services/definitions'
 export default {
     //region ======== ROOTS =================================================================
     [ RoutePathNames.dashboard ]: RoutePathNames.dashboard,
+    [ RoutePathNames.profile   ]: 'perfil de usuario',
     logout: 'salir',
     //endregion =============================================================================
 
@@ -17,6 +18,7 @@ export default {
     [ RoutePathNames.users ]: "@:{'entities.users.section-name'}",
     [ RoutePathNames.usersCreate ]: '@:crud-actions.create @:entities.users.section-name',
     [ RoutePathNames.usersForm ]: '@:crud-actions.edition @:entities.users.section-name',
+    [ RoutePathNames.usersDetails ]: '@:crud-actions.details @:entities.users.section-name',
     // [ RoutePathNames.roles ]: RoutePathNames.roles,
     //endregion =============================================================================
 

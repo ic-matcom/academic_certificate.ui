@@ -25,5 +25,11 @@ export const UsersRoutes: Array<RouteRecordRaw> = [
         component: () => import('../views/users/ViewFormUsers.vue'),
         meta: { layout: LayBaseDashboard, reqAuth: true, }
     },
+    {
+        path: RoutePaths.usersForm,
+        name: RoutePathNames.usersDetails,
+        component: () => import('../views/users/ViewFormUsers.vue'),
+        meta: { layout: LayBaseDashboard, reqAuth: true, }
+    },
 
 ]

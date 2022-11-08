@@ -68,7 +68,8 @@
         "update-pas":      "actualizado",
         "update-gerund":   "de actualización",
         "request-pas":     "solicitado",
-        "request-gerund":  "de solicitud"
+        "request-gerund":  "de solicitud",
+        "details":         "detalles de"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",

@@ -15,6 +15,7 @@
                                   @navCreateIntent="h_navCreateUsers"
                                   @requestIntent="h_reqQuery"
                                   @editIntent="h_navEditUsers"
+                                  @detailsIntent="h_navUserDetails"
                                   @deleteIntent="h_reqDeleteUser"
 
                                   @bulkActionIntent="h_BulkActionIntent"
@@ -85,40 +86,20 @@ export default defineComponent({
         // ❗ this functions here for fetching data could be async await functions easily, if is needed
 
         function a_reqQuery( queryData: IDataTableQuery ) {
-            usersStore.reqUsersPages().catch(err => tfyBasicFail(err, 'Users', 'request'))
-        }
-
-        function a_reqUser( id: string ) {
-
-            usersStore.reqUserById(id).then(() => {
-
-                router.push({
-                name  : RoutePathNames.usersForm,
-                params: {
-                    fmode: 'details' as FormMode,
-                    id   : '',
-                    cname: RoutePathNames.usersCreate                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
-                }
-            })
-
-            }).catch(err => tfyBasicFail(err, 'User', 'request'))
+            usersStore.reqUsersPages().catch(err => tfyBasicFail(err, 'usuarios', 'request'))
         }
 
         function a_reqDelete( id: string ) {
 
             usersStore.reqUserDeletion(id).then(() => {
 
-                tfyBasicSuccess('User', 'deletion')
+                tfyBasicSuccess(id, 'deletion')
 
-                // If a user delete al the records from a page of the table, then the table becomes empty, so in this case we need to make a request for the remains data (in the server, ... if any) and repopulate the table / page
-                //if (usersStore.pageSize == 0 && usersStore.totalRecords > 0)
-                //    usersStore.reqStaffPages(queryBase).catch(err => tfyBasicFail(err, 'Staff', 'request'))
-
-            }).catch(err => tfyBasicFail(err, 'User', 'deletion'))
+            }).catch(err => tfyBasicFail(err, id, 'deletion'))
         }
 
         function a_bulkSwitchState( ids: Array<number> ) {
-            let msgSubject = t('entities.staff.name', ids.length)
+            let msgSubject = t('entities.users.name', ids.length)
 
             usersStore.reqToggleStatus({ids})
             .then(() => tfyBasicSuccess(msgSubject, 'update'))
@@ -131,10 +112,6 @@ export default defineComponent({
         //#endregion ==========================================================================
 
         //#region ======= EVENTS HANDLERS =====================================================
-
-        async function h_reqGetUserById( objectId: string ) {
-            a_reqUser(objectId)
-        }
 
         async function h_reqDeleteUser( objectId: string ) {
             const wasConfirmed = await dialogfyConfirmation('delete', 'users')
@@ -159,6 +136,19 @@ export default defineComponent({
                     fmode: 'edit' as FormMode,
                     id   : objectId.username,
                     cname: RoutePathNames.usersForm                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
+                }
+            })
+        }
+
+        async function h_navUserDetails( objectId: any ) {
+            console.log("details")
+            console.log(objectId)
+            router.push({
+                name  : RoutePathNames.usersForm,
+                params: {
+                    fmode: 'details' as FormMode,
+                    id   : objectId,
+                    cname: RoutePathNames.usersDetails                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
                 }
             })
         }
@@ -208,6 +198,7 @@ export default defineComponent({
             h_reqDeleteUser,
             h_navCreateUsers,
             h_navEditUsers,
+            h_navUserDetails,
             h_BulkActionIntent
         }
     }

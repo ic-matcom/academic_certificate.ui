@@ -54,7 +54,7 @@ export const useAuthStore = defineStore({
         // --- async calls actions ---
 
         /**
-         * Trys to log in in the backed the given user credential data as payload, with the help of a definid axios apis
+         * Tries to log in in the backed the given user credential data as payload, with the help of a definid axios apis
          * to make the actual request
          *
          * @param payload user credential data for logged in
@@ -79,7 +79,7 @@ export const useAuthStore = defineStore({
         },
 
         /**
-         * Trys to log out in the backend the given user with the JWT Authentication token, with the help of a defined axios apis
+         * Tries to log out in the backend the given user with the JWT Authentication token, with the help of a defined axios apis
          * to make the actual request
          *
          */

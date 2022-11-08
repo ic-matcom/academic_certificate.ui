@@ -41,13 +41,9 @@
          * setup is called before component creation, so the onMounted hook is a good time / place to
          * invoke data population method through web API request.
          */
-        onMounted(() => {
-            authStore.reqUserInfo().catch(err => tfyBasicFail(err, 'User', 'request'))
-        })
 
         //endregion ===========================================================================
         return {
-            authStore
         }
 
     }

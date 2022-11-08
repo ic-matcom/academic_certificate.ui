@@ -103,7 +103,11 @@
 
                         <!-- Menu Links -->
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Profile</a>
+                            <a href="#" 
+                               class="nav-item dropdown-item"
+                               @click="hGetProfileIntent">
+                               {{ common.cap( $t( 'routes.profile' )) }}
+                               </a>
                         </li>
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">Settings</a>
@@ -182,6 +186,9 @@ export default defineComponent({
         hLogOutIntent(): void {
             this.setLoggedOut()
             this.$router.push(RoutePaths.login)
+        },
+        hGetProfileIntent(): void {
+            this.$router.push(RoutePaths.profile)
         },
         hMenuToggle(): void {
             this.showMenu = !this.showMenu

@@ -61,7 +61,7 @@
             hasFormBackBtn: {
                 type: Boolean,
                 default: false,
-                description: "For a card form, that sow a go-back navigation button"
+                description: "For a card form, that show a go-back navigation button"
             },
 
             // CLASSES PROPS
