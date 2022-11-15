@@ -1,0 +1,133 @@
+{
+    "alerts":       {
+        "scrollInfo": "Debe proporcionar las props de infoParent y elem"
+    },
+    "btn":          {
+        "val-yes":            "si",
+        "val-no":             "no",
+        "val-login":          "iniciar sesión",
+        "val-guest-login":    "continuar sin cuenta",
+        "val-edit":           "Editar",
+        "val-del":            "Eliminar",
+        "val-save":           "Guardar",
+        "val-cancel":         "Cancelar",
+        "val-details":        "Detalles",
+        "tip-back":           "Ir atrás",
+        "tip-create-new":     "Crear nuevo",
+        "tip-add-time-range": "Adicionar rango de tiempo",
+        "tip-enable-sel":     "Habilitar selección de {subject}",
+        "tip-disable-sel":    "Deshabilitar selección de {subject}",
+        "tip-remove-sel":     "Eliminar selección de {subject}",
+        "tip-remove-entity":  "Eliminar la entidad",
+        "tip-cancel":         "Descartar cambios",
+        "tip-save":           "Guardar cambios",
+        "tip-back-top":       "Subir"
+    },
+    "nav":          {
+        "sidebar-people": "People"
+    },
+    "data":         {
+        "status":             "Estado",
+        "_id":                "ID",
+        "id":                 "@:data._id",
+        "Name":               "Nombre",
+        "isEnable":           "@:data.status",
+        "Items":              "Elementos",
+        "Actions":            "Acciones",
+        "footer-description": "Mostrando del {start} al {end} de {total} total de entradas",
+        "Description":        "Descripción",
+        "Active":             "Estado",
+        "Store Type":         "Tipo"
+    },
+    "others":       {
+        "enable":           "Activo",
+        "disabled":         "Inactivo",
+        "allowed":          "Permitido",
+        "not-allowed":      "No Permitido",
+        "adm-system":       "Sistema de Administración",
+        "footer-copyright": "hecho con ❤ por",
+        "this-ones":        "estos"
+    },
+    "crud-actions": {
+        "delete":          "eliminar",
+        "deletion-pas":    "eliminado",
+        "deletion-gerund": "de eliminando",
+        "edition":        "editar",
+        "edition-pas":    "editado",
+        "edition-gerund": "de edición",
+        "create":          "crear",
+        "addition-pas":    "agregado",
+        "addition-gerund": "de creación",
+        "activate":        "habilitar",
+        "enable-pas":      "activado",
+        "enable-gerund":   "de activación",
+        "deactivate":      "inhabilitar",
+        "disable-pas":     "desactivado",
+        "disable-gerund":  "de desactivación",
+        "update":          "actualizar",
+        "update-pas":      "actualizado",
+        "update-gerund":   "de actualización",
+        "request-pas":     "solicitado",
+        "request-gerund":  "de solicitud",
+        "details":         "detalles de"
+    },
+    "dialogs":      {
+        "confirm":      "Por favor, confirme",
+        "confirmation": "¿ Está seguro que desea {action} {plural} {subject} ?"
+    },
+    "toasts": {
+        "auth-fail-4xx":         "Credenciales inválidas.",
+        "auth-fail-unknown":     "Algo no fue bien en la autenticación.",
+        "e404":                  "Uno o varios identificadores de {subject} no fueron encontrados en el servidor.",
+        "e404-single":           "Identifier de {subject} {name} no fue encontrado en el servidor.",
+        "e401":                  "No autenticado o la autenticación ha expirado.",
+        "ops-fail":              "Operación {opsKind} falló para {subject}. Algo ocurrió en el servidor.",
+        "ops-fail-details":      "Operación {opsKind} falló para {subject} {name}. Error {status}. {details}",
+        "ops-ok":                "{subject} {name} {opsKind} correctamente",
+        "empty-categories":      "No se encontraron categorías para la tienda.",
+        "empty-stores":          "No se encontraron tiendas de acuerda con tipo establecido.",
+        "no-item-type-selected": "El producto no puede ser creado, debe seleccionar un tipo de producto."
+    },
+    "validation":   {
+        "required":      "El campo es requerido",
+        "min-length":    "La longitud mínima permitida es de {length}",
+        "max-length":    "La longitud máxima permitida es de {length}",
+        "str-start":     "El campo no debe comenzar con número",
+        "min-value":     "El valor mínimo permitido es de {value}",
+        "max-value":     "El valor máximo permitido es de {value}",
+        "only-numbers":  "El campo debe contener solo números",
+        "only-integers": "El campo debe contener solo números enteros"
+    },
+    "forms":        {
+        "placeholders": {
+            "reset-filters": "Restablecer filtros",
+            "user":          "usuario",
+            "pass":          "contraseña",
+            "search":        "buscar",
+            "firstname":     "nombre",
+            "lastname":      "apellido",
+            "email":         "correo"
+        }
+    },
+    "table-headers": {
+        "name":     "Nombre",
+        "avatar":   "Avatar",
+        "id":       "Id",
+        "user":     "Usuario",
+        "lastname": "Apellido",
+        "contact":  "Contacto",
+        "role":     "Rol",
+        "active":   "está activo?"
+    },
+    "entities":     {
+        "default": "entidades",
+        "staff": {
+            "name": "Staff",
+            "section-name": "@:entities.staff.name"
+        },
+        "users": {
+            "name": "Usuarios",
+            "section-name": "@:entities.users.name"
+        }
+    }
+}

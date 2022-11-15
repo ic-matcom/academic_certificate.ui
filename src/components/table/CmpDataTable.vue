@@ -4,6 +4,7 @@
     <template v-if="hasTopBtnBar">
         <!-- If you need another direction of action bar function create a dynamic component here -->
         <CmpTableActionBar
+                :subject="this.$props.subject"
                 :entityMode="eMode"
                 :chkCount="Object.keys(ls_selections.selected).length"
                 v-on:navCreateIntent="$emit('navCreateIntent')"
@@ -38,7 +39,7 @@
                         <button
                                 @click.prevent="h_clearAllFilters()"
                                 type="button"
-                                :title="'others.reset-filters'"
+                                :title="$t('forms.placeholders.reset-filters')"
                                 class="btn remove btn-icon btn-sm"
                         >
                             <i class="tim-icons icon-refresh-01"></i>
@@ -51,6 +52,7 @@
                             ></i>
                         </div>
                     </span>
+
                     <!--With debaunce version for trigger the event for request the new data with the search criteria-->
                     <!--<input v-model="search"-->
                     <!--       class="form-control"-->
@@ -61,15 +63,17 @@
                     <!--       @blur="h_onSrchBlursEvt($event)"-->
                     <!--       @focus="h_onSrchFocusEvt($event)"                           -->
                     <!--/>-->
+
                     <input v-model="search"
                            class="form-control"
                            type="text"
-                           :placeholder="cap('data.ph-search')"
+                           :placeholder="cap($t('forms.placeholders.search'))"
                            aria-describedby="addon-right addon-left"
                            @blur="h_onSrchBlursEvt($event)"
                            @focus="h_onSrchFocusEvt($event)"
                            @keydown.enter="h_searchChange($event)"
                     />
+
                 </div>
             </div>
         </div>
@@ -105,12 +109,16 @@
                             { 'text-right': header.toRight },
                             { 'text-left': header.toLeft },
                             { 'text-center': header.toCenter }
-                        ]"
-                >
+                        ]">
+
                     <!-- printing the header with i18n -->
-                    {{ header.title }}
-                    <!--{{ 'data["' + header.title + '"]'}}-->
-                    <!-- {{ header.navKey ? $t("data." + header.navKey) : $t("data." + header.title) }} -->
+
+                    {{ header.title !== '' ? $t( 'table-headers["' + header.title + '"]' ) : '' }}
+
+                    <!-- some alternatives -->
+                    <!--{{ $t( 'table-headers.' + header.title ) }}-->
+                    <!--{{ $t( 'table-headers["' + header.title + '"]' ) }}-->
+                    <!-- {{ header.navKey ? $t("table-headers." + header.navKey) : $t("table-headers." + header.title) }} -->
 
                     <!-- printing the sorters carets -->
                     <span @click.prevent="h_changeSort(header)"
@@ -176,8 +184,8 @@
 
                 <!-- checkbox cell -->
                 <td v-if="header.chk === true" rowspan="1" colspan="1" :style="[{ width: header.width + '%' }]">
-                    <CmpTableChkbox :identifier="rowObj['id']"
-                                       :checked="ls_selections.selected[rowObj['id']]"
+                    <CmpTableChkbox :identifier="rowObj['username']"
+                                       :checked="ls_selections.selected[rowObj['username']]"
                                        v-on:checkIntent="h_ChkObject"
                     />
                 </td>
@@ -189,7 +197,7 @@
                     :style="[{ width: header.width + '%' }]"
                 >
                     <!-- main role -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -197,7 +205,7 @@
                     />
 
                     <!-- secondary role | when we need two switches in the data-grid -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntentSecond', $event)"
                                    v-on:disableIntent="$emit('disableIntentSecond', $event)"
@@ -205,7 +213,7 @@
                     />
 
                     <!-- default switch -->
-                    <CmpSwitchCell :identifier="rowObj['id']"
+                    <CmpSwitchCell :identifier="rowObj['username']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -237,7 +245,7 @@
 
                 <!--<CmpTableRowActions v-if="entityTypes.Store === entityMode || entityTypes.Menu === entityMode"-->
                 <CmpTableRowActions :mode="eMode"
-                                    :identifier="rowObj['id']"
+                                    :identifier="rowObj['username']"
                                     v-on:deleteIntent="$emit('deleteIntent', $event)"
                                     v-on:detailsIntent="$emit('detailsIntent', $event)"
                                     v-on:editIntent="$emit('editIntent', {...rowObj})"
@@ -285,61 +293,64 @@ export default defineComponent({
         CmpTableRowActions
     },
     props: {
-        entityMode: {
-            type: Number,
-            description:
-                    'The type of the entity that indicate the component how to adapt according with the given entity type',
-            required: true
+        subject:             {
+            type:        String,
+            description: 'This should be the translation (❗means the translated string) value string for a specific entity of the business. This value could be used for contextualization in components tips & titles and others translations strings.',
+            required:    false,
         },
-
-        columns: {
-            type: Array,
-            default: (): IColumnHeader[] => [],
+        entityMode:          {
+            type:        Number,
+            description: 'The type of the entity that indicate the component how to adapt according with the given entity type',
+            required:    true
+        },
+        columns:             {
+            type:        Array,
+            default:     (): IColumnHeader[] => [],
             description: 'Table columns'
         },
-        count: {
-            type: Number,
-            default: 0,
+        count:               {
+            type:        Number,
+            default:     0,
             description: 'The number of all the records/document of this type of entity in the database'
         },
-        data: {
-            type: Object as PropType<IIndexable[]>,
-            default: [],
+        data:                {
+            type:        Object as PropType<IIndexable[]>,
+            default:     [],
             description: 'The collection of the data for display in the table'
         },
-        hasActions: {
-            type: Boolean,
-            default: false,
+        hasActions:          {
+            type:        Boolean,
+            default:     false,
             description: 'If the table has actions buttons or not'
         },
-        hasTopBtnBar: {
-            type: Boolean,
-            default: true,
+        hasTopBtnBar:        {
+            type:        Boolean,
+            default:     true,
             description: 'If the table has the top button bar for specific actions like creation button'
         },
         hasPageSizeSelector: {
-            type: Boolean,
-            default: true,
+            type:        Boolean,
+            default:     true,
             description: 'If the table has the page size (limit) selector items'
         },
-        hasSearch: {
-            type: Boolean,
-            default: true,
+        hasSearch:           {
+            type:        Boolean,
+            default:     true,
             description: 'If the table has search field or not'
         },
-        tbodyClasses: {
-            type: String,
-            default: '',
+        tbodyClasses:        {
+            type:        String,
+            default:     '',
             description: 'tbody tag css classes'
         },
-        theadClasses: {
-            type: String,
-            default: '',
+        theadClasses:        {
+            type:        String,
+            default:     '',
             description: 'thead tag css classes'
         },
-        tableType: {
-            type: String, // striped | hover
-            default: '',
+        tableType:           {
+            type:        String,            // values can be 'striped' | 'hover'
+            default:     '',
             description: 'Whether table is striped or hover type',
 
             validator( value: string ): boolean {
@@ -349,10 +360,10 @@ export default defineComponent({
         },
 
         filters: {
-            type: Array,
+            type:        Array,
             description: 'Array of fields to filter by',
-            required: false,
-            default: []
+            required:    false,
+            default:     []
         }
     },
     emits: [
@@ -598,7 +609,7 @@ export default defineComponent({
 
             if (status)
                 return data!.reduce<ById<IChecked>>(( accumulator, obj ) => {
-                    accumulator[ obj.id ] = { chked: true }
+                    accumulator[ obj.username ] = { chked: true }
 
                     return accumulator
                 }, {})
@@ -650,7 +661,7 @@ export default defineComponent({
          * @param obj row object
          */
         const chkHasId = ( obj: any ): boolean => {
-            return obj[ 'id' ] !== undefined
+            return true//obj[ 'id' ] !== undefined
         }
 
         /***

@@ -11,7 +11,7 @@
                         id="user"
                         name="username"
                         type="text"
-                        :placeholder="'usuario@correo.cu'"
+                        :placeholder="$t('forms.placeholders.user')"
                 />
             </div>
             <div class="form-group has-label">
@@ -19,7 +19,7 @@
                         id="password"
                         name="password"
                         type="password"
-                        :placeholder="'password'"
+                        :placeholder="$t('forms.placeholders.pass')"
                         v-on:keydown.enter="hLoginIntent"
                 />
             </div>
@@ -27,7 +27,10 @@
 
         <template v-slot:footer>
             <CmpBaseButton block button-type="primary" @doClick.prevent="hLoginIntent">
-                Entrar
+                {{ cap($t("btn.val-login")) }}
+            </CmpBaseButton>
+            <CmpBaseButton block button-type="primary" @doClick.prevent="hAnonymousLoginIntent">
+                {{ cap($t("btn.val-guest-login")) }}
             </CmpBaseButton>
         </template>
     </CmpCard>
@@ -93,11 +96,15 @@ export default defineComponent({
             aReqAccess(formData)
         })
 
+        const hAnonymousLoginIntent = handleSubmit(formData => {
+            goToDashboard()
+        })
+
         //endregion =============================================================================
 
         return {
             hLoginIntent,
-
+            hAnonymousLoginIntent,
             cap
         }
     }

@@ -10,6 +10,7 @@ export interface IStaffRow {
     firstName: string,
     username: string,
     roleId: number,
+    isActive: boolean,
     created: Date,
     cell: number,
     avatarPath: string

@@ -1,6 +1,12 @@
 export const RoutePaths = {
     login:     '/',
     dashboard: '/dashboard',
+    profile:   '/profile',
+
+    //Users section
+
+    usersList: '/users/list',
+    usersForm: '/users/:fmode/:id?',
 
     // PEOPLE section
 
@@ -12,18 +18,25 @@ export const RoutePaths = {
 }
 
 export const RoutePathNames = {
-    login:     'Login',
-    dashboard: 'Dashboard',
+    login:     'login',
+    dashboard: 'dashboard',
+    profile:   'profile',
+
+    // Users section
+    users:       'users',
+    usersForm:   'users-edit',
+    usersCreate: 'users-create',
+    usersDetails:'users-details',
 
     // PEOPLE section
 
-    staff:       'Staff',
-    staffForm:   'Editar Staff',
-    staffCreate: 'Crear Staff',
+    staff:       'staff',
+    staffForm:   'staff-edit',
+    staffCreate: 'staff-create',
 
 
-    clients: 'Clientes',
-    auth:    'Autorización'
+    clients: 'clients',
+    auth:    'authorization'
 
     // ...
 }

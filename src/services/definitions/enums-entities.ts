@@ -4,5 +4,6 @@
  */
 export enum EntityTypes {
     Default = 0,
-    Staff = 1
+    Staff = 1,
+    Users = 2
 }

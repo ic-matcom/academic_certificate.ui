@@ -1,4 +1,5 @@
 <template>
+
     <sidebar-menu v-model:collapsed="collapsed"
                   :menu="menu"
                   @update:collapsed="onToggleCollapse"
@@ -6,14 +7,15 @@
 
     <div v-if="isOnMobile && !collapsed"
          class="sidebar-overlay"
-         @click="collapsed = true" />
+         @click="collapsed = true"></div>
 
     <div id="container" :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]">
         <slot></slot>
     </div>
+
 </template>
 
-<script>
+<script lang="ts">
 import { RoutePathNames, RoutePaths } from '@/services/definitions/route-paths';
 
 export default {
@@ -23,17 +25,17 @@ export default {
             menu: [
                 {
                     href: { path: RoutePaths.dashboard },
-                    title: RoutePathNames.dashboard.toUpperCase(),
+                    title: this.$t( 'routes.' + RoutePathNames.dashboard ).toUpperCase(),
                     icon: 'tim-icons icon-chart-pie-36',
                 },
                 {
                     href: {},
-                    title: ('Personas').toUpperCase(),
+                    title: this.$t( 'nav.sidebar-people' ).toUpperCase(),
                     icon: 'fa fa-users',
                     child: [
                         {
-                            href: { path: RoutePaths.staffList },
-                            title: RoutePathNames.staff,
+                            href: { path: RoutePaths.usersList },
+                            title: RoutePathNames.users,
                             icon: 'tim-icons icon-single-02',
                         },
                         {
@@ -58,7 +60,7 @@ export default {
         window.addEventListener( 'resize', this.onResize );
     },
     methods: {
-        onToggleCollapse( collapsed ) {
+        onToggleCollapse( collapsed: boolean ) {
         },
         onItemClick() {
             if (this.isOnMobile) {

@@ -3,7 +3,7 @@
 
         <!-- INFO [LEFT] -->
         <!--<div><p class="card-category">{{ `Showing ${ls.start} to ${ls.end} of ${total} entries` }}</p></div>-->
-        <div><p class="card-pagination">{{ 'Mostrando del ' + ls.start + ' al ' + ls.end + ' de un total de ' + total }}</p></div>
+        <div><p class="card-pagination">{{ $t('data.footer-description', { start: ls.start, end: ls.end, total: total }) }}</p></div>
 
         <!-- BUTTONS [RIGHT] -->
         <ul class="pagination pagination-no-border">

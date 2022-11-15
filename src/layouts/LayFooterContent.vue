@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="container-fluid">
             <div class="copyright">
-                © {{year}} {{ 'academic-certificates' }} <a href="http://www.mamei.pro" target="_blank" rel="noopener">UH</a>
+                © {{year}} {{ $t('others.footer-copyright') }} <a href="http://www.mamei.pro" target="_blank" rel="noopener">UH</a>
             </div>
         </div>
     </footer>

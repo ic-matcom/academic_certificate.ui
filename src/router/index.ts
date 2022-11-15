@@ -4,6 +4,7 @@ import { ApiAuth } from '@/services/api/api-auth'
 import { LayBasePage, LayBaseDashboard } from '@/layouts'
 import { RoutePaths, RoutePathNames } from '@/services/definitions'
 import { PeopleRoutes } from '@/router/people-routes'
+import { UsersRoutes } from '@/router/users-routes'
 
 
 const router = createRouter({
@@ -21,7 +22,14 @@ const router = createRouter({
             component: () => import('../views/ViewDashboard.vue'),
             meta:      { layout: LayBaseDashboard }
         },
-        ...PeopleRoutes
+        {
+            path:      RoutePaths.profile,
+            name:      RoutePathNames.profile,
+            component: () => import('../views/auth/ViewProfile.vue'),
+            meta:      { layout: LayBaseDashboard , reqAuth: true,}
+        },
+        ...PeopleRoutes,
+        ...UsersRoutes
     ]
 })
 

@@ -46,7 +46,7 @@
                                    type="text"
                                    class="form-control"
                                    id="inlineFormInputGroup"
-                                   :placeholder="'data.ph-search'.toUpperCase()"
+                                   :placeholder="$t('forms.placeholders.search').toUpperCase()"
                             />
                         </template>
                     </CmpModal>
@@ -72,14 +72,14 @@
                         <!-- Notifications -->
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item"
-                            >10 certificados validados satisfactoriamente</a
+                            >Mike John responded to your email</a
                             >
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Tienes 100 certificados por validar</a>
+                            <a href="#" class="nav-item dropdown-item">You have 5 more tasks</a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Más notificaciones</a>
+                            <a href="#" class="nav-item dropdown-item">Another notification</a>
                         </li>
                     </CmpDropdown>
 
@@ -103,7 +103,11 @@
 
                         <!-- Menu Links -->
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Profile</a>
+                            <a href="#" 
+                               class="nav-item dropdown-item"
+                               @click="hGetProfileIntent">
+                               {{ common.cap( $t( 'routes.profile' )) }}
+                               </a>
                         </li>
                         <li class="nav-link">
                             <a href="#" class="nav-item dropdown-item">Settings</a>
@@ -113,7 +117,7 @@
                             <a href="#"
                                class="nav-item dropdown-item"
                                @click="hLogOutIntent">
-                                {{ common.cap( 'logout' ) }}
+                                {{ common.cap( $t( 'routes.logout' )) }}
                             </a>
                         </li>
                     </CmpDropdown>
@@ -130,6 +134,7 @@ import { useAuthStore } from '@/stores/auth'
 import { CmpModal, CmpDropdown } from '../components'
 import { RoutePaths } from '@/services/definitions'
 import useCommon from '@/services/composables/useCommon'
+
 
 interface INavData {
     // TODO Pass this state data to the general store / state manager code. See data below.
@@ -163,8 +168,8 @@ export default defineComponent({
             const { name } = this.$route
             const { cname } = this.$route.params // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
 
-            if (cname !== undefined && typeof cname === 'string') return 'routes.' + cname
-            else return 'routes.' + String(name)
+            if (cname !== undefined && typeof cname === 'string') return this.$t('routes.' + cname)
+            else return this.$t('routes.' + String(name))
         }
     },
     methods: {
@@ -172,24 +177,18 @@ export default defineComponent({
         //region ======== FROM STORE ============================================================
 
         // ...mapActions(useAuthStore, { callLogOut: 'setLoggedOut' }),
-        ...mapActions(useAuthStore, ['reqLogout']),
+        ...mapActions(useAuthStore, ['setLoggedOut']),
 
-        //endregion =============================================================================
-
-        //region ======== Actions ============================================================
-
-        aReqLogout(): void {
-            this.reqLogout()
-            .then(() => { this.$router.push(RoutePaths.login) })
-            .catch(error => {  })
-        },
-        
         //endregion =============================================================================
 
         //region ======== EVENTS HANDLERS =======================================================
 
         hLogOutIntent(): void {
-            this.aReqLogout()
+            this.setLoggedOut()
+            this.$router.push(RoutePaths.login)
+        },
+        hGetProfileIntent(): void {
+            this.$router.push(RoutePaths.profile)
         },
         hMenuToggle(): void {
             this.showMenu = !this.showMenu

@@ -8,8 +8,8 @@ import type { IAuthResponse } from '../definitions/types-api'
 
 
 const version = config.site.current_version
-//const url = `v${ version }/cauth`
-const url = `auth`
+const url = `api/v${ version }/auth`
+//const url = `auth`
 
 
 export class ApiAuth {
@@ -36,7 +36,7 @@ export class ApiAuth {
      * Request logged user to the backend
      */
      public static reqGetUser(): AxiosPromise<any>{
-        return axios.get(`${ url }/user`)
+        return axios.get(`${ url }/profile`)
     }
 
     public static setAccessToken( at: string ) {

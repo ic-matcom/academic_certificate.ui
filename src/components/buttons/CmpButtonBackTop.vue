@@ -12,11 +12,11 @@
     <transition name="back2top-bnt-fade">
         <div v-show="pivot <= infoData.scrollTop">
             <CmpBaseButton icon
-                              id="back2top-btn"
-                              class="ml-1"
-                              buttonType="primary"
-                              @doClick="hBackToTop"
-                              :title="'btn.tip-back-top'">
+                           id="back2top-btn"
+                           class="ml-1"
+                           buttonType="primary"
+                           @doClick="hBackToTop"
+                           :title="$t('btn.tip-back-top')">
                 <b-icon-arrow-up />
             </CmpBaseButton>
         </div>

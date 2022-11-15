@@ -9,7 +9,7 @@
             <!-- btn details -->
             <button @click.prevent="$emit('detailsIntent', identifier)"
                     type="button"
-                    :title="'btn.val-details'"
+                    :title="$t('btn.val-details')"
                     class="btn like btn-link btn-icon btn-fab btn-info btn-sm"
             >
                 <i class="tim-icons icon-heart-2"></i>
@@ -18,7 +18,7 @@
             <!-- btn edit -->
             <button @click.prevent="$emit('editIntent', identifier)"
                     type="button"
-                    :title="'btn.val-edit'"
+                    :title="$t('btn.val-edit')"
                     class="btn edit btn-link btn-icon btn-fab btn-warning btn-sm"
             >
                 <i class="tim-icons icon-pencil"></i>
@@ -27,20 +27,20 @@
             <!-- btn delete -->
             <button @click.prevent="$emit('deleteIntent', identifier)"
                     type="button"
-                    :title="'btn.val-del'"
+                    :title="$t('btn.val-del')"
                     class="btn remove btn-link btn-icon btn-fab btn-danger btn-sm"
             >
                 <i class="tim-icons icon-trash-simple"></i>
             </button>
         </template>
 
-        <!-- Staff  -->
-        <template v-else-if="mode === entityTypes.Staff">
+        <!-- Users  -->
+        <template v-else-if="mode === entityTypes.Users">
 
             <!--btn edit meuns-->
             <button @click.prevent="$emit('detailsIntent', identifier)"
                     type="button"
-                    :title="'btn.val-store-menus'"
+                    :title="$t('btn.val-details')"
                     class="btn like btn-link btn-icon btn-fab btn-info btn-sm"
             >
                 <i class="tim-icons icon-calendar-60"></i>
@@ -49,7 +49,7 @@
             <!-- btn edit stores -->
             <button @click.prevent="$emit('editIntent', identifier)"
                     type="button"
-                    :title="'btn.val-edit'"
+                    :title="$t('btn.val-edit')"
                     class="btn edit btn-link btn-icon btn-fab btn-warning btn-sm"
             >
                 <i class="tim-icons icon-pencil"></i>
@@ -58,7 +58,7 @@
             <!-- btn delete -->
             <button @click.prevent="$emit('deleteIntent', identifier)"
                     type="button"
-                    :title="'btn.val-del'"
+                    :title="$t('btn.val-del')"
                     class="btn remove btn-link btn-icon btn-fab btn-danger btn-sm"
             >
                 <i class="tim-icons icon-trash-simple"></i>
@@ -79,7 +79,7 @@ export default defineComponent({
     props: {
 
         identifier: {
-            type: Number,
+            type: String,
             description: "Row object identifier / id",
         },
 
