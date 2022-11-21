@@ -75,6 +75,7 @@ export default defineComponent({
         //#region ======= FETCHING DATA & ACTIONS ===============================================
 
         const aReqAccess = ( data: IAuthFormData ) => {
+            console.log('banana')
             authStore.reqLogin(data)
             .then(() => { goToDashboard() })
             .catch(error => { tfyAuthFail(error) })
@@ -93,7 +94,9 @@ export default defineComponent({
         //region ======== EVENTS HANDLERS =======================================================
 
         const hLoginIntent = handleSubmit(formData => {
+            console.log('kiki')
             aReqAccess(formData)
+            console.log('love me')
         })
 
         const hAnonymousLoginIntent = handleSubmit(formData => {

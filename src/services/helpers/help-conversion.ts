@@ -1,4 +1,4 @@
-import { ById, IIndexable, IShell } from "@/services/definitions";
+import type { ById, IIndexable, IShell } from "@/services/definitions";
 
 /***
  * Convert a dictionary mapped by Id to an array of the collection objects

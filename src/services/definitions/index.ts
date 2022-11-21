@@ -1,4 +1,4 @@
-import { ALIGN_POSITION } from './types-common'
+import { ALIGN_POSITION, type IScrollInfo, type IShell } from './types-common'
 import { RoutePaths, RoutePathNames } from './route-paths'
 import { HCatalogsTable, PAGE_SIZE, queryBase } from './data-datatables'
 import { EntityTypes } from '@/services/definitions/enums-entities'
@@ -30,7 +30,7 @@ export {
     Problem,
     ErrorDictionary,
     IDataTableQuery, ITableChkEmit, IColumnHeader, IIndexable, IChecked, IBasicPageState, IDataListBasicResponse, IBulkData,
-    ById, BULK_ACTION, Filter, FormMode, ActionKind, EntityGenericNames, IdsArray,
+    ById, BULK_ACTION, Filter, FormMode, ActionKind, EntityGenericNames, IdsArray, IShell, IScrollInfo,
     ALIGN_POSITION,
 
     // =====  ENTITIES =====

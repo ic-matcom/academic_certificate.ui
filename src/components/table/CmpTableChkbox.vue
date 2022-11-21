@@ -16,7 +16,7 @@
         name: 'CmpTableChkbox',
         props: {
             identifier: {
-                type: String,
+                type: Number,
                 description: 'Row object identifier/id'
             }
         },

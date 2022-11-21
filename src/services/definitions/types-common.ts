@@ -1,5 +1,5 @@
 export interface IIndexable {
-    username: string
+    id: number
 }
 
 export type IdsArray = { ids: Array<number> }

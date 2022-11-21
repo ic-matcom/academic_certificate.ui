@@ -79,7 +79,7 @@ export default defineComponent({
     props: {
 
         identifier: {
-            type: String,
+            type: Number,
             description: "Row object identifier / id",
         },
 

@@ -3,8 +3,17 @@ export interface IAuthResponse {
 }
 
 export interface IAuthProfileResponse {
-    username: string,
+    id:        number,
+    username:  string,
     firstname: string,
-    lastname: string,
-    email: string
+    lastname:  string,
+    email:     string
+}
+
+export type IUserResponseData = {
+    id:         number
+    email:      string
+    firstname:  string
+    lastname:   string
+    username:   string
 }

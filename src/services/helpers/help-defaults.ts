@@ -1,4 +1,4 @@
-import { IDataTableQuery, IScrollInfo } from '../definitions/common-types'
+import type { IDataTableQuery, IScrollInfo } from "@/services/definitions"
 
 
 export function makeDefaultMenuQuery( pLimit = Number.MAX_VALUE ): IDataTableQuery {

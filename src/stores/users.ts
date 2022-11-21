@@ -3,6 +3,7 @@ import { ApiUsers } from '@/services/api/api-users'
 
 import type { IDataTableQuery, IUsersRow, IBasicPageState, IdsArray } from '@/services/definitions'
 import type { IUserFormData } from '@/services/definitions/types-forms'
+import type { IUserResponseData } from '@/services/definitions/types-api'
 
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
@@ -15,7 +16,7 @@ export const useUsersStore = defineStore({
         pageSize:      0,
         totalRecords: 0,
         entityPage:   [] as IUsersRow[],
-        user: {email:'',firstname:'',lastname:'',passphrase:'',username:''} 
+        user: {id: 0, email:'',firstname:'',lastname:'',username:''} 
     }),
 
     /**
@@ -37,8 +38,8 @@ export const useUsersStore = defineStore({
          * Delete a User from the store
          * @param payload User identifier to be deleted
          */
-        mutDeleteUser( payload: string ): void {
-            this.entityPage = this.entityPage.filter(userRow => payload != userRow.username)
+        mutDeleteUser( payload: number ): void {
+            this.entityPage = this.entityPage.filter(userRow => payload != userRow.id)
             this.totalRecords -= 1
             //this.pageSize -= payload.ids.length
         },
@@ -50,27 +51,25 @@ export const useUsersStore = defineStore({
          * to make the actual request
          *
          */
-        async reqUsersPages () : Promise<void> {
+        async reqUsersPages (payload: IDataTableQuery) : Promise<void> {
 
              return await new Promise<void>((resolve, reject) => {
-                ApiUsers.reqGetUsers()
+                ApiUsers.reqUsersPage(payload)
                 .then((response:any) => {
-
-                    this.entityPage = response.data                    
-                    this.totalRecords = response.data.length
-                    this.pageSize = response.data.length
-                    this.pageNumber = 1
+                    this.entityPage = response.data.rows                  
+                    this.totalRecords = response.data.total_rows
+                    this.pageSize = response.data.limit
+                    this.pageNumber = response.data.page
                     
                     resolve()
 
                 }).catch(error => {
-
                     if (error.response.status === 404)
                     {
                         this.entityPage = []
                         this.totalRecords = 0
                         this.pageSize = 0
-                        this.pageNumber = 1//payload.Offset
+                        this.pageNumber = payload.Offset
                     }
 
                     reject(error)
@@ -105,7 +104,7 @@ export const useUsersStore = defineStore({
          * @param id User identifier to be updated
          * @param payload new user data 
          */
-        async reqUserUpdate (id: string, payload: IUserFormData) : Promise<void> {
+        async reqUserUpdate (id: number, payload: IUserFormData) : Promise<void> {
 
             return await new Promise<void>((resolve, reject) => {
                ApiUsers.reqUpdateUser(id, payload as IUserFormData)
@@ -123,10 +122,11 @@ export const useUsersStore = defineStore({
          * Tries to get a user by id
          * @param payload User identifier to be fetched
          */
-        async reqUserById( payload: string ): Promise<any> {
+        async reqUserById( payload: number ): Promise<any> {
 
             return await new Promise<void>((resolve, reject) => {
                 ApiUsers.reqGetUserById(payload).then((response: any) => {
+                    this.user.id = response.data.id
                     this.user.email = response.data.email
                     this.user.firstname = response.data.firstname
                     this.user.lastname = response.data.lastname
@@ -142,7 +142,7 @@ export const useUsersStore = defineStore({
          * Tries to delete a user
          * @param payload User identifier to be deleted
          */
-        async reqUserDeletion( payload: string ): Promise<void> {
+        async reqUserDeletion( payload: number ): Promise<void> {
 
             return await new Promise<void>(( resolve, reject ) => {
                 ApiUsers.reqDeleteUser(payload).then(( response: any ) => {
@@ -187,7 +187,7 @@ export const useUsersStore = defineStore({
 
 interface IUsersState extends IBasicPageState {
     entityPage: Array<IUsersRow>,
-    user: IUserFormData
+    user: IUserResponseData
 }
 
 //endregion =============================================================================

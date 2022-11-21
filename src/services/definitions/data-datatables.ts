@@ -7,7 +7,8 @@ export const PAGE_SIZE = 10
 export const queryBase: IDataTableQuery = {
     Offset:  0,
     Limit:   PAGE_SIZE,
-    Orderer: 'id'
+    Orderer: 'id',
+    OrderDir: 'ASC'
 }
 
 export const HCatalogsTable: Partial<IColumnHeader>[] = [
@@ -28,7 +29,7 @@ export const HUsersTable: Partial<IColumnHeader>[] = [
     },
 
     {
-        title:  'email',
+        title:  'id',
         hidden: true
     },
 

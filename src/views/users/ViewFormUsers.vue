@@ -179,6 +179,7 @@ import type { IUserFormData } from '@/services/definitions/types-forms'
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
 import { storeToRefs } from 'pinia';
+import { number } from '@intlify/core-base';
 
 
 export default defineComponent({
@@ -198,6 +199,8 @@ export default defineComponent({
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
+        const userId = Number.parseInt(id as string, 10)
+        
 
         const toast = useToast() // The toast lib interface
 
@@ -224,7 +227,7 @@ export default defineComponent({
             .catch(error => { tfyBasicFail(error, 'users','addition') })
         }
 
-        const aReqUserUpdate = ( id: string, data: IUserFormData ) => {
+        const aReqUserUpdate = ( id: number, data: IUserFormData ) => {
             usersStore.reqUserUpdate(id, data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
             .catch(error => { tfyBasicFail(error, 'users','update') })
@@ -248,7 +251,7 @@ export default defineComponent({
         onMounted(() => {            
             if(id)
             {
-                usersStore.reqUserById(id as string).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'User','request') })
+                usersStore.reqUserById(userId).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'User','request') })
             }
         })
 
@@ -261,7 +264,7 @@ export default defineComponent({
         })
 
         const hEditIntent = handleSubmit(formData => {
-            aReqUserUpdate(id as string, formData)
+            aReqUserUpdate(userId, formData)
         })
 
         const h_Back = () => {
