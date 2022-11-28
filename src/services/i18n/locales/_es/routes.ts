@@ -2,16 +2,15 @@ import { RoutePathNames } from '@/services/definitions'
 
 export default {
     //region ======== ROOTS =================================================================
-    [ RoutePathNames.dashboard ]: RoutePathNames.dashboard,
+    [ RoutePathNames.dashboard ]: "inicio",
     [ RoutePathNames.profile   ]: 'perfil de usuario',
     logout: 'salir',
     //endregion =============================================================================
 
-    //region ======== CATALOGS ==============================================================
-    // [ RoutePathNames.catalogs ]: 'Catálogos',
-    // [ RoutePathNames.catalogsForm ]: 'Editar Catálogo',
-    // 'catalog-create': 'Crear Catálogo',
-    // [ RoutePathNames.catalogsDetails ]: 'Detalles de Catálogo',
+    //region ======== Certificates ==============================================================
+    [ RoutePathNames.certificates ]: "@:{'entities.certificates.section-name'}",
+    [ RoutePathNames.certificatesCreate ]: '@:crud-actions.create @:entities.certificates.section-name',
+    [ RoutePathNames.certificatesDetails ]: '@:crud-actions.details @:entities.certificates.section-name',
     //endregion =============================================================================
 
     //region ======== USERS =================================================================
@@ -34,8 +33,8 @@ export default {
 
     //#region ======== STAFF ================================================================
     [ RoutePathNames.staff ]: "@:{'entities.staff.section-name'}",
-    [ RoutePathNames.staffForm ]: '@:crud-actions.create @:entities.staff.section-name',
-    [ RoutePathNames.staffCreate ]: '@:crud-actions.edition @:entities.staff.section-name',
+    [ RoutePathNames.staffCreate ]: '@:crud-actions.create @:entities.staff.section-name',
+    [ RoutePathNames.staffForm ]: '@:crud-actions.edition @:entities.staff.section-name',
 
     // [ RoutePathNames.storesMenus ]: "Gestión de @:{'menu.menu'}s",
     // [ RoutePathNames.storeMenuDetails ]: 'Detalles de @:menu.menu',

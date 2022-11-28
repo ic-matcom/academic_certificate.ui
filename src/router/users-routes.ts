@@ -1,5 +1,5 @@
 import { LayBaseDashboard } from '@/layouts'
-import { RoutePaths, RoutePathNames } from '@/services/definitions'
+import { RoutePaths, RoutePathNames, Roles } from '@/services/definitions'
 
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -11,25 +11,25 @@ export const UsersRoutes: Array<RouteRecordRaw> = [
         path: RoutePaths.usersList,
         name: RoutePathNames.users,
         component: () => import('../views/users/ViewListUsers.vue'),
-        meta: { layout: LayBaseDashboard, reqAuth: true }
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.sysadmin]}
     },
     {
         path: RoutePaths.usersForm,
         name: RoutePathNames.usersCreate,
         component: () => import('../views/users/ViewFormUsers.vue'),
-        meta: { layout: LayBaseDashboard, reqAuth: true, }
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.sysadmin]}
     },
     {
         path: RoutePaths.usersForm,
         name: RoutePathNames.usersForm,
         component: () => import('../views/users/ViewFormUsers.vue'),
-        meta: { layout: LayBaseDashboard, reqAuth: true, }
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.sysadmin] }
     },
     {
         path: RoutePaths.usersForm,
         name: RoutePathNames.usersDetails,
         component: () => import('../views/users/ViewFormUsers.vue'),
-        meta: { layout: LayBaseDashboard, reqAuth: true, }
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.sysadmin]}
     },
 
 ]

@@ -2,26 +2,26 @@
 
 
 //region ======== SCHEMA ================================================================
-export const VSCHEMA = {
-   
+export const VSchemaAuth = {
+
 }
 //endregion =============================================================================
 
 
 //region ======== VALIDATIONS FUNCTIONS =================================================
 // function vUserName (val:any, field: string) : boolean | string {
-    
+
 //     if (!vRequired(val)) return `The ${field} is required`
 //     if (!vLengthMin(val)) return `The ${field} is invalid`
-    
+
 //     return true
 // }
 
 // function vPassword (val:any, field: string) : boolean | string {
-    
+
 //     if (!vRequired(val)) return `The ${field} is required`
 //     if (!vLengthMin(val)) return `The ${field} is invalid`
-    
+
 //     return true
 // }
 //endregion =============================================================================

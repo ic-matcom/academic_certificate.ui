@@ -14,7 +14,7 @@
     text-align: left;
     -webkit-transition: max-width .3s ease;
     transition: max-width .3s ease;
-    border-top: 2px solid $primary;
+    border-top: 2px solid $success;
 }
 
 .v-sidebar-menu, .v-sidebar-menu * {
@@ -326,7 +326,7 @@ button.vsm--toggle-btn {
 }
 
 .v-sidebar-menu {
-    @include linear-gradient($primary-states, $primary);
+    @include linear-gradient($vue-states, $success);
 }
 
 .v-sidebar-menu .vsm--link {

@@ -1,5 +1,5 @@
 export interface IIndexable {
-    username: string
+    id: number | string
 }
 
 export type IdsArray = { ids: Array<number> }
@@ -85,24 +85,27 @@ export type IShell<T> = {
 
 /***
  * Definition for API operations that requieres a UI toast feedback
+ * T = type
  */
-export type OPSKind = 'deletion' | 'addition' | 'update' | 'enable' | 'disable' | 'request'
+export type TOPSKind = 'deletion' | 'addition' | 'update' | 'enable' | 'disable' | 'request'
 
 /***
  * Definition for UI actions that requieres a dialog confirmations or UI feedback
+ * T = type
  */
-export type ActionKind = 'delete' | 'create' | 'update' | 'activate' | 'deactivate'
+export type TActionKind = 'delete' | 'create' | 'update' | 'activate' | 'deactivate'
 
 /**
  * Definition for entities forms view mode
+ * T = type
  */
-export type FormMode = 'edit' | 'create' | 'details'
+export type TFormMode = 'edit' | 'create' | 'details' | 'validate' | 'invalidate'
 
 /**
  * This mostly used in the dialog (Dialogfy) custom composable, as constraint type of actual business entities names
  * when those names will be pases as parameters of some kind
  */
-export type EntityGenericNames = 'users'
+export type EntityGenericNames = 'staff' | 'users' | 'certificates'
 // export type EntityGenericNames = 'item' | 'items' | 'store' | 'stores' | 'menu' | 'menus'
 
 /***
@@ -259,4 +262,12 @@ export interface IBasicPageState {
     pageNumber: number,
     pageSize: number,
     totalRecords: number                  // Total entity count on the entire system
+}
+
+/**
+ * Basic multiselect interface data
+ */
+ export interface IMultiselectBasic {
+    value: number|string,
+    label: string
 }

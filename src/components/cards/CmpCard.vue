@@ -11,7 +11,7 @@
             <slot name="header">
                 <button v-if="hasFormBackBtn"
                         :title="$t('btn.tip-back')"
-                        class="btn btn-icon btn-primary"
+                        class="btn btn-icon btn-success"
                         @click.prevent="h_Click">
                     <i class="tim-icons icon-minimal-left"></i>
                 </button>

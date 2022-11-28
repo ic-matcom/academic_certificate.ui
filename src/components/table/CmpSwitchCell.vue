@@ -34,7 +34,7 @@
         name: 'CmpSwitchCell',
         props: {
             identifier: {
-                type: String,
+                type: [Number, String],
                 description: 'Row object identifier/id'
             },
             isEnable: {

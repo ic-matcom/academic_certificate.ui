@@ -1,8 +1,20 @@
 /* Form controls */
 @include form-control-placeholder(#6c757c, 1);
 
-.schedules-timerange-input {
+.caret-form-section {
+    margin-top: 10px;
+    height: 14px;
+    width: 14px;
+    color: $success;
+    float: right;
+    vertical-align: middle;
+}
 
+.collapsable-form-section-divisor {
+    width: 90%;
+    border-width: thin;
+    border-color: $success !important;
+    opacity: 0.2;
 }
 
 .form-control {
@@ -11,9 +23,8 @@
     font-size: $font-size-sm;
     @include transition-input-focus-color();
 
-
     &:focus {
-        border-color: $primary;
+        border-color: $success;
         background-color: $input-bg;
         @include box-shadow(none);
 
@@ -21,7 +32,7 @@
         & ~ .input-group-append .input-group-text,
         & + .input-group-prepend .input-group-text,
         & ~ .input-group-prepend .input-group-text {
-            border: 1px solid $primary;
+            border: 1px solid $success;
             border-left: none;
             background-color: $transparent-bg;
         }
@@ -91,7 +102,7 @@
 
 div.form-group.has-danger div.multiselect {
     border-color: lighten($danger-states, 5%);
-    color: $danger-states;
+    color: $vue-states;
     background-color: rgba(222, 222, 222, .1);
 
     &:focus {

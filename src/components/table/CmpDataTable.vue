@@ -18,7 +18,7 @@
     <template v-if="hasPageSizeSelector || hasSearch">
         <div class="table-action-bars col-12 d-flex justify-content-center justify-content-sm-between flex-wrap">
             <!-- TABLE PAGE SIZE -->
-            <div class="select-primary mb-3 m-1 pagination-select row" v-if="hasPageSizeSelector">
+            <div class="select-success mb-3 m-1 pagination-select row" v-if="hasPageSizeSelector">
                 <multiselect
                         v-model="pageSizeOptions.value"
                         id="table-page-size"
@@ -39,7 +39,7 @@
                         <button
                                 @click.prevent="h_clearAllFilters()"
                                 type="button"
-                                :title="$t('forms.placeholders.reset-filters')"
+                                :title="$t('form.placeholders.reset-filters')"
                                 class="btn remove btn-icon btn-sm"
                         >
                             <i class="tim-icons icon-refresh-01"></i>
@@ -67,7 +67,7 @@
                     <input v-model="search"
                            class="form-control"
                            type="text"
-                           :placeholder="cap($t('forms.placeholders.search'))"
+                           :placeholder="cap($t('form.placeholders.search'))"
                            aria-describedby="addon-right addon-left"
                            @blur="h_onSrchBlursEvt($event)"
                            @focus="h_onSrchFocusEvt($event)"
@@ -184,8 +184,8 @@
 
                 <!-- checkbox cell -->
                 <td v-if="header.chk === true" rowspan="1" colspan="1" :style="[{ width: header.width + '%' }]">
-                    <CmpTableChkbox :identifier="rowObj['username']"
-                                       :checked="ls_selections.selected[rowObj['username']]"
+                    <CmpTableChkbox :identifier="rowObj['id']"
+                                       :checked="ls_selections.selected[rowObj['id']]"
                                        v-on:checkIntent="h_ChkObject"
                     />
                 </td>
@@ -197,7 +197,7 @@
                     :style="[{ width: header.width + '%' }]"
                 >
                     <!-- main role -->
-                    <CmpSwitchCell :identifier="rowObj['username']"
+                    <CmpSwitchCell :identifier="rowObj['id']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -205,7 +205,7 @@
                     />
 
                     <!-- secondary role | when we need two switches in the data-grid -->
-                    <CmpSwitchCell :identifier="rowObj['username']"
+                    <CmpSwitchCell :identifier="rowObj['id']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntentSecond', $event)"
                                    v-on:disableIntent="$emit('disableIntentSecond', $event)"
@@ -213,7 +213,7 @@
                     />
 
                     <!-- default switch -->
-                    <CmpSwitchCell :identifier="rowObj['username']"
+                    <CmpSwitchCell :identifier="rowObj['id']"
                                    :is-enable="getRowValue(rowObj, header)"
                                    v-on:enableIntent="$emit('enableIntent', $event)"
                                    v-on:disableIntent="$emit('disableIntent', $event)"
@@ -245,7 +245,7 @@
 
                 <!--<CmpTableRowActions v-if="entityTypes.Store === entityMode || entityTypes.Menu === entityMode"-->
                 <CmpTableRowActions :mode="eMode"
-                                    :identifier="rowObj['username']"
+                                    :identifier="rowObj['id']"
                                     v-on:deleteIntent="$emit('deleteIntent', $event)"
                                     v-on:detailsIntent="$emit('detailsIntent', $event)"
                                     v-on:editIntent="$emit('editIntent', {...rowObj})"
@@ -387,7 +387,7 @@ export default defineComponent({
 
         //region ======== DECLARATIONS & LOCAL STATE ============================================
 
-        const pageSizeOptions = { '10': 10, '25': 25, '50': 50, '100': 100 }                            // pagination size (options) data
+        const pageSizeOptions = { '10': 10, '25': 25, '50': 50, '100': 100 }                      // pagination size (options) data
         const ls_selections = reactive<{ selected: ById<IChecked> }>({ selected: {} })            // ls =  local state
         const ls_rootChkBoxState = ref<boolean>(false)
         const ls_pageSize = ref<number>(PAGE_SIZE)
@@ -477,7 +477,7 @@ export default defineComponent({
         }
 
         const h_computePaginationData = ( nextPage: number ) => {
-            ls_dtQueryData.Offset = nextPage == 1 ? 0 : nextPage * ls_pageSize.value - ls_pageSize.value
+            ls_dtQueryData.Offset = nextPage == 1 ? 0 : nextPage //* ls_pageSize.value - ls_pageSize.value
             ls_dtQueryData.Limit = ls_pageSize.value
 
             ctx.emit('requestIntent', ls_dtQueryData)
@@ -609,7 +609,7 @@ export default defineComponent({
 
             if (status)
                 return data!.reduce<ById<IChecked>>(( accumulator, obj ) => {
-                    accumulator[ obj.username ] = { chked: true }
+                    accumulator[ obj.id ] = { chked: true }
 
                     return accumulator
                 }, {})
@@ -661,7 +661,7 @@ export default defineComponent({
          * @param obj row object
          */
         const chkHasId = ( obj: any ): boolean => {
-            return true//obj[ 'id' ] !== undefined
+            return obj[ 'id' ] !== undefined
         }
 
         /***

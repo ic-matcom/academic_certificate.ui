@@ -5,15 +5,26 @@ export interface IUsersPage extends IDataListBasicResponse {
 }
 
 export interface IUsersRow {
-    email: string,
-    username: string,
+    id:        number,
+    email:     string,
+    username:  string,
     firstname: string,
-    lastname: string
+    lastname:  string,
+    rol:       string
 }
 
 export type UserInfo = {
-    username: string,
+    id:        number,
+    username:  string,
     firstname: string,
-    lastname: string,
-    email: string
+    lastname:  string,
+    email:     string,
+    rol:       string
+}
+
+export interface IRol {
+    id:          number,
+    label:       string,
+    name:        string,
+    description: string
 }

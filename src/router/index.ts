@@ -5,6 +5,7 @@ import { LayBasePage, LayBaseDashboard } from '@/layouts'
 import { RoutePaths, RoutePathNames } from '@/services/definitions'
 import { PeopleRoutes } from '@/router/people-routes'
 import { UsersRoutes } from '@/router/users-routes'
+import { CertificatesRoutes } from '@/router/certificates-routes'
 
 
 const router = createRouter({
@@ -29,14 +30,16 @@ const router = createRouter({
             meta:      { layout: LayBaseDashboard , reqAuth: true,}
         },
         ...PeopleRoutes,
-        ...UsersRoutes
+        ...UsersRoutes,
+        ...CertificatesRoutes
     ]
 })
 
 // GUARD - authentication checker | axios hook
 router.beforeEach(( to, _, next ) => {
 
-    const store = useAuthStore()                                                // maybe we can put this outside this method to improve speed
+    const store = useAuthStore()
+                                                // maybe we can put this outside this method to improve speed
 
     if (store === undefined) next()
     else if (to.meta.reqAuth && !store.isLoggedIn) {
@@ -46,6 +49,18 @@ router.beforeEach(( to, _, next ) => {
         // Try to login but the user is logged in already
         ApiAuth.setAccessToken(store.authTk)                                    // As the user is logged in already the access_token has to be in the store
         next(RoutePaths.dashboard)
+    }
+    else if (to.meta.authorize)
+    {
+        const authorize : any = to.meta.authorize
+        const role = store.user?.rol
+        if(!authorize.includes(role))
+        {
+          next(RoutePaths.dashboard)
+        }
+        else{
+            next()
+        }
     }
     else {
         next()                                                                  // Carry on

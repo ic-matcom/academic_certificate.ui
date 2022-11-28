@@ -3,7 +3,7 @@ import { i18n } from '@/services/i18n'
 import Swal from 'sweetalert2/dist/sweetalert2.min.js'
 
 import type { SweetAlertOptions, SweetAlertResult } from 'sweetalert2'
-import type { ActionKind, EntityGenericNames } from '@/services/definitions'
+import type { TActionKind, EntityGenericNames } from '@/services/definitions'
 import type { Function1 } from '@/services/definitions'
 
 
@@ -65,7 +65,7 @@ export default function useDialogfy() {
      * @param isBulk Tells if the call is for a plural subject (more than one). Eg. in bulk actions
      * @returns true if ok clicked, false otherwise
      */
-    async function dialogfyConfirmation( action: ActionKind, subject: EntityGenericNames, isBulk = false ): Promise<boolean> {
+    async function dialogfyConfirmation( action: TActionKind, subject: EntityGenericNames, isBulk = false ): Promise<boolean> {
         let result: SweetAlertResult = await Swal.fire({
             icon:           'warning',
             titleText:      t('dialogs.confirm'),

@@ -1,5 +1,4 @@
 <template>
-
     <div style="text-align: right">
 
         <!-- DEFAULT -->
@@ -65,6 +64,37 @@
             </button>
         </template>
 
+        <!-- Certificates  -->
+        <template v-else-if="mode === entityTypes.Certificates">
+
+            <!--btn edit meuns-->
+            <button @click.prevent="$emit('detailsIntent', identifier)"
+                    type="button"
+                    :title="$t('btn.val-details')"
+                    class="btn like btn-link btn-icon btn-fab btn-info btn-sm"
+            >
+                <i class="tim-icons icon-calendar-60"></i>
+            </button>
+
+            <!-- btn edit stores -->
+            <button @click.prevent="$emit('editIntent', identifier)"
+                    type="button"
+                    :title="$t('btn.val-edit')"
+                    class="btn edit btn-link btn-icon btn-fab btn-warning btn-sm"
+            >
+                <i class="tim-icons icon-single-copy-04"></i>
+            </button>
+
+            <!-- btn delete -->
+            <button @click.prevent="$emit('deleteIntent', identifier)"
+                    type="button"
+                    :title="$t('btn.val-del')"
+                    class="btn remove btn-link btn-icon btn-fab btn-danger btn-sm"
+            >
+                <i class="tim-icons icon-trash-simple"></i>
+            </button>
+        </template>
+
     </div>
 </template>
 
@@ -79,7 +109,7 @@ export default defineComponent({
     props: {
 
         identifier: {
-            type: String,
+            type: [Number, String],
             description: "Row object identifier / id",
         },
 

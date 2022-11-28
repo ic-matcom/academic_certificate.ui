@@ -10,8 +10,10 @@
         "val-edit":           "Editar",
         "val-del":            "Eliminar",
         "val-save":           "Guardar",
+        "val-apply":          "Aplicar",
         "val-cancel":         "Cancelar",
         "val-details":        "Detalles",
+        "val-validate":       "Validar",
         "tip-back":           "Ir atrás",
         "tip-create-new":     "Crear nuevo",
         "tip-add-time-range": "Adicionar rango de tiempo",
@@ -21,10 +23,16 @@
         "tip-remove-entity":  "Eliminar la entidad",
         "tip-cancel":         "Descartar cambios",
         "tip-save":           "Guardar cambios",
+        "tip-save-stay":      "Guardar cambios y continuar en el formulario",
         "tip-back-top":       "Subir"
     },
     "nav":          {
-        "sidebar-people": "People"
+        "sidebar-people": "Usuarios",
+        "sidebar-certificates": "Certificados",
+        "sidebar-create-certificates": "Emitir",
+        "sidebar-validate-certificates": "Validar",
+        "sidebar-query-certificates": "Consultar",
+        "sidebar-authorization": "Autorización"
     },
     "data":         {
         "status":             "Estado",
@@ -42,6 +50,8 @@
     "others":       {
         "enable":           "Activo",
         "disabled":         "Inactivo",
+        "available":        "Habilitado",
+        "unavailable":      "Inhabilitado",
         "allowed":          "Permitido",
         "not-allowed":      "No Permitido",
         "adm-system":       "Sistema de Administración",
@@ -69,7 +79,8 @@
         "update-gerund":   "de actualización",
         "request-pas":     "solicitado",
         "request-gerund":  "de solicitud",
-        "details":         "detalles de"
+        "details":         "detalles de",
+        "validate":        "validar"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",
@@ -88,25 +99,54 @@
         "empty-stores":          "No se encontraron tiendas de acuerda con tipo establecido.",
         "no-item-type-selected": "El producto no puede ser creado, debe seleccionar un tipo de producto."
     },
-    "validation":   {
-        "required":      "El campo es requerido",
-        "min-length":    "La longitud mínima permitida es de {length}",
-        "max-length":    "La longitud máxima permitida es de {length}",
-        "str-start":     "El campo no debe comenzar con número",
-        "min-value":     "El valor mínimo permitido es de {value}",
-        "max-value":     "El valor máximo permitido es de {value}",
-        "only-numbers":  "El campo debe contener solo números",
-        "only-integers": "El campo debe contener solo números enteros"
+    "validation":    {
+        "required":                          "El campo es requerido",
+        "email":                             "El campo debe contener un email válido",
+        "cellphone":                         "El campo de # de celular solo debe contener enteros",
+        "min-length":                        "La longitud mínima permitida es de {length} caracteres",
+        "max-length":                        "La longitud máxima permitida es de {length} caracteres",
+        "str-start":                         "El campo no debe comenzar con número",
+        "min-value":                         "El valor mínimo permitido es de {value}",
+        "max-value":                         "El valor máximo permitido es de {value}",
+        "only-numbers":                      "El campo debe contener solo números",
+        "only-integers":                     "El campo debe contener solo números enteros",
+        "password-complexity":               "Al menos 2 letras mayúsculas, 1 caracter espacial {'(!@#$&._*)'} , números y letras, de 8 y 20 caracteres",
+        "password-confirmation":             "El campo no coincide con la contraseña definida",
+        "only-alpha-spaces":                 "El campo solo debe contener caracteres y espacios, terminando solo en caracteres",
+        "only-alpha-digits-underscore-dots": "El campo solo debe contener caracteres, guion bajo, puntos y números, sin espacios"
     },
-    "forms":        {
-        "placeholders": {
-            "reset-filters": "Restablecer filtros",
-            "user":          "usuario",
-            "pass":          "contraseña",
-            "search":        "buscar",
-            "firstname":     "nombre",
-            "lastname":      "apellido",
-            "email":         "correo"
+    "form":          {
+        "section":       {
+            "staff-information": "Información del Staff",
+            "user-information":  "Información del Usuario"
+        },
+        "fields-common": {
+            "change-password":  "Cambiar password",
+            "set-password":     "Definir password",
+            "password":         "Contraseña",
+            "password-confirm": "Confirmación",
+            "username":         "Nombre de usuario",
+            "firstname":        "Nombre",
+            "lastname":         "Apellidos",
+            "cell":             "Celular",
+            "email":            "E-mail"
+        },
+        "fields":        {
+            "staff": {
+                "system-role": "Rol"
+            }
+        },
+        "placeholders":  {
+            "username":        "nickname__78",
+            "staff-firstname": "Escriba el nombre del empleado",
+            "staff-lastname":  "Escriba los apellidos del empleado",
+            "user-firstname":  "escriba el nombre del usuario",
+            "user-lastname":   "escriba los apellidos del usuario",
+            "reset-filters":   "Restablecer filtros",
+            "user":            "usuario",
+            "pass":            "contraseña",
+            "search":          "buscar",
+            "email":           "correo.del.usuario{'@'}.dominio.que"
         }
     },
     "table-headers": {
@@ -117,7 +157,11 @@
         "lastname": "Apellido",
         "contact":  "Contacto",
         "role":     "Rol",
-        "active":   "está activo?"
+        "active":   "activo?",
+        "accredited": "Acreditado",
+        "emitter":    "Emisor",
+        "date":       "Fecha",
+        "certification": "Certificación"
     },
     "entities":     {
         "default": "entidades",
@@ -128,6 +172,10 @@
         "users": {
             "name": "Usuarios",
             "section-name": "@:entities.users.name"
+        },
+        "certificates": {
+            "name": "Certificados",
+            "section-name": "@:entities.certificates.name"
         }
     }
 }

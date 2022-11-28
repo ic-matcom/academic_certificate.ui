@@ -1,6 +1,5 @@
 import axios from './api'
 import config from './config'
-import qs from 'query-string'
 
 import type { AxiosPromise } from 'axios'
 import type { IAuthFormData } from '../definitions/types-forms'

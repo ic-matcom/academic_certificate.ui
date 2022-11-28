@@ -15,7 +15,7 @@ export const useAuthStore = defineStore({
         authTk: '',
 
         // userList: [] as UserInfo[],
-        user: null as UserInfo | null
+        user: {id:0, username:'',firstname:'',lastname:'',email:'',rol:''}
     }),
 
     getters: {
@@ -48,7 +48,12 @@ export const useAuthStore = defineStore({
          * @param user The User Profile
          */
          setUserInfo( userInfo: UserInfo ) : void {
-            this.user = userInfo
+            this.user.email = userInfo.email
+            this.user.firstname = userInfo.firstname
+            this.user.username = userInfo.username
+            this.user.lastname = userInfo.lastname
+            this.user.id = userInfo.id
+            this.user.rol = userInfo.rol
         },
 
         // --- async calls actions ---
@@ -131,7 +136,7 @@ export const useAuthStore = defineStore({
 interface IAuthState {
     isLoggedIn: boolean
     authTk: string
-    user: UserInfo | null
+    user: UserInfo
 }
 
 //endregion =============================================================================

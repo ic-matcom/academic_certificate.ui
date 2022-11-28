@@ -3,6 +3,7 @@ import config from './config'
 
 import type { AxiosPromise } from 'axios'
 import type { IUserFormData } from '@/services/definitions/types-forms'
+import type { IDataTableQuery } from '../definitions/types-common'
 
 
 const version = config.site.current_version
@@ -11,10 +12,18 @@ const url = `api/v${ version }/users`
 export class ApiUsers {
 
     /**
-     * Invoke an api call to get the list of users
+     * Request datatable page data according to the given query parameters
+     * @param queryParams Parameterized request for the entities. Contains query params such as pagination details and filter options for searching.
      */
-     public static reqGetUsers( ): AxiosPromise<void> {
-        return axios.get(url)
+     public static reqUsersPage( queryParams: IDataTableQuery ): AxiosPromise<void> {
+
+        const payload = {
+            limit : queryParams.Limit,
+            page  : queryParams.Offset,
+            sort  : `${queryParams.Orderer} ${queryParams.OrderDir}`
+        }
+
+        return axios.get(url, { params: payload })
     }
 
     /**
@@ -29,7 +38,7 @@ export class ApiUsers {
      * Invoke an api call to get a user by id
      * @param id user identifier
      */
-     public static reqGetUserById( id: string ): AxiosPromise<void> {
+     public static reqGetUserById( id: number ): AxiosPromise<void> {
         return axios.get(`${ url }/${id}`)
     }
 
@@ -38,7 +47,7 @@ export class ApiUsers {
      * * @param id user identifier
      * @param formData new user information
      */
-     public static reqUpdateUser(id: string, formData: IUserFormData ): AxiosPromise<void> {
+     public static reqUpdateUser(id: number, formData: IUserFormData ): AxiosPromise<void> {
         return axios.put(`${ url }/${id}`,JSON.stringify(formData))
     }
 
@@ -46,8 +55,23 @@ export class ApiUsers {
      * Invoke an api call to delete a user
      * @param id user identifier
      */
-     public static reqDeleteUser( id: string ): AxiosPromise<void> {
+     public static reqDeleteUser( id: number ): AxiosPromise<void> {
         return axios.delete(`${ url }/${id}`)
+    }
+
+    /**
+     * Invoke an api call to get the system's roles
+     */
+     public static reqGetRoles( ): AxiosPromise<void> {
+        return axios.get(`${ url }/roles`)
+    }
+
+    /**
+     * Invoke an api call to remove user permissions
+     * * @param id user identifier
+     */
+     public static reqInvalidateUser(id: number ): AxiosPromise<void> {
+        return axios.put(`${ url }/invalidate_user/${id}`)
     }
 
 }

@@ -7,7 +7,8 @@ export const PAGE_SIZE = 10
 export const queryBase: IDataTableQuery = {
     Offset:  0,
     Limit:   PAGE_SIZE,
-    Orderer: 'id'
+    Orderer: 'id',
+    OrderDir: 'ASC'
 }
 
 export const HCatalogsTable: Partial<IColumnHeader>[] = [
@@ -28,7 +29,7 @@ export const HUsersTable: Partial<IColumnHeader>[] = [
     },
 
     {
-        title:  'email',
+        title:  'id',
         hidden: true
     },
 
@@ -48,6 +49,49 @@ export const HUsersTable: Partial<IColumnHeader>[] = [
         title:    'lastname',
         sorting:  '',
         navKey:   'lastname'
+    },
+
+    {
+        title:   '',            // actions buttons
+        toRight: true,
+        width:   40
+    }
+]
+
+export const HCertificatesTable: Partial<IColumnHeader>[] = [
+    {
+        title: '',
+        chk:   true,
+        width: 2
+    },
+
+    {
+        title:  'id',
+        hidden: true
+    },
+
+    {
+        title:    'accredited',
+        sorting:  '',
+        navKey:   'accredited'
+    },
+
+    {
+        title:   'certification',
+        sorting: '',
+        navKey:  'certification'
+    },
+
+    {
+        title:    'emitter',
+        sorting:  '',
+        navKey:   'emitter'
+    },
+
+    {
+        title:    'date',
+        sorting:  '',
+        navKey:   'date'
     },
 
     {

@@ -39,7 +39,7 @@
         color: $link-disabled;
 
         &.btn-week-day-active {
-            color: $primary;
+            color: $success;
         }
     }
 
@@ -148,7 +148,7 @@
 }
 
 .btn-success {
-    @include btn-styles($success, $success-states);
+    @include btn-styles($success, $vue-states);
 
 }
 

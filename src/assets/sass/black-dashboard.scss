@@ -67,7 +67,7 @@
 @import "src/assets/sass/black-dashboard/custom/vue-sidebar-menu";
 
 // Vendor / Plugins
-@import "src/assets/sass/black-dashboard/custom/vendor/multiselect";                    // TODO We had to use the new version of vueform/multiselect (its JS stop working with the new version of vue) so the css we had in the code doesn't work anymore. So we copied the content of the original css file from the new version of multiselect
+@import "src/assets/sass/black-dashboard/custom/vendor/multiselect";                    // TODO We had to use the new version of vueform/multiselect (its JS stop working with the new version of vue) so the css we had in the code doesn't work anymore. So we copied the content of the original css file from the new version of multiselect and is pending to adjust this new CSS code the UI style
 @import "src/assets/sass/black-dashboard/custom/vendor/plugin-perfect-scrollbar";
 @import "src/assets/sass/black-dashboard/custom/vendor/plugin-animate-bootstrap-notify";
 @import "src/assets/sass/black-dashboard/custom/vendor/slider-bars";

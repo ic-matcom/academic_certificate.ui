@@ -25,7 +25,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue'
-import CmpBaseButton from '@/components/buttons/CmpBaseButton.vue'
+import { CmpBaseButton } from '@/components'
+
 import type { IScrollInfo } from '@/services/definitions/types-common'
 
 

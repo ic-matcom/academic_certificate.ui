@@ -8,28 +8,30 @@
         <form>
             <div class="form-group">
                 <CmpBasicInput
+                        :key="componentKey"
                         id="user"
                         name="username"
                         type="text"
-                        :placeholder="$t('forms.placeholders.user')"
+                        :placeholder="$t('form.placeholders.user')"
                 />
             </div>
             <div class="form-group has-label">
                 <CmpBasicInput
+                        :key="componentKey"
                         id="password"
                         name="password"
                         type="password"
-                        :placeholder="$t('forms.placeholders.pass')"
+                        :placeholder="$t('form.placeholders.pass')"
                         v-on:keydown.enter="hLoginIntent"
                 />
             </div>
         </form>
 
         <template v-slot:footer>
-            <CmpBaseButton block button-type="primary" @doClick.prevent="hLoginIntent">
+            <CmpBaseButton block button-type="success" @doClick.prevent="hLoginIntent">
                 {{ cap($t("btn.val-login")) }}
             </CmpBaseButton>
-            <CmpBaseButton block button-type="primary" @doClick.prevent="hAnonymousLoginIntent">
+            <CmpBaseButton block button-type="success" @doClick.prevent="hAnonymousLoginIntent">
                 {{ cap($t("btn.val-guest-login")) }}
             </CmpBaseButton>
         </template>
@@ -37,12 +39,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { CmpBaseButton, CmpBasicInput, CmpCard } from '@/components'
-import { VSCHEMA } from '@/views/auth/validation'
+import { VSchemaAuth } from '@/services/definitions'
 import { RoutePathNames } from '@/services/definitions/route-paths'
 import { useAuthStore } from '@/stores/auth'
 
@@ -68,7 +70,9 @@ export default defineComponent({
 
         const { tfyAuthFail } = useToastify(toast)
         const { cap } = useCommon()
-        const { handleSubmit } = useForm<IAuthFormData>({ validationSchema: VSCHEMA })
+        const { handleSubmit } = useForm<IAuthFormData>({ validationSchema: VSchemaAuth })
+
+        const componentKey = ref(0);
 
         //endregion =============================================================================
 
@@ -77,10 +81,20 @@ export default defineComponent({
         const aReqAccess = ( data: IAuthFormData ) => {
             authStore.reqLogin(data)
             .then(() => { goToDashboard() })
-            .catch(error => { tfyAuthFail(error) })
+            .catch(error => { 
+                forceRerender()
+                tfyAuthFail(error) })
         }
 
         //endregion =============================================================================
+
+        //region ======= HELPERS ==============================================================
+
+        const forceRerender = () => {
+            componentKey.value += 1;
+        };
+
+        //endregion ===========================================================================
 
         //region ======== NAVIGATION ============================================================
 
@@ -105,7 +119,8 @@ export default defineComponent({
         return {
             hLoginIntent,
             hAnonymousLoginIntent,
-            cap
+            cap,
+            componentKey
         }
     }
 })
