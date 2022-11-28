@@ -46,7 +46,7 @@
                                    type="text"
                                    class="form-control"
                                    id="inlineFormInputGroup"
-                                   :placeholder="$t('forms.placeholders.search').toUpperCase()"
+                                   :placeholder="$t('form.placeholders.search').toUpperCase()"
                             />
                         </template>
                     </CmpModal>
@@ -128,9 +128,9 @@
 </template>
 
 <script lang="ts">
+import { useAuthStore } from '@/stores/auth'
 import { defineComponent } from 'vue'
 import { mapActions } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
 import { CmpModal, CmpDropdown } from '../components'
 import { RoutePaths } from '@/services/definitions'
 import useCommon from '@/services/composables/useCommon'
@@ -166,10 +166,8 @@ export default defineComponent({
     computed: {
         routeName(): string {
             const { name } = this.$route
-            const { cname } = this.$route.params // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
-
-            if (cname !== undefined && typeof cname === 'string') return this.$t('routes.' + cname)
-            else return this.$t('routes.' + String(name))
+            
+            return this.$t('routes.' + String(name))
         }
     },
     methods: {

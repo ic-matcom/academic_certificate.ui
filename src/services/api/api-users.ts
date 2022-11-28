@@ -59,6 +59,21 @@ export class ApiUsers {
         return axios.delete(`${ url }/${id}`)
     }
 
+    /**
+     * Invoke an api call to get the system's roles
+     */
+     public static reqGetRoles( ): AxiosPromise<void> {
+        return axios.get(`${ url }/roles`)
+    }
+
+    /**
+     * Invoke an api call to remove user permissions
+     * * @param id user identifier
+     */
+     public static reqInvalidateUser(id: number ): AxiosPromise<void> {
+        return axios.put(`${ url }/invalidate_user/${id}`)
+    }
+
 }
 
     

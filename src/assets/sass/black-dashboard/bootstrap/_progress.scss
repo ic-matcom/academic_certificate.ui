@@ -20,7 +20,7 @@
     color: $progress-bar-color;
     text-align: center;
     white-space: nowrap;
-    background-color: $primary;
+    background-color: $success;
     @include transition($progress-bar-transition);
 }
 

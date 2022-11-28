@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import { RoutePathNames, RoutePaths } from '@/services/definitions/route-paths';
+import type { TFormMode } from '@/services/definitions/types-common';
 
 export default {
     name: 'CmpSideBarMenu',
@@ -30,22 +31,39 @@ export default {
                 },
                 {
                     href: {},
+                    title: this.$t( 'nav.sidebar-certificates' ).toUpperCase(),
+                    icon: 'fa fa-id-card',
+                    child: [
+                        {
+                            href: { path: RoutePaths.certificatesList },
+                            title: this.$t( 'nav.sidebar-query-certificates'),
+                            icon: 'tim-icons icon-credit-card',
+                        },
+                        {
+                            href: { path: RoutePaths.certificatesCreate },
+                            title: this.$t('nav.sidebar-create-certificates'),
+                            icon: 'tim-icons icon-paper',
+                        },
+                        {
+                            href: { path: RoutePaths.certificatesForm },
+                            title: this.$t('nav.sidebar-validate-certificates'),
+                            icon: 'tim-icons icon-bank',
+                        }
+                    ]
+                },
+                {
+                    href: {},
                     title: this.$t( 'nav.sidebar-people' ).toUpperCase(),
                     icon: 'fa fa-users',
                     child: [
                         {
                             href: { path: RoutePaths.usersList },
-                            title: RoutePathNames.users,
+                            title: this.$t('entities.users.name'),
                             icon: 'tim-icons icon-single-02',
                         },
                         {
-                            href: { path: RoutePaths.clientsList },
-                            title: RoutePathNames.clients,
-                            icon: 'fa fa-heartbeat',
-                        },
-                        {
                             href: { path: RoutePaths.authList },
-                            title: RoutePathNames.auth,
+                            title: this.$t('nav.sidebar-authorization'),
                             icon: 'tim-icons icon-badge',
                         }
                     ]

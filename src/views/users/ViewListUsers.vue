@@ -41,7 +41,7 @@ import { CmpCard, CmpDataTable } from '@/components'
 import useDialogfy from '@/services/composables/useDialogfy'
 import useToastify from '@/services/composables/useToastify'
 
-import type { FormMode, IDataTableQuery, IBulkData } from '@/services/definitions'
+import type { TFormMode, IDataTableQuery, IBulkData } from '@/services/definitions'
 
 
 export default defineComponent({
@@ -76,6 +76,10 @@ export default defineComponent({
          * invoke data population method through web API request.
          */
         onMounted(() => {
+            // getting roles definitions from the system (side effect)
+            // this is used to fetch users roles data from the system 
+            usersStore.reqUsersRoles().catch(err => tfyBasicFail(err, 'Roles', 'request'))
+
             // populate users datatable
             usersStore.reqUsersPages(queryBase).catch(err => tfyBasicFail(err, 'Users', 'request'))
         })
@@ -86,7 +90,7 @@ export default defineComponent({
         // ❗ this functions here for fetching data could be async await functions easily, if is needed
 
         function a_reqQuery( queryData: IDataTableQuery ) {
-            usersStore.reqUsersPages(queryData).catch(err => tfyBasicFail(err, 'usuarios', 'request'))
+            usersStore.reqUsersPages(queryData).catch(err => tfyBasicFail(err, 'Users', 'request'))
         }
 
         function a_reqDelete( id: number ) {
@@ -122,7 +126,7 @@ export default defineComponent({
             router.push({
                 name  : RoutePathNames.usersForm,
                 params: {
-                    fmode: 'create' as FormMode,
+                    fmode: 'create' as TFormMode,
                     id   : '',
                     cname: RoutePathNames.usersCreate                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
                 }
@@ -133,7 +137,7 @@ export default defineComponent({
             router.push({
                 name  : RoutePathNames.usersForm,
                 params: {
-                    fmode: 'edit' as FormMode,
+                    fmode: 'edit' as TFormMode,
                     id   : objectId.id,
                     cname: RoutePathNames.usersForm                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
                 }
@@ -146,7 +150,7 @@ export default defineComponent({
             router.push({
                 name  : RoutePathNames.usersForm,
                 params: {
-                    fmode: 'details' as FormMode,
+                    fmode: 'details' as TFormMode,
                     id   : objectId,
                     cname: RoutePathNames.usersDetails                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
                 }

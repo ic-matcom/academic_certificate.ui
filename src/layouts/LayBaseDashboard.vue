@@ -33,10 +33,10 @@ import { CmpSideBarMenu, CmpButtonBackTop } from '@/components'
 export default defineComponent({
     name: 'LayBaseDashboard',
     components: {
+        LayBaseTopNav,
+        LayFooterContent,
         CmpSideBarMenu,
         CmpButtonBackTop,
-        LayBaseTopNav,
-        LayFooterContent
     },
     mounted(this:any): void {
         new PerfectScrollbar('#topper-border-cont')

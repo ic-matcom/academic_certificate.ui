@@ -15,7 +15,7 @@ function getConfig (): IConfig {
     return {
         site: {
             api: 'http://localhost:7001/',
-            name: 'Dapp',
+            name: 'academic_certificate.dapp-go',
             current_version: 1,
         },
         auth: {

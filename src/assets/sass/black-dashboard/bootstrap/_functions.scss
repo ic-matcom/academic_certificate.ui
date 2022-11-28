@@ -70,7 +70,7 @@
     @return map-get($colors, $key);
 }
 
-@function theme-color($key: "primary") {
+@function theme-color($key: "success") {
     @return map-get($theme-colors, $key);
 }
 
@@ -79,7 +79,7 @@
 }
 
 // Request a theme color level
-@function theme-color-level($color-name: "primary", $level: 0) {
+@function theme-color-level($color-name: "success", $level: 0) {
     $color: theme-color($color-name);
     $color-base: if($level > 0, $black, $white);
     $level: abs($level);

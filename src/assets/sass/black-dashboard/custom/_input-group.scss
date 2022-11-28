@@ -1,5 +1,5 @@
 .input-hover:hover {
-    border-color: $primary;
+    border-color: $success;
 }
 
 .form-group .error {
@@ -18,10 +18,10 @@
 
 // Customize date time picker
 .dp__theme_dark {
-    --dp-primary-color: #{$primary} !important;
+    --dp-success-color: #{$success} !important;
     --dp-background-color: #{$card-black-background} !important;
     --dp-border-color: #{$default-states} !important;
-    --dp-border-color-hover: #{$primary} !important;
+    --dp-border-color-hover: #{$success} !important;
     --dp-text-color: #{$medium-gray} !important;
 }
 
@@ -149,9 +149,9 @@
     .input-group-prepend .input-group-text,
     .input-group-append .input-group-text {
         background-color: $white;
-        border-color: $primary;
+        border-color: $success;
         background-color: $transparent-bg;
-        border-color: $primary;
+        border-color: $success;
     }
 
     &.no-border {

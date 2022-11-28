@@ -24074,7 +24074,7 @@ table.tablesorter thead tr .headerSortDown {
 .main-panel[data="red"] {
     border-top: 2px solid #fd5d93;
 }
-.main-panel[data="primary"] {
+.main-panel[data="success"] {
     border-top: 2px solid #e14eca;
 }
 .main-panel[data="vue"] {
@@ -28624,7 +28624,7 @@ body.swal2-iosfix {
 .card-wizard[data-color="primary"] .nav-pills .nav-item .nav-link.active:focus,
 .card-wizard[data-color="primary"] .nav-pills .nav-item .nav-link.active:hover,
 .card-wizard[data-color="primary"] .nav-pills .nav-item .nav-link.checked:focus,
-.card-wizard[data-color="primary"] .nav-pills .nav-item .nav-link.checked:hover {
+.card-wizard[data-color="success"] .nav-pills .nav-item .nav-link.checked:hover {
     background: #e14eca;
 }
 .card-wizard[data-color="green"] .progress-with-circle .progress-bar {

@@ -75,7 +75,7 @@
       color: $black;
       border-color: rgba($black-states,0.5);
       &:focus{
-        border-color: $primary;
+        border-color: $success;
       }
     }
 
@@ -123,7 +123,7 @@
       .input-group-prepend .input-group-text,
       .input-group-append .input-group-text,
       .form-control{
-        border-color: $primary;
+        border-color: $success;
       }
 
       &.no-border{

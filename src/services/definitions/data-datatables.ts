@@ -58,6 +58,49 @@ export const HUsersTable: Partial<IColumnHeader>[] = [
     }
 ]
 
+export const HCertificatesTable: Partial<IColumnHeader>[] = [
+    {
+        title: '',
+        chk:   true,
+        width: 2
+    },
+
+    {
+        title:  'id',
+        hidden: true
+    },
+
+    {
+        title:    'accredited',
+        sorting:  '',
+        navKey:   'accredited'
+    },
+
+    {
+        title:   'certification',
+        sorting: '',
+        navKey:  'certification'
+    },
+
+    {
+        title:    'emitter',
+        sorting:  '',
+        navKey:   'emitter'
+    },
+
+    {
+        title:    'date',
+        sorting:  '',
+        navKey:   'date'
+    },
+
+    {
+        title:   '',            // actions buttons
+        toRight: true,
+        width:   40
+    }
+]
+
 export const HStaffTable: Partial<IColumnHeader>[] = [
     {
         title: '',

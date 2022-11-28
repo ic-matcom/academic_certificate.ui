@@ -18,7 +18,7 @@
     <template v-if="hasPageSizeSelector || hasSearch">
         <div class="table-action-bars col-12 d-flex justify-content-center justify-content-sm-between flex-wrap">
             <!-- TABLE PAGE SIZE -->
-            <div class="select-primary mb-3 m-1 pagination-select row" v-if="hasPageSizeSelector">
+            <div class="select-success mb-3 m-1 pagination-select row" v-if="hasPageSizeSelector">
                 <multiselect
                         v-model="pageSizeOptions.value"
                         id="table-page-size"
@@ -39,7 +39,7 @@
                         <button
                                 @click.prevent="h_clearAllFilters()"
                                 type="button"
-                                :title="$t('forms.placeholders.reset-filters')"
+                                :title="$t('form.placeholders.reset-filters')"
                                 class="btn remove btn-icon btn-sm"
                         >
                             <i class="tim-icons icon-refresh-01"></i>
@@ -67,7 +67,7 @@
                     <input v-model="search"
                            class="form-control"
                            type="text"
-                           :placeholder="cap($t('forms.placeholders.search'))"
+                           :placeholder="cap($t('form.placeholders.search'))"
                            aria-describedby="addon-right addon-left"
                            @blur="h_onSrchBlursEvt($event)"
                            @focus="h_onSrchFocusEvt($event)"

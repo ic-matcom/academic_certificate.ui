@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts">
-
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { defineComponent, onMounted } from 'vue'
@@ -40,7 +39,7 @@ import { CmpCard, CmpDataTable } from '@/components'
 import useDialogfy from '@/services/composables/useDialogfy'
 import useToastify from '@/services/composables/useToastify'
 
-import type { FormMode, IDataTableQuery, IBulkData } from '@/services/definitions'
+import type { TFormMode, IDataTableQuery, IBulkData, TOPSKind } from '@/services/definitions'
 
 
 export default defineComponent({
@@ -89,15 +88,19 @@ export default defineComponent({
         }
 
         function a_reqDelete( ids: Array<number> ) {
-            staffStore.reqStaffDeletion({ ids }).then(() => {
 
-                tfyBasicSuccess('Staff', 'deletion')
+            // some aux vars
+            const sub = 'Staff'
+            const op: TOPSKind = 'deletion'
+
+            staffStore.reqStaffDeletion({ ids }).then(() => {
+                tfyBasicSuccess(sub, op)
 
                 // If a user delete al the records from a page of the table, then the table becomes empty, so in this case we need to make a request for the remains data (in the server, ... if any) and repopulate the table / page
                 if (staffStore.pageSize == 0 && staffStore.totalRecords > 0)
                     staffStore.reqStaffPages(queryBase).catch(err => tfyBasicFail(err, 'Staff', 'request'))
 
-            }).catch(err => tfyBasicFail(err, 'Staff', 'deletion'))
+            }).catch(err => tfyBasicFail(err, sub, op))
         }
 
         function a_bulkSwitchState( ids: Array<number> ) {
@@ -122,11 +125,10 @@ export default defineComponent({
 
         function h_navCreateStaff() {
             router.push({
-                name  : RoutePathNames.staffForm,
+                name  : RoutePathNames.staffCreate,
                 params: {
-                    fmode: 'create' as FormMode,
-                    id   : '',
-                    cname: RoutePathNames.staffCreate                                  // Translation Name of the Route, this is used when we need to specify a name programmatically, cname = custom name
+                    fmode: 'create' as TFormMode,
+                    // id   : '', no need for passing ID on creation mode
                 }
             })
         }

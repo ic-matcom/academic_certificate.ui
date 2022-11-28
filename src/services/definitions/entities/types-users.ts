@@ -9,7 +9,8 @@ export interface IUsersRow {
     email:     string,
     username:  string,
     firstname: string,
-    lastname:  string
+    lastname:  string,
+    rol:       string
 }
 
 export type UserInfo = {
@@ -17,5 +18,13 @@ export type UserInfo = {
     username:  string,
     firstname: string,
     lastname:  string,
-    email:     string
+    email:     string,
+    rol:       string
+}
+
+export interface IRol {
+    id:          number,
+    label:       string,
+    name:        string,
+    description: string
 }

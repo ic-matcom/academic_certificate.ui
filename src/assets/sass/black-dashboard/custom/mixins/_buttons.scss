@@ -55,7 +55,7 @@
 
   // btn-neutral style
   @if $btn-color == $white {
-    color: $primary;
+    color: $success;
 
     &.btn-danger {
       color: $danger;
@@ -122,13 +122,13 @@
     .show > &.dropdown-toggle:focus,
     .show > &.dropdown-toggle:hover {
       background-color: $white;
-      color: $primary-states;
+      color: $vue-states;
       box-shadow: none;
     }
 
     &:hover,
     &:focus {
-      color: $primary-states;
+      color: $vue-states;
 
       &:not(.nav-link) {
         box-shadow: none;

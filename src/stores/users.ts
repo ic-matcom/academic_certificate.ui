@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { ApiUsers } from '@/services/api/api-users'
 
-import type { IDataTableQuery, IUsersRow, IBasicPageState, IdsArray } from '@/services/definitions'
+import type { IDataTableQuery, IUsersRow, IBasicPageState, IdsArray, IMultiselectBasic } from '@/services/definitions'
 import type { IUserFormData } from '@/services/definitions/types-forms'
 import type { IUserResponseData } from '@/services/definitions/types-api'
+import type { IRol } from '@/services/definitions/entities/types-users'
+import { mapRolesNom2Multiselect } from '@/services/helpers/help-forms'
 
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
@@ -16,7 +18,8 @@ export const useUsersStore = defineStore({
         pageSize:      0,
         totalRecords: 0,
         entityPage:   [] as IUsersRow[],
-        user: {id: 0, email:'',firstname:'',lastname:'',username:''} 
+        roles: [] as IRol[],
+        user: {id: 0, email:'',firstname:'',lastname:'',username:'', rol:''} 
     }),
 
     /**
@@ -26,6 +29,8 @@ export const useUsersStore = defineStore({
     getters: {
 
         getUsersList: ( state ) : Array<IUsersRow> => state.entityPage,
+        getRolesList: ( state ) : Array<IRol> => state.roles,
+        getRolesForMultiselect: ( state ): IMultiselectBasic[] => mapRolesNom2Multiselect(state.roles),
         getEntitiesCount: ( state ) : number => state.totalRecords
     },
 
@@ -131,6 +136,7 @@ export const useUsersStore = defineStore({
                     this.user.firstname = response.data.firstname
                     this.user.lastname = response.data.lastname
                     this.user.username =  response.data.username
+                    this.user.rol = response.data.rol
 
                     resolve()
                     
@@ -149,6 +155,35 @@ export const useUsersStore = defineStore({
 
                     // deleting (mutate / modify) the users from the local store
                     this.mutDeleteUser(payload)
+                    resolve()
+
+                }).catch(error => { reject(error) })
+            })
+        },
+
+        /**
+         * Tries to get the system's roles
+         */
+         async reqUsersRoles(): Promise<void> {
+
+            return await new Promise<void>((resolve, reject) => {
+                ApiUsers.reqGetRoles().then((response: any) => {
+                    this.roles = response.data.rows
+
+                    resolve()
+                    
+                }).catch(error => { reject(error) })
+            }) 
+        },
+
+        /**
+         * Tries to remove a user permissions
+         * @param payload User identifier
+         */
+        async reqUserInvalidate( payload: number ): Promise<void> {
+
+            return await new Promise<void>(( resolve, reject ) => {
+                ApiUsers.reqInvalidateUser(payload).then(( response: any ) => {
                     resolve()
 
                 }).catch(error => { reject(error) })
@@ -187,6 +222,7 @@ export const useUsersStore = defineStore({
 
 interface IUsersState extends IBasicPageState {
     entityPage: Array<IUsersRow>,
+    roles: Array<IRol>
     user: IUserResponseData
 }
 

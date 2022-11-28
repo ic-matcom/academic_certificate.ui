@@ -3,7 +3,7 @@ import { POSITION } from 'vue-toastification'
 import { useErrors } from '@/services/helpers/errors-helpers'
 
 import type { PluginOptions, ToastInterface } from 'vue-toastification'
-import type { OPSKind } from '@/services/definitions'
+import type { TOPSKind } from '@/services/definitions'
 
 
 const { t } = i18n.global
@@ -28,7 +28,7 @@ export default function useToastify( toast: ToastInterface ) {
      * @param ops Type / Kind of the operation
      * @param isPresentTense if tense is current time, then present tense will be used, otherwise gerund tense will be used.
      */
-    function _getOpsKind( ops: OPSKind, isPresentTense: boolean = false ): string {
+    function _getOpsKind( ops: TOPSKind, isPresentTense: boolean = false ): string {
         let opsKind = '[unknown]'
 
         if (ops === 'deletion') opsKind = isPresentTense ? t('crud-actions.deletion-gerund') : t('crud-actions.deletion-pas')
@@ -93,7 +93,7 @@ export default function useToastify( toast: ToastInterface ) {
      * @param ops Type of API operation for the feedback
      * @param name Object/Entity name was involved int in the api request/operations
      */
-    const tfyBasicSuccess = ( subject: string, ops: OPSKind, name: undefined | string = undefined ): void => {
+    const tfyBasicSuccess = ( subject: string, ops: TOPSKind, name: undefined | string = undefined ): void => {
 
         let kind = _getOpsKind(ops)
 
@@ -131,7 +131,7 @@ export default function useToastify( toast: ToastInterface ) {
      * @param ops Type of API operation for the feedback
      * @param name Object/Entity name was involved int in the api request/operations
      */
-    const tfyBasicFail = ( error: any, subject: string, ops: OPSKind, name: undefined | string = undefined ): void => {
+    const tfyBasicFail = ( error: any, subject: string, ops: TOPSKind, name: undefined | string = undefined ): void => {
 
         let kind = _getOpsKind(ops, true)
         let subjectName = name !== undefined && typeof name === 'string' ? name : ''

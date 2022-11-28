@@ -10,7 +10,7 @@
     outline         : none;
     border          : var(--ms-border-width, 1px) solid var(--ms-border-color, #D1D5DB);
     border-radius   : var(--ms-radius, 4px);
-    background      : var(--ms-bg, #FFFFFF);
+    background      : var(--ms-bg,#263148);
     font-size       : var(--ms-font-size, 1rem);
     min-height      : calc(2 * var(--ms-border-width, 1px) + var(--ms-font-size, 1rem) * var(--ms-line-height, 1.375) + 2 * var(--ms-py, 0.5rem));
 
@@ -290,7 +290,7 @@
     overflow-y                 : scroll;
     -webkit-overflow-scrolling : touch;
     z-index                    : 100;
-    background                 : var(--ms-dropdown-bg, #FFFFFF);
+    background                 : var(--ms-dropdown-bg, #263148);
     display                    : flex;
     flex-direction             : column;
     border-radius              : 0 0 var(--ms-dropdown-radius, 4px) var(--ms-dropdown-radius, 4px);

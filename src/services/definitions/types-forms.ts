@@ -3,11 +3,27 @@ export type IAuthFormData = {
     password: string
 }
 
+export type IQueryFormData = {
+    param: string
+}
+
 export type IUserFormData = {
     email:      string
     firstname:  string
     lastname:   string
     passphrase: string
     username:   string
+    rol:        string
+}
+
+export type ICertificateFormData = {
+    certification:              string,
+    gold_certificate:           boolean,
+    emitter:                    string,
+    accredited:                 string,
+    date:                       string,
+    created_by:                 string,
+    volume_folio_faculty:       string,
+    volume_folio_university:    string,
 }
 

@@ -10,7 +10,7 @@
                                         id="email"
                                         name="email"
                                         type="text"               
-                                        :placeholder="$t('forms.placeholders.email')"
+                                        :placeholder="$t('form.placeholders.email')"
                                 />
                             </div>
                             <div class="form-group">
@@ -18,7 +18,7 @@
                                         id="firstname"
                                         name="firstname"
                                         type="text"                                        
-                                        :placeholder="$t('forms.placeholders.firstname')"
+                                        :placeholder="$t('form.placeholders.user-firstname')"
                                 />
                             </div>
                             <div class="form-group">
@@ -26,7 +26,7 @@
                                         id="lastname"
                                         name="lastname"
                                         type="text"                                        
-                                        :placeholder="$t('forms.placeholders.lastname')"
+                                        :placeholder="$t('form.placeholders.user-lastname')"
                                 />
                             </div>
                             <div class="form-group has-label">
@@ -34,7 +34,7 @@
                                         id="passphrase"
                                         name="passphrase"
                                         type="password"                                        
-                                        :placeholder="$t('forms.placeholders.pass')"
+                                        :placeholder="$t('form.placeholders.pass')"
                                 />
                             </div>
                             <div class="form-group">
@@ -42,8 +42,28 @@
                                         id="username"
                                         name="username"
                                         type="text"
-                                        :placeholder="$t('forms.placeholders.user')"
+                                        :placeholder="$t('form.placeholders.user')"
                                 />
+                            </div>
+                            <!-- role -->
+                            <div class="form-group">
+                                    <CmpMultiselectField placeholder="- rol - "
+                                                         :options="usersStore.getRolesForMultiselect"
+                                                         name="rol"
+                                                         class="mb-2"
+                                                         mode="single"
+                                                         closeOnSelect>
+                                        <!--option coming from slot child component ('slots props') [option] -->
+                                        <template #customOption="{option}">
+                                            {{  option.label }}
+                                        </template>
+                                        <!-- option coming from slot child component ('slots props') [value] -->
+                                        <template #customSingleLabel="{value}">
+                                            <div class="multiselect-placeholder">
+                                                {{ value.label }}
+                                            </div>
+                                        </template>
+                                    </CmpMultiselectField>
                             </div>
                         </form>
                     </template>
@@ -57,7 +77,7 @@
                                         name="email"
                                         type="text"
                                         :value="user.email"
-                                        :placeholder="$t('forms.placeholders.email')"
+                                        :placeholder="$t('form.placeholders.email')"
                                 />
                             </div>
                             <div class="form-group">
@@ -67,7 +87,7 @@
                                         name="firstname"
                                         type="text"
                                         :value="user.firstname"
-                                        :placeholder="$t('forms.placeholders.firstname')"
+                                        :placeholder="$t('form.placeholders.user-firstname')"
                                 />
                             </div>
                             <div class="form-group">
@@ -77,7 +97,7 @@
                                         name="lastname"
                                         type="text"
                                         :value="user.lastname"
-                                        :placeholder="$t('forms.placeholders.lastname')"
+                                        :placeholder="$t('form.placeholders.user-lastname')"
                                 />
                             </div>
                             <div class="form-group has-label">
@@ -87,7 +107,7 @@
                                         name="passphrase"
                                         type="password"
                                         :value="user.passphrase"
-                                        :placeholder="$t('forms.placeholders.pass')"
+                                        :placeholder="$t('form.placeholders.pass')"
                                 />
                             </div>
                             <div class="form-group">
@@ -97,8 +117,28 @@
                                         name="username"
                                         type="text"
                                         :value="user.username"
-                                        :placeholder="$t('forms.placeholders.user')"
+                                        :placeholder="$t('form.placeholders.user')"
                                 />
+                            </div>
+                            <div class="form-group">
+                                    <CmpMultiselectField placeholder="- rol - "
+                                                         :options="usersStore.getRolesForMultiselect"
+                                                         name="rol"
+                                                         class="mb-2"
+                                                         :label="user.rol"
+                                                         mode="single"
+                                                         closeOnSelect>
+                                        <!--option coming from slot child component ('slots props') [option] -->
+                                        <template #customOption="{option}">
+                                            {{  option.label }}
+                                        </template>
+                                        <!-- option coming from slot child component ('slots props') [value] -->
+                                        <template #customSingleLabel="{value}">
+                                            <div class="multiselect-placeholder">
+                                                {{ value.label }}
+                                            </div>
+                                        </template>
+                                    </CmpMultiselectField>
                             </div>
                         </form>
                     </template>
@@ -108,7 +148,7 @@
                                 <div class="form-group">
                                     <CmpBasicInput
                                             :key="componentKey"
-                                            :label="$t('forms.placeholders.email')"
+                                            :label="$t('form.fields-common.email')"
                                             id="email"
                                             name="email"
                                             type="text"
@@ -118,7 +158,7 @@
                                 <div class="form-group">
                                     <CmpBasicInput
                                             :key="componentKey"
-                                            :label="$t('forms.placeholders.firstname')"
+                                            :label="$t('form.fields-common.firstname')"
                                             id="firstname"
                                             name="firstname"
                                             type="text"
@@ -128,7 +168,7 @@
                                 <div class="form-group">
                                     <CmpBasicInput
                                             :key="componentKey"
-                                            :label="$t('forms.placeholders.lastname')"
+                                            :label="$t('form.fields-common.lastname')"
                                             id="lastname"
                                             name="lastname"
                                             type="text"
@@ -138,25 +178,36 @@
                                 <div class="form-group">
                                     <CmpBasicInput
                                             :key="componentKey"
-                                            :label="$t('forms.placeholders.user')"
+                                            :label="$t('form.fields-common.username')"
                                             id="username"
                                             name="username"
                                             type="text"
                                             :value="user.username"
                                     />
                                 </div>
+                                <div class="form-group">
+                                    <CmpBasicInput
+                                            :key="componentKey"
+                                            label="Rol"
+                                            id="rol"
+                                            name="rol"
+                                            type="text"
+                                            :value="user.rol"
+                                    />
+                                </div>
                             </form>
                         </fieldset>                       
                     </template>
+                    <!-- FORM ACTION BUTTONS -->
                     <template v-slot:footer v-if="fmode === 'create'">
-                            <CmpBaseButton block button-type="primary" @doClick.prevent="hCreateIntent">
-                                {{ cap($t("btn.val-save")) }}
-                            </CmpBaseButton>
+                        <CmpFormActionsButton
+                                v-on:saveIntent="hCreateIntent"
+                        />
                     </template>
                     <template v-slot:footer v-else-if="fmode === 'edit'">
-                            <CmpBaseButton block button-type="primary" @doClick.prevent="hEditIntent">
-                                {{ cap($t("btn.tip-save")) }}
-                            </CmpBaseButton>
+                        <CmpFormActionsButton
+                                v-on:saveIntent="hEditIntent"
+                        />
                     </template>
                 </CmpCard>
             </div>
@@ -167,7 +218,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from "vue-router";
-import { CmpBaseButton, CmpBasicInput, CmpCard } from '@/components'
+import { CmpBasicInput, CmpCard, CmpBasicCheckbox, CmpMultiselectField, CmpFormActionsButton } from '@/components'
 import { RoutePathNames } from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
@@ -187,8 +238,10 @@ export default defineComponent({
 
     components: {
         CmpCard,
-        CmpBaseButton,
-        CmpBasicInput
+        CmpBasicInput,
+        CmpBasicCheckbox,
+        CmpMultiselectField,
+        CmpFormActionsButton
     },
 
     setup() {
@@ -222,6 +275,7 @@ export default defineComponent({
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         const aReqUserCreation = ( data: IUserFormData ) => {
+            console.log(data)
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
             .catch(error => { tfyBasicFail(error, 'users','addition') })
@@ -280,7 +334,8 @@ export default defineComponent({
             cap,
             fmode,
             user,
-            componentKey
+            componentKey,
+            usersStore
         }
     }
 })

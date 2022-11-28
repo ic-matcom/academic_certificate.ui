@@ -17,6 +17,7 @@
                                    <h4 class="title">{{user.username}}</h4>
                                    <divider/>
                                    <h3 class="title">{{user.firstname}} {{user.lastname}}</h3>
+                                   <h4 class="subtitle">{{user.rol}}</h4>
                                    <p class="description">{{user.email}}</p>
                                </div>
                     </template>                                                               

@@ -1,6 +1,6 @@
 .slider {
-  --slider-connect-bg: #{$primary};
-  --slider-handle-shadow: 0 0 10px 0 #{$primary-states};
+  --slider-connect-bg: #{$success};
+  --slider-handle-shadow: 0 0 10px 0 #{$vue-states};
   --slider-handle-bg: #{$success};
   --slider-tooltip-bg: var(--slider-connect-bg);
   --slider-height: 15px;

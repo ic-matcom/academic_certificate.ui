@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ApiStaff } from '@/services/api/api-staff'
 
 import type { IDataTableQuery, IStaffRow, IBasicPageState, IdsArray } from '@/services/definitions'
+import type { IStaffDto } from '@/services/definitions'
 
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
@@ -37,7 +38,7 @@ export const useStaffStore = defineStore({
          * @param payload Staff identifiers list to be deleted
          */
         mutDeleteStaffList( payload: IdsArray ): void {
-            this.entityPage = this.entityPage.filter(staffRow => !payload.ids.includes(staffRow.id))
+            this.entityPage = this.entityPage.filter(s => !payload.ids.includes(s.id))
             this.totalRecords -= payload.ids.length
             this.pageSize -= payload.ids.length
         },
@@ -45,7 +46,33 @@ export const useStaffStore = defineStore({
         // --- async calls actions ---
 
         /**
-         * Trys to log in in the backed the given user credential data as payload, with the help of a definid axios apis
+         * Tries to insert a new Staff
+         * @param payload Staff entity data to me inserted
+         */
+        async reqInsertStaff (payload: IStaffDto) : Promise<void> {
+
+            return await new Promise<void>((resolve, reject) => {
+                ApiStaff.insert(payload)
+                .then((response:any) => {
+
+                    // we are going request the page to the backend to keep the data sync after the new successfully insertion
+                    const queryData: IDataTableQuery = {
+                        Offset : this.pageNumber,
+                        Limit  : this.pageSize,
+                        Orderer: 'id'
+                    }
+
+                    // TODO check if wee need to do this
+                    this.reqStaffPages(queryData)               // making the request
+
+                    resolve(response.data)
+
+                }).catch(error => {reject(error)})
+            })
+        },
+
+        /**
+         * Tries to log in in the backed the given user credential data as payload, with the help of a definid axios apis
          * to make the actual request
          *
          * @param payload user credential data for logged in
@@ -53,7 +80,7 @@ export const useStaffStore = defineStore({
         async reqStaffPages (payload: IDataTableQuery) : Promise<void> {
 
              return await new Promise<void>((resolve, reject) => {
-                ApiStaff.reqStaffPage(payload)
+                ApiStaff.getPage(payload)
                 .then((response:any) => {
 
                     this.entityPage = response.data.entityList
@@ -85,7 +112,7 @@ export const useStaffStore = defineStore({
         async reqStaffDeletion( payload: IdsArray ): Promise<void> {
 
             return await new Promise<void>(( resolve, reject ) => {
-                ApiStaff.reqDelete(payload.ids).then(( response: any ) => {
+                ApiStaff.delete(payload.ids).then(( response: any ) => {
 
                     // deleting (mutate / modify) the staff from the local store
                     this.mutDeleteStaffList(payload)
@@ -102,7 +129,6 @@ export const useStaffStore = defineStore({
         async reqToggleStatus( payload: IdsArray ): Promise<void> {
 
             return await new Promise<void>(( resolve, reject ) => {
-
                 ApiStaff.bulkToggle(payload.ids).then((response: any ) => {
 
                     // toggling (mutate / modify) the status of the corresponding staff from the local store
@@ -130,5 +156,4 @@ interface IStaffState extends IBasicPageState {
 }
 
 //endregion =============================================================================
-
 
