@@ -124,7 +124,7 @@ export default defineComponent({
 
         function h_navCreateUsers() {
             router.push({
-                name  : RoutePathNames.usersForm,
+                name  : RoutePathNames.usersCreate,
                 params: {
                     fmode: 'create' as TFormMode,
                     id   : '',
@@ -145,10 +145,8 @@ export default defineComponent({
         }
 
         async function h_navUserDetails( objectId: any ) {
-            console.log("details")
-            console.log(objectId)
             router.push({
-                name  : RoutePathNames.usersForm,
+                name  : RoutePathNames.usersDetails,
                 params: {
                     fmode: 'details' as TFormMode,
                     id   : objectId,

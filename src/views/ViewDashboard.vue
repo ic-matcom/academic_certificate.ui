@@ -104,7 +104,6 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
         {
             rol = 'sa'
         }
-        console.log(rol)
 
         //#endregion ==========================================================================
 

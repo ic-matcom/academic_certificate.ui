@@ -37,7 +37,8 @@ export default function useFactory() {
             rector_validating:          '',
             volume_folio_faculty:       '',
             volume_folio_university:    '',
-            certificate_status:         0
+            certificate_status:         0,
+            invalid_reason:             ''
         }
     }
 

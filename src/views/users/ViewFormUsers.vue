@@ -275,7 +275,6 @@ export default defineComponent({
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         const aReqUserCreation = ( data: IUserFormData ) => {
-            console.log(data)
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
             .catch(error => { tfyBasicFail(error, 'users','addition') })

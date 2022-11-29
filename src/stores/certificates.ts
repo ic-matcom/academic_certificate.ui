@@ -15,7 +15,7 @@ export const useCertificatesStore = defineStore({
         entityPage:   [] as ICertificatesRow[],
         certificate: {
             docType:"", 
-            ID:"", 
+            id:"", 
             certification:"",
             gold_certificate:false,
             emitter:"",
@@ -27,7 +27,8 @@ export const useCertificatesStore = defineStore({
             created_by:"",
             volume_folio_faculty:"",
             volume_folio_university:"",
-            certificate_status:""
+            certificate_status:0,
+            invalid_reason:""
         }
     }),
 
@@ -93,7 +94,11 @@ export const useCertificatesStore = defineStore({
              return await new Promise<void>((resolve, reject) => {
                 ApiCertificates.getCertificatesPageById(payload)
                 .then((response:any) => {
-                    this.entityPage = transformCertificateResponse([response.data.responsePayload])              
+                    this.entityPage = transformCertificateResponse([response.data.responsePayload])
+                    this.certificate = {
+                        ...this.entityPage[0],
+                        invalid_reason: response.data.responsePayload.invalid_reason
+                    }           
                     this.totalRecords = 1
                     this.pageSize = 1
                     this.pageNumber = 1
@@ -198,7 +203,7 @@ export const useCertificatesStore = defineStore({
        },
 
        /**
-         * Tries to validate a certificate using a defined axios apis
+         * Tries to invalidate a certificate using a defined axios apis
          * to make the actual request
          *
          * @param id certificate identifier to be validated
@@ -224,10 +229,9 @@ export const useCertificatesStore = defineStore({
          *
          * @param payload new user data 
          */
-        async reqModifyCertificate (payload: ICertificateDto) : Promise<void> {
-
+        async reqModifyCertificate (data:any) : Promise<void> {
             return await new Promise<void>((resolve, reject) => {
-               ApiCertificates.modifyCertificate(payload)
+               ApiCertificates.modifyCertificate(data)
                .then((response:any) => {
 
                    const at = response.data
@@ -261,7 +265,7 @@ export const useCertificatesStore = defineStore({
 
 interface ICertificatesState extends IBasicPageState {
     entityPage: Array<ICertificatesRow>,
-    certificate: ICertificateResponseData
+    certificate: ICertificateDto
 }
 
 //endregion =============================================================================

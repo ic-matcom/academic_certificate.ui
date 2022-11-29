@@ -27,8 +27,8 @@ export const CertificatesRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: RoutePaths.certificatesForm,
-        name: RoutePathNames.certificatesValidate,
+        name: RoutePathNames.certificatesModify,
         component: () => import('../views/certificates/ViewFormCertificates.vue'),
-        meta: { layout: LayBaseDashboard, reqAuth: true, }
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.certadmin] }
     },
 ]
