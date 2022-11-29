@@ -3,103 +3,8 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard :hasFormBackBtn="true" v-on:doClick="h_Back">
-                    <template v-if="fmode === 'create'">
-                        <form>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.certification') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            id="certification"
-                                            name="certification"
-                                            type="text"                                        
-                                            :placeholder="$t('form.placeholders.certification')"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.emitter') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            id="emitter"
-                                            name="emitter"
-                                            type="text"
-                                            :placeholder="$t('form.placeholders.emitter')"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.accredited') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            id="accredited"
-                                            name="accredited"
-                                            type="text"
-                                            :placeholder="$t('form.placeholders.accredited')"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.created_by') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            id="created_by"
-                                            name="created_by"
-                                            type="text"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.volume_folio') }}
-                                    </label>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        id="volume_folio_faculty"
-                                        name="volume_folio_faculty"
-                                        type="text"
-                                        :placeholder="$t('form.placeholders.volume_folio_faculty')"
-                                        />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        id="volume_folio_university"
-                                        name="volume_folio_university"
-                                        type="text"
-                                        :placeholder="$t('form.placeholders.volume_folio_university')"
-                                        />
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.date') }}
-                                    </label>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        id="date"
-                                        name="date"
-                                        type="text"
-                                        :placeholder="$t('form.placeholders.date')"
-                                    />
-                                    </div>
-                        
-                                    <div class="col-md-3">
-                                        <CmpBasicCheckbox name="gold_certificate"
-                                                      :checked="true"
-                                                      :labels="[$t('form.fields-common.gold_certificate'), $t('btn.val-no')]"
-                                         />
-                                     </div>                          
-                            </div>
-                        </form>
-                    </template>
-                    <template v-else-if="fmode === 'edit'">
+                    <template v-if="fmode === 'validate'">
+                        <fieldset disabled>
                         <form>
                             <div class="row">
                                     <label class="text-sm-left text-md-right col-md-3 col-form-label">
@@ -291,8 +196,24 @@
                                     </div>
                             </div>
                         </form>
+                    </fieldset>
+                    <form>
+                        <div class="row">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                        {{ $t('form.fields-common.sign') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        <CmpBasicInput
+                                            :key="componentKey"
+                                            id="param"
+                                            name="param"
+                                            type="text"
+                                        />
+                                    </div>                                    
+                            </div>
+                    </form>
                     </template>
-                    <template v-else-if="fmode === 'details'"> 
+                    <template v-else-if="fmode === 'invalidate'"> 
                         <fieldset disabled>
                             <form>
                             <div class="row">
@@ -398,20 +319,6 @@
                             </div>
                             <div class="row">
                                     <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.invalid_reason') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="invalid_reason"
-                                            name="invalid_reason"
-                                            type="text"                                        
-                                            :value="certificate.invalid_reason"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.secretary_validating') }}
                                     </label>
                                     <div class="col-md-6">
@@ -485,17 +392,32 @@
                                     </div>
                             </div>
                         </form>
-                        </fieldset>                   
+                        </fieldset>
+                        <form>
+                            <div class="row">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                        {{ $t('form.fields-common.invalid_reason') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        <CmpBasicInput
+                                            :key="componentKey"
+                                            id="param"
+                                            name="param"
+                                            type="text" 
+                                        />
+                                    </div>                                    
+                            </div>
+                        </form>          
                     </template>
                     <!-- FORM ACTION BUTTONS -->
-                    <template v-slot:footer v-if="fmode === 'create'">
+                    <template v-slot:footer v-if="fmode === 'validate' && show">
                         <CmpFormActionsButton
-                                v-on:saveIntent="hCreateIntent"
+                                v-on:saveIntent="hValidateIntent"
                         />
                     </template>
-                    <template v-slot:footer v-else-if="fmode === 'edit'">
+                    <template v-slot:footer v-else-if="fmode === 'invalidate'">
                         <CmpFormActionsButton
-                                v-on:saveIntent="hEditIntent"
+                                v-on:saveIntent="hInvalidateIntent"
                         />
                     </template>
                 </CmpCard>
@@ -508,18 +430,19 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBaseButton, CmpBasicInput, CmpCard, CmpFormActionsButton, CmpBasicCheckbox } from '@/components'
-import { RoutePathNames} from '@/services/definitions'
+import { Roles, RoutePathNames, VSchemaAuth} from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { VSCHEMA } from '@/views/auth/validation'
 
-import type { ICertificateFormData } from '@/services/definitions/types-forms'
+import type { ICertificateFormData, IQueryFormData } from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
 import { storeToRefs } from 'pinia';
 import { useCertificatesStore } from '@/stores/certificates';
 import type { ICertificateDto } from '@/services/definitions';
+import { useUsersStore } from '@/stores/users';
 
 export default defineComponent({
     name: 'ViewFormCertificates',
@@ -536,10 +459,29 @@ export default defineComponent({
 
         //region ======= DECLARATIONS & LOCAL STATE ===========================================
         const certificatesStore = useCertificatesStore()
+        const userStore = useUsersStore()
 
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
+        const rol = userStore.user.rol
+
+        let show:boolean = false
+        let to:string = "1"
+        if(certificatesStore.certificate.certificate_status === 1 && rol === Roles.secretary)
+        {
+            show = true
+        }
+        else if(certificatesStore.certificate.certificate_status === 2 && rol === Roles.dean)
+        {
+            show = true
+            to  = "2"
+        }
+        else if(certificatesStore.certificate.certificate_status === 3 && rol === Roles.rector)
+        {
+            show = true
+            to  = "3"
+        }
         //const userId = Number.parseInt(id as string, 10)
         
 
@@ -547,8 +489,7 @@ export default defineComponent({
 
         const { tfyBasicFail } = useToastify(toast)
         const { cap } = useCommon()
-        const { handleSubmit } = useForm<ICertificateFormData>({ validationSchema: VSCHEMA })
-
+        const { handleSubmit } = useForm<IQueryFormData>(VSchemaAuth)
         const componentKey = ref(0);
 
         let certificate:any = null;
@@ -562,31 +503,31 @@ export default defineComponent({
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
-        const aReqCertificateCreation = ( data: ICertificateFormData ) => {
-            certificatesStore.reqInsertCertificate(data)
+        const aReqValidateCertificate = ( data: IQueryFormData ) => {
+            certificatesStore.reqValidateCertificate(id as string, data.param)
             .then(() => { 
                 
                 router.push({ 
                 name: RoutePathNames.certificates,
                 params: {
-                    param: "1",
+                    param: to,
                     searchType: "status",
-                    rol: "admin"
+                    rol: "sdr"
                 }
              }); })
             .catch(error => { tfyBasicFail(error, 'Certificates','addition') })
         }
 
-        const aReqCertificateUpdate = (data: ICertificateDto ) => {
-            certificatesStore.reqModifyCertificate(data)
+        const aReqInvalidateCertificate = (data: IQueryFormData ) => {
+            certificatesStore.reqInvalidateCertificate(id as string, data.param)
             .then(() => { 
                 
                 router.push({ 
                 name: RoutePathNames.certificates,
                 params: {
-                    param: "1",
+                    param: "0",
                     searchType: "status",
-                    rol: "admin"
+                    rol: "sdr"
                 }
              }); })
             .catch(error => { tfyBasicFail(error, 'Certificates','update') })
@@ -610,7 +551,7 @@ export default defineComponent({
         onMounted(() => {            
             if(id)
             {
-                certificatesStore.reqCertificatesById(id as string).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'User','request') })
+                certificatesStore.reqCertificatesById(id as string).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'Certificate','request') })
             }
         })
 
@@ -618,12 +559,12 @@ export default defineComponent({
 
         //region ======= EVENTS HANDLERS ======================================================
 
-        const hCreateIntent = handleSubmit(formData => {
-            aReqCertificateCreation(formData)
+        const hValidateIntent = handleSubmit(formData => {
+            aReqValidateCertificate(formData)
         })
 
-        const hEditIntent= handleSubmit(formData => {
-            aReqCertificateUpdate(formData)
+        const hInvalidateIntent= handleSubmit(formData => {
+            aReqInvalidateCertificate(formData)
         })
         
         const h_Back = () => {
@@ -634,12 +575,13 @@ export default defineComponent({
 
         return {
             h_Back,
-            hCreateIntent,
-            hEditIntent,
+            hValidateIntent,
+            hInvalidateIntent,
             cap,
             fmode,
             certificate,
             componentKey,
+            show
         }
     }
 })

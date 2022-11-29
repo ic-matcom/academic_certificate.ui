@@ -80,7 +80,8 @@
         "request-pas":     "solicitado",
         "request-gerund":  "de solicitud",
         "details":         "detalles de",
-        "validate":        "validar"
+        "validate":        "validar",
+        "invalidate":        "invalidar"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",
@@ -141,7 +142,8 @@
             "secretary_validating": "Secretario General",
             "dean_validating":   "Decano",
             "invalid_reason":    "Razón de invalidación",
-            "data":              "ID, Tipo de Certificado, Estado"
+            "data":              "ID, Tipo de Certificado, Estado",
+            "sign":              "Firma"
         },
         "fields":        {
             "staff": {

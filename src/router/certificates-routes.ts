@@ -31,4 +31,16 @@ export const CertificatesRoutes: Array<RouteRecordRaw> = [
         component: () => import('../views/certificates/ViewFormCertificates.vue'),
         meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.certadmin] }
     },
+    {
+        path: RoutePaths.certificatesForm,
+        name: RoutePathNames.certificatesValidate,
+        component: () => import('../views/certificates/ViewFormValidateCertificates.vue'),
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.secretary,Roles.dean,Roles.rector] }
+    },
+    {
+        path: RoutePaths.certificatesForm,
+        name: RoutePathNames.certificatesInvalidate,
+        component: () => import('../views/certificates/ViewFormValidateCertificates.vue'),
+        meta: { layout: LayBaseDashboard, reqAuth: true, authorize:[Roles.secretary,Roles.dean,Roles.rector] }
+    },
 ]

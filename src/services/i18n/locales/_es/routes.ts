@@ -11,6 +11,9 @@ export default {
     [ RoutePathNames.certificates ]: "@:{'entities.certificates.section-name'}",
     [ RoutePathNames.certificatesCreate ]: '@:crud-actions.create @:entities.certificates.section-name',
     [ RoutePathNames.certificatesDetails ]: '@:crud-actions.details @:entities.certificates.section-name',
+    [ RoutePathNames.certificatesModify ]: '@:crud-actions.edit @:entities.certificates.section-name',
+    [ RoutePathNames.certificatesValidate ]: '@:crud-actions.validate @:entities.certificates.section-name',
+    [ RoutePathNames.certificatesInvalidate ]: '@:crud-actions.invalidate @:entities.certificates.section-name',   
     //endregion =============================================================================
 
     //region ======== USERS =================================================================
