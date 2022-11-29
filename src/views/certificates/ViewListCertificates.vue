@@ -196,7 +196,7 @@ export default defineComponent({
                 name  : RoutePathNames.certificatesInvalidate,
                 params: {
                     fmode: 'invalidate' as TFormMode,
-                    id   : objectId.id,
+                    id   : objectId,
                 }
             })
         }
