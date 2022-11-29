@@ -129,7 +129,19 @@
             "firstname":        "Nombre",
             "lastname":         "Apellidos",
             "cell":             "Celular",
-            "email":            "E-mail"
+            "email":            "E-mail",
+            "gold_certificate": "Certificado de Oro",
+            "volume_folio":     "Volumen y Folio",
+            "created_by":       "Creado por",
+            "date":             "Fecha",
+            "certification":    "Certificación",
+            "emitter":          "Emisor",
+            "accredited":       "Acreditado",
+            "rector_validating": "Rector",
+            "secretary_validating": "Secretario General",
+            "dean_validating":   "Decano",
+            "invalid_reason":    "Razón de invalidación",
+            "data":              "ID, Tipo de Certificado, Estado"
         },
         "fields":        {
             "staff": {
@@ -146,7 +158,13 @@
             "user":            "usuario",
             "pass":            "contraseña",
             "search":          "buscar",
-            "email":           "correo.del.usuario{'@'}.dominio.que"
+            "email":           "correo.del.usuario{'@'}.dominio.que",
+            "volume_folio_faculty": "volumen y folio de la facultad",
+            "volume_folio_university": "volumen y folio de la universidad",
+            "certification":    "Licenciado en Ciencias de la Computación",
+            "emitter":          "Universidad de La Habana",
+            "accredited":       "John Doe",
+            "date":             "18 de noviembre del 2013"
         }
     },
     "table-headers": {

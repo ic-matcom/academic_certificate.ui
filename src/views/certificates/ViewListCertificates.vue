@@ -99,9 +99,9 @@ export default defineComponent({
 
         const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
         const { dialogfyConfirmation } = useDialogfy()
-        console.log(route.params)
+
         const { param, searchType, rol } = route.params 
-        console.log(rol)
+
 
         //#endregion ==========================================================================
 
@@ -162,8 +162,6 @@ export default defineComponent({
         }
 
         function h_navCreateCertificate() {
-            console.log('he')
-            console.log(RoutePathNames.certificatesCreate)
             router.push({
                 name  : RoutePathNames.certificatesCreate,
                 params: {

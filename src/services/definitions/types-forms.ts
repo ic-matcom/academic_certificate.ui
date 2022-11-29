@@ -25,5 +25,12 @@ export type ICertificateFormData = {
     created_by:                 string,
     volume_folio_faculty:       string,
     volume_folio_university:    string,
+    docType:                    string,
+    id:                         string,
+    secretary_validating:       string,
+    dean_validating:            string,
+    rector_validating:          string,
+    certificate_status:         number,
+    invalid_reason:             string
 }
 

@@ -1,7 +1,7 @@
 // Helpers functions to be used in form views
 //
 // ===========================================================
-import type { ICertificatesRow, IMultiselectBasic, IRol } from '@/services/definitions'
+import type { ICertificatesRow, IMultiselectBasic, IRol, ICertificateDto } from '@/services/definitions'
 
 
 /**
@@ -39,5 +39,29 @@ export function transformCertificateResponse (records:any): Array<ICertificatesR
        });
 
     return certificatesRow
+}
+
+export function transformCertificateForm (record:ICertificateDto): any {
+    let certificate: any = 
+            {
+                ID: record.id,
+                docType: record.docType,
+                certification:record.certification,
+                gold_certificate:record.gold_certificate,
+                emitter:record.emitter,
+                accredited:record.accredited,
+                secretary_validating:record.secretary_validating,
+                dean_validating:record.dean_validating,
+                rector_validating:record.rector_validating,
+                date:record.date,
+                created_by:record.created_by,
+                volume_folio_faculty:record.volume_folio_faculty,
+                volume_folio_university:record.volume_folio_university,
+                certificate_status: record.certificate_status,
+                invalid_reason: record.invalid_reason
+            }
+
+
+    return certificate
 }
 

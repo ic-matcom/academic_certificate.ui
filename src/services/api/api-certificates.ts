@@ -6,6 +6,7 @@ import type { ICertificateFormData, IUserFormData } from '@/services/definitions
 import type { IDataTableQuery } from '../definitions/types-common'
 import useFactory from '../composables/useFactory'
 import { Chaincode, HTTP_RESPONSES, type ICertificateDto, type ICertificatesPage } from '../definitions'
+import { transformCertificateForm } from '../helpers/help-forms'
 
 
 const version = config.site.current_version
@@ -25,11 +26,7 @@ export class ApiCertificates {
      * @param certificate
      */
      public static insertCertificate( certificate: ICertificateFormData ): AxiosPromise<void> {
-        const payload = {
-            certificate  : certificate,
-            ...Chaincode
-        }
-        return axios.post(url, payload)
+        return axios.post(url + "?channel=mychannel&chaincode=certificate&signer=User1", JSON.stringify(certificate))
     }
 
     /**
@@ -63,12 +60,10 @@ export class ApiCertificates {
      * @param queryParams Parameterized request for the entities. Contains query params such as pagination details and filter options for searching.
      */
      public static getCertificatesPageByAccredited( queryParams: IDataTableQuery, accredited: string ): AxiosPromise<ICertificatesPage> {
-
         const payload = {
             page_limit  : queryParams.Limit - 5,
             ...Chaincode
         }
-        console.log(url + "_by_accredited/" + `${accredited}`)
         return axios.get(url + "_by_accredited/" + `${accredited}`, { params: payload })
     }
 
@@ -115,11 +110,8 @@ export class ApiCertificates {
      * @param id user identifier
      */
      public static modifyCertificate(certificate: ICertificateDto ): AxiosPromise<void> {
-        const payload = {
-            certificate  : certificate,
-            ...Chaincode
-        }
-        return axios.put(url, payload)
+        const newCertificate = transformCertificateForm(certificate)
+        return axios.put(url + "?channel=mychannel&chaincode=certificate&signer=User1", JSON.stringify(newCertificate))
     }
 
     //endregion ===========================================================================

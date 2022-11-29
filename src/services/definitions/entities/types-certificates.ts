@@ -23,5 +23,5 @@ export interface ICertificatesRow {
 }
 
 export interface ICertificateDto extends ICertificatesRow {
-    
+    invalid_reason: string
 }
