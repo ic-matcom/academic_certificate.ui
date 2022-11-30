@@ -14,6 +14,7 @@
         "val-cancel":         "Cancelar",
         "val-details":        "Detalles",
         "val-validate":       "Validar",
+        "val-invalidate":     "Invalidar",
         "tip-back":           "Ir atrás",
         "tip-create-new":     "Crear nuevo",
         "tip-add-time-range": "Adicionar rango de tiempo",
@@ -81,7 +82,7 @@
         "request-gerund":  "de solicitud",
         "details":         "detalles de",
         "validate":        "validar",
-        "invalidate":        "invalidar"
+        "invalidate":      "invalidar"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",
@@ -139,7 +140,7 @@
             "emitter":          "Emisor",
             "accredited":       "Acreditado",
             "rector_validating": "Rector",
-            "secretary_validating": "Secretario General",
+            "secretary_validating":"Secretario General",
             "dean_validating":   "Decano",
             "invalid_reason":    "Razón de invalidación",
             "data":              "ID, Tipo de Certificado, Estado",
@@ -166,7 +167,9 @@
             "certification":    "Licenciado en Ciencias de la Computación",
             "emitter":          "Universidad de La Habana",
             "accredited":       "John Doe",
-            "date":             "18 de noviembre del 2013"
+            "date":             "18 de noviembre del 2013",
+            "id":               "CERT2022...",
+            "status":           "Estado"
         }
     },
     "table-headers": {
@@ -197,5 +200,10 @@
             "name": "Certificados",
             "section-name": "@:entities.certificates.name"
         }
-    }
+    },
+    "Invalid": "Inválido",
+    "Created": "Creado",
+    "SignedBySecretary": "Firmado por el Secretario",
+    "SignedByDean":      "Firmado por el Decano",
+    "Valid": "Válido"
 }

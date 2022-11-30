@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-6">
                     <CmpBasicInput
-                        id="param"
-                        name="param"
+                        id="accredited"
+                        name="accredited"
                         type="text"
-                        :placeholder="$t('form.placeholders.search').toUpperCase()"
+                        :placeholder="$t('form.placeholders.accredited').toUpperCase()"
                         v-on:keydown.enter="hQueryIntentByAccredited"
                 />             
                 </div>
@@ -22,10 +22,10 @@
             <div class="row">
                 <div class="col-6">
                     <CmpBasicInput
-                        id="param1"
-                        name="param"
+                        id="id"
+                        name="id"
                         type="text"
-                        :placeholder="$t('form.placeholders.search').toUpperCase()"
+                        :placeholder="$t('form.placeholders.id').toUpperCase()"
                         v-on:keydown.enter="hQueryIntentById"
                 />             
                 </div>
@@ -34,16 +34,26 @@
                     </CmpBaseButton>
             </div>
 
-            <h3 v-if="show">Búsqueda por estado del certificado</h3>
-            <div class="row" v-if="show">
+            <h3 v-if="authStore.showSearchByState">Búsqueda por estado del certificado</h3>
+            <div class="row" v-if="authStore.showSearchByState">
                 <div class="col-6">
-                    <CmpBasicInput
-                        id="param2"
-                        name="param"
-                        type="text"
-                        :placeholder="$t('form.placeholders.search').toUpperCase()"
-                        v-on:keydown.enter="hQueryIntentByStatus"
-                />             
+                    <CmpMultiselectField :placeholder="$t('form.placeholders.status')"
+                        :options="authStore.getStatusForMultiselect"
+                        name="status"
+                        class="mb-2"
+                        mode="single"
+                        closeOnSelect>
+                        <!--option coming from slot child component ('slots props') [option] -->
+                        <template #customOption="{option}">
+                            {{  $t(option.label) }}
+                        </template>
+                        <!-- option coming from slot child component ('slots props') [value] -->
+                        <template #customSingleLabel="{value}">
+                            <div class="multiselect-placeholder">
+                            {{ $t(value.label)  }}
+                            </div>
+                        </template>
+                    </CmpMultiselectField>
                 </div>
                     <CmpBaseButton block button-type="success" :icon="true" @doClick.prevent="hQueryIntentByStatus">
                         <i class="tim-icons icon-zoom-split"></i>
@@ -55,7 +65,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, onMounted, onBeforeMount } from 'vue'
+    import { defineComponent, onMounted, ref} from 'vue'
     import { useRouter } from 'vue-router'
     import { useToast } from 'vue-toastification'
     import { RoutePathNames } from '@/services/definitions/route-paths'
@@ -63,16 +73,17 @@
 
     import useToastify from '@/services/composables/useToastify'
     import useCommon from '@/services/composables/useCommon'
-    import { CmpBaseButton, CmpBasicInput } from '@/components'
+    import { CmpBaseButton, CmpBasicInput, CmpMultiselectField } from '@/components'
     import { useForm } from 'vee-validate'
-    import { Roles, VSchemaAuth } from '@/services/definitions'
+    import { VSchemaAuth } from '@/services/definitions'
 import type { IQueryFormData } from '@/services/definitions/types-forms'
 
     export default defineComponent({
         name: 'ViewDashboard',
         components: {
             CmpBaseButton,
-            CmpBasicInput
+            CmpBasicInput,
+            CmpMultiselectField
         },
 
         setup(){
@@ -87,41 +98,32 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
 
         const { handleSubmit } = useForm<IQueryFormData>(VSchemaAuth)
 
-        const roles:string = authStore.user.rol
-        let show: boolean = false
-        let rol:string = ''
-        if (roles === Roles.certadmin)
-        {
-            rol = 'admin'
-            show = true
-        }
-        else if ([Roles.dean,Roles.secretary,Roles.rector].includes(roles))
-        {
-            rol = 'sdr'
-            show = true
-        }
-        else
-        {
-            rol = 'sa'
-        }
-
+        const componentKey = ref(0);
+        
         //#endregion ==========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
-        const aReqQueryCertificates = ( data: IQueryFormData, searchType:string ="accredited" ) => {
+        const aReqQueryCertificates = ( data: any, searchType:string ="accredited" ) => {
             router.push({
                 name  : RoutePathNames.certificates,
                 params: {
-                    param: data.param,
+                    param: data,
                     searchType: searchType,
-                    rol: rol
                 }
             })
         }
 
         //#endregion ==========================================================================
 
+        //region ======= HELPERS ==============================================================
+
+        const forceRerender = () => {
+            componentKey.value += 1;
+        };
+
+        //endregion ===========================================================================
+        
         //region ======== HOOKS ===============================================================
 
         /**
@@ -129,34 +131,34 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
          * invoke data population method through web API request.
          */
         onMounted(() => {
-            authStore.reqUserInfo().catch(err => tfyBasicFail(err, 'User', 'request'))
+            if(authStore.isLoggedIn){
+                authStore.reqUserInfo().then(() => {forceRerender()}).catch(err => tfyBasicFail(err, 'Auth', 'request'))
+            }           
         })
 
         //endregion ===========================================================================
         //region ======= EVENTS HANDLERS ======================================================
 
         const hQueryIntentByAccredited = handleSubmit(formData => {
-            aReqQueryCertificates(formData)
+            aReqQueryCertificates(formData.accredited)
         })
 
         const hQueryIntentById = handleSubmit(formData => {
-            aReqQueryCertificates(formData, "id")
+            aReqQueryCertificates(formData.id, "id")
         })
 
         const hQueryIntentByStatus = handleSubmit(formData => {
-            aReqQueryCertificates(formData, "status")
+            aReqQueryCertificates(formData.status, "status")
         })
 
-
         //endregion ===========================================================================
-
         
         return {
             authStore,
             hQueryIntentByAccredited,
             hQueryIntentById,
             hQueryIntentByStatus,
-            show
+            componentKey
         }
 
     }

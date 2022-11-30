@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard>
-                    <template v-if="rol === 'admin'">
+                    <template v-if="authStore.getUserGroup === groupRoles.CertAdmin">
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
@@ -21,7 +21,7 @@
                         >
                         </CmpDataTable>
                     </template>
-                    <template v-else-if="rol === 'sdr'">
+                    <template v-else-if="authStore.getUserGroup === groupRoles.SDR">
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
@@ -65,16 +65,15 @@ import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { defineComponent, onMounted } from 'vue'
 import { useCertificatesStore } from '@/stores/certificates'
+import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'vue-toastification'
 import { HCertificatesTable } from '@/services/definitions/data-datatables'
-import { RoutePathNames, RoutePaths } from '@/services/definitions'
-import { EntityTypes, queryBase } from '@/services/definitions'
+import { EntityTypes, queryBase, RoutePathNames, GroupRoles, Roles } from '@/services/definitions'
 import { CmpCard, CmpDataTable } from '@/components'
 import useDialogfy from '@/services/composables/useDialogfy'
 import useToastify from '@/services/composables/useToastify'
 
 import type { TFormMode, IDataTableQuery, IBulkData } from '@/services/definitions'
-
 
 export default defineComponent({
     name: 'ViewListCertificates',
@@ -88,8 +87,10 @@ export default defineComponent({
 
         const {t} = useI18n({useScope: 'global'})
 
+        const authStore = useAuthStore()
         const certificatesStore = useCertificatesStore()
         const eMode: EntityTypes = EntityTypes.Certificates
+        const groupRoles = GroupRoles
 
         const route = useRoute()
         const router = useRouter()
@@ -100,7 +101,7 @@ export default defineComponent({
         const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
         const { dialogfyConfirmation } = useDialogfy()
 
-        const { param, searchType, rol } = route.params 
+        const { param, searchType } = route.params 
 
 
         //#endregion ==========================================================================
@@ -125,10 +126,24 @@ export default defineComponent({
                 }
                 else
                 {
-                    certificatesStore.reqCertificatesByStatus(queryBase,Number.parseInt(param as string, 10)).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                    certificatesStore.reqCertificatesByStatus(queryBase,+param).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
                 }
             }
-            
+            else
+            {
+                if(authStore.getUserRol == Roles.secretary)
+                {
+                    certificatesStore.reqCertificatesByStatus(queryBase, 1).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                }
+                else if (authStore.getUserRol == Roles.dean)
+                {
+                    certificatesStore.reqCertificatesByStatus(queryBase, 2).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                }
+                else 
+                {
+                    certificatesStore.reqCertificatesByStatus(queryBase, 3).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                }
+            }        
         })
 
         //endregion ===========================================================================
@@ -251,7 +266,8 @@ export default defineComponent({
             columns,
             filters,
             certificatesStore,
-            rol,
+            authStore,
+            groupRoles,
 
             h_reqQuery,
             h_reqDeleteCertificate,

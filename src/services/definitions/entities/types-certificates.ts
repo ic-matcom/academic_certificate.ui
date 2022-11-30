@@ -18,10 +18,15 @@ export interface ICertificatesRow {
     rector_validating:          string,
     volume_folio_faculty:       string,
     volume_folio_university:    string,
-    certificate_status:         number
+    certificate_status:         number,
+    invalid_reason:             string
     
 }
 
 export interface ICertificateDto extends ICertificatesRow {
-    invalid_reason: string
+}
+
+export interface ICertStatus {
+    name: string,
+    value: number
 }

@@ -3,217 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard :hasFormBackBtn="true" v-on:doClick="h_Back">
-                    <template v-if="fmode === 'validate'">
-                        <fieldset disabled>
-                        <form>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.certification') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="certification"
-                                            name="certification"
-                                            type="text"                                        
-                                            :value="certificate.certification"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.emitter') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="emitter"
-                                            name="emitter"
-                                            type="text"
-                                            :value="certificate.emitter"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.accredited') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="accredited"
-                                            name="accredited"
-                                            type="text"
-                                            :value="certificate.accredited"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.created_by') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="created_by"
-                                            name="created_by"
-                                            type="text"
-                                            :value="certificate.created_by"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.volume_folio') }}
-                                    </label>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="volume_folio_faculty"
-                                        name="volume_folio_faculty"
-                                        type="text"
-                                        :value="certificate.volume_folio_faculty"
-                                        />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="volume_folio_university"
-                                        name="volume_folio_university"
-                                        type="text"
-                                        :value="certificate.volume_folio_university"
-                                        />
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.date') }}
-                                    </label>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="date"
-                                        name="date"
-                                        type="text"
-                                        :value="certificate.date"
-                                    />
-                                    </div>
-                        
-                                    <div class="col-md-3">
-                                        <CmpBasicCheckbox name="gold_certificate"
-                                                      :key="componentKey"
-                                                      :checked="certificate.gold_certificate"
-                                                      :labels="[$t('form.fields-common.gold_certificate'), $t('btn.val-no')]"
-                                         />
-                                     </div>                          
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.invalid_reason') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="invalid_reason"
-                                            name="invalid_reason"
-                                            type="text"                                        
-                                            :value="certificate.invalid_reason"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.secretary_validating') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="secretary_validating"
-                                            name="secretary_validating"
-                                            type="text"
-                                            :value="certificate.secretary_validating"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.dean_validating') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="dean_validating"
-                                            name="dean_validating"
-                                            type="text"
-                                            :value="certificate.dean_validating"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.rector_validating') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="rector_validating"
-                                            name="rector_validating"
-                                            type="text"
-                                            :value="certificate.rector_validating"
-                                        />
-                                    </div>                                    
-                            </div>
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.data') }}
-                                    </label>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="id"
-                                        name="id"
-                                        type="text"
-                                        :value="certificate.id"
-                                        />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="docType"
-                                        name="docType"
-                                        type="text"
-                                        :value="certificate.docType"
-                                        />
-                                    </div>
-                                    <div class="col-md-1">
-                                        <CmpBasicInput
-                                        :key="componentKey"
-                                        id="certificate_status"
-                                        name="certificate_status"
-                                        type="number"
-                                        :value="certificate.certificate_status"
-                                        />
-                                    </div>
-                            </div>
-                        </form>
-                    </fieldset>
-                    <form>
-                        <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.sign') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="param"
-                                            name="param"
-                                            type="text"
-                                        />
-                                    </div>                                    
-                            </div>
-                    </form>
-                    </template>
-                    <template v-else-if="fmode === 'invalidate'"> 
+                    <template v-if="fmode === 'validate' || fmode === 'invalidate'"> 
                         <fieldset disabled>
                             <form>
                             <div class="row">
@@ -226,7 +16,7 @@
                                             id="certification"
                                             name="certification"
                                             type="text"                                        
-                                            :value="certificate.certification"
+                                            :value="certificatesStore.certificate.certification"
                                         />
                                     </div>                                    
                             </div>
@@ -240,7 +30,7 @@
                                             id="emitter"
                                             name="emitter"
                                             type="text"
-                                            :value="certificate.emitter"
+                                            :value="certificatesStore.certificate.emitter"
                                         />
                                     </div>                                    
                             </div>
@@ -254,7 +44,7 @@
                                             id="accredited"
                                             name="accredited"
                                             type="text"
-                                            :value="certificate.accredited"
+                                            :value="certificatesStore.certificate.accredited"
                                         />
                                     </div>                                    
                             </div>
@@ -268,7 +58,7 @@
                                             id="created_by"
                                             name="created_by"
                                             type="text"
-                                            :value="certificate.created_by"
+                                            :value="certificatesStore.certificate.created_by"
                                         />
                                     </div>                                    
                             </div>
@@ -282,7 +72,7 @@
                                         id="volume_folio_faculty"
                                         name="volume_folio_faculty"
                                         type="text"
-                                        :value="certificate.volume_folio_faculty"
+                                        :value="certificatesStore.certificate.volume_folio_faculty"
                                         />
                                     </div>
                                     <div class="col-md-3">
@@ -291,7 +81,7 @@
                                         id="volume_folio_university"
                                         name="volume_folio_university"
                                         type="text"
-                                        :value="certificate.volume_folio_university"
+                                        :value="certificatesStore.certificate.volume_folio_university"
                                         />
                                     </div>
                             </div>
@@ -305,14 +95,14 @@
                                         id="date"
                                         name="date"
                                         type="text"
-                                        :value="certificate.date"
+                                        :value="certificatesStore.certificate.date"
                                     />
                                     </div>
                         
                                     <div class="col-md-3">
                                         <CmpBasicCheckbox name="gold_certificate"
                                                       :key="componentKey"
-                                                      :checked="certificate.gold_certificate"
+                                                      :checked="certificatesStore.certificate.gold_certificate"
                                                       :labels="[$t('form.fields-common.gold_certificate'), $t('btn.val-no')]"
                                          />
                                      </div>                          
@@ -327,7 +117,7 @@
                                             id="secretary_validating"
                                             name="secretary_validating"
                                             type="text"
-                                            :value="certificate.secretary_validating"
+                                            :value="certificatesStore.certificate.secretary_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -341,7 +131,7 @@
                                             id="dean_validating"
                                             name="dean_validating"
                                             type="text"
-                                            :value="certificate.dean_validating"
+                                            :value="certificatesStore.certificate.dean_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -355,7 +145,7 @@
                                             id="rector_validating"
                                             name="rector_validating"
                                             type="text"
-                                            :value="certificate.rector_validating"
+                                            :value="certificatesStore.certificate.rector_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -369,7 +159,7 @@
                                         id="id"
                                         name="id"
                                         type="text"
-                                        :value="certificate.id"
+                                        :value="certificatesStore.certificate.id"
                                         />
                                     </div>
                                     <div class="col-md-1">
@@ -378,7 +168,7 @@
                                         id="docType"
                                         name="docType"
                                         type="text"
-                                        :value="certificate.docType"
+                                        :value="certificatesStore.certificate.docType"
                                         />
                                     </div>
                                     <div class="col-md-1">
@@ -387,13 +177,13 @@
                                         id="certificate_status"
                                         name="certificate_status"
                                         type="number"
-                                        :value="certificate.certificate_status"
+                                        :value="certificatesStore.certificate.certificate_status"
                                         />
                                     </div>
                             </div>
                         </form>
                         </fieldset>
-                        <form>
+                        <form v-if="fmode === 'invalidate'">
                             <div class="row">
                                     <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.invalid_reason') }}
@@ -410,15 +200,25 @@
                         </form>          
                     </template>
                     <!-- FORM ACTION BUTTONS -->
-                    <template v-slot:footer v-if="fmode === 'validate' && show">
-                        <CmpFormActionsButton
-                                v-on:saveIntent="hValidateIntent"
-                        />
+                    <template v-slot:footer v-if="(fmode === 'validate' && authStore.getValidatePermission(certificatesStore.certificate.certificate_status))">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-md-6">
+                                <CmpBaseButton block button-type="success" @doClick.prevent="hValidateIntent">
+                                    {{ cap($t("btn.val-validate")) }}
+                                </CmpBaseButton>
+                            </div>             
+                        </div>          
                     </template>
                     <template v-slot:footer v-else-if="fmode === 'invalidate'">
-                        <CmpFormActionsButton
-                                v-on:saveIntent="hInvalidateIntent"
-                        />
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-md-6">
+                                <CmpBaseButton block button-type="success" @doClick.prevent="hInvalidateIntent">
+                                    {{ cap($t("btn.val-invalidate")) }}
+                                </CmpBaseButton>
+                            </div>             
+                        </div>     
                     </template>
                 </CmpCard>
             </div>
@@ -430,19 +230,16 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBaseButton, CmpBasicInput, CmpCard, CmpFormActionsButton, CmpBasicCheckbox } from '@/components'
-import { Roles, RoutePathNames, VSchemaAuth} from '@/services/definitions'
+import { RoutePathNames, VSchemaCertificateInvalidate } from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
-import { VSCHEMA } from '@/views/auth/validation'
 
-import type { ICertificateFormData, IQueryFormData } from '@/services/definitions/types-forms'
+import type { IValidateFormData } from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
-import { storeToRefs } from 'pinia';
 import { useCertificatesStore } from '@/stores/certificates';
-import type { ICertificateDto } from '@/services/definitions';
-import { useUsersStore } from '@/stores/users';
+import { useAuthStore } from '@/stores/auth';
 
 export default defineComponent({
     name: 'ViewFormCertificates',
@@ -459,77 +256,32 @@ export default defineComponent({
 
         //region ======= DECLARATIONS & LOCAL STATE ===========================================
         const certificatesStore = useCertificatesStore()
-        const userStore = useUsersStore()
+        const authStore = useAuthStore()
 
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
-        const rol = userStore.user.rol
-
-        let show:boolean = false
-        let to:string = "1"
-        if(certificatesStore.certificate.certificate_status === 1 && rol === Roles.secretary)
-        {
-            show = true
-        }
-        else if(certificatesStore.certificate.certificate_status === 2 && rol === Roles.dean)
-        {
-            show = true
-            to  = "2"
-        }
-        else if(certificatesStore.certificate.certificate_status === 3 && rol === Roles.rector)
-        {
-            show = true
-            to  = "3"
-        }
-        //const userId = Number.parseInt(id as string, 10)
-        
 
         const toast = useToast() // The toast lib interface
 
         const { tfyBasicFail } = useToastify(toast)
         const { cap } = useCommon()
-        const { handleSubmit } = useForm<IQueryFormData>(VSchemaAuth)
-        const componentKey = ref(0);
 
-        let certificate:any = null;
-        
-        if(id)
-        {
-            ({ certificate } = storeToRefs(certificatesStore))
-        }
+        const componentKey = ref(0);
 
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
-        const aReqValidateCertificate = ( data: IQueryFormData ) => {
-            certificatesStore.reqValidateCertificate(id as string, data.param)
-            .then(() => { 
-                
-                router.push({ 
-                name: RoutePathNames.certificates,
-                params: {
-                    param: to,
-                    searchType: "status",
-                    rol: "sdr"
-                }
-             }); })
-            .catch(error => { tfyBasicFail(error, 'Certificates','addition') })
+        const aReqValidateCertificate = () => {
+            certificatesStore.reqValidateCertificate(id as string, `${authStore.user.firstname} ${authStore.user.lastname}`)
+            .then(() => { router.push({ name: RoutePathNames.certificatesToValidate }); })
+            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
         }
 
-        const aReqInvalidateCertificate = (data: IQueryFormData ) => {
+        const aReqInvalidateCertificate = (data: IValidateFormData ) => {
             certificatesStore.reqInvalidateCertificate(id as string, data.param)
-            .then(() => { 
-                
-                router.push({ 
-                name: RoutePathNames.certificates,
-                params: {
-                    param: "0",
-                    searchType: "status",
-                    rol: "sdr"
-                }
-             }); })
+            .then(() => {  router.push({ name: RoutePathNames.dashboard }); })
             .catch(error => { tfyBasicFail(error, 'Certificates','update') })
         }
 
@@ -544,6 +296,12 @@ export default defineComponent({
         //endregion ===========================================================================
 
         //region ======= COMPUTATIONS & GETTERS ===============================================
+
+        // getting the vee validate method to manipulate the form related actions from the view
+        const { handleSubmit, resetForm } = useForm<IValidateFormData>({
+            validationSchema: VSchemaCertificateInvalidate,
+        })
+
         //endregion ===========================================================================
         
         //region ======== HOOKS ===============================================================
@@ -559,16 +317,22 @@ export default defineComponent({
 
         //region ======= EVENTS HANDLERS ======================================================
 
-        const hValidateIntent = handleSubmit(formData => {
-            aReqValidateCertificate(formData)
-        })
+        const hValidateIntent = () => {
+            aReqValidateCertificate()
+        }
 
         const hInvalidateIntent= handleSubmit(formData => {
             aReqInvalidateCertificate(formData)
         })
         
         const h_Back = () => {
-            router.push({ name: RoutePathNames.users });
+            router.push({ 
+                name: RoutePathNames.certificates, 
+                params: {
+                    searchType: "status", 
+                    param: certificatesStore.certificate.certificate_status
+                } 
+            });
         }
 
         //endregion ===========================================================================
@@ -579,9 +343,9 @@ export default defineComponent({
             hInvalidateIntent,
             cap,
             fmode,
-            certificate,
+            authStore,
+            certificatesStore,
             componentKey,
-            show
         }
     }
 })

@@ -2,6 +2,10 @@ import { defineStore } from 'pinia'
 import { ApiAuth } from '@/services/api/api-auth'
 import type { IAuthFormData } from '@/services/definitions/types-forms'
 import type { UserInfo } from '@/services/definitions/entities/types-users'
+import { Roles, type IMultiselectBasic } from '@/services/definitions'
+import { GroupRoles } from '@/services/definitions/users-roles'
+import { Cert_Status } from '@/services/definitions/enums-common'
+import { mapCertStatus2Multiselect } from '@/services/helpers/help-forms'
 
 // https://pinia.vuejs.org/core-concepts/#setup-stores
 
@@ -13,13 +17,32 @@ export const useAuthStore = defineStore({
     state: () : IAuthState => ({
         isLoggedIn: false,
         authTk: '',
-
-        // userList: [] as UserInfo[],
-        user: {id:0, username:'',firstname:'',lastname:'',email:'',rol:''}
+        user: {id:0, username:'',firstname:'',lastname:'',email:'',rol:''},
+        showSearchByState: false,
+        userGroupRol: GroupRoles.Normal,
+        validatePermission: false
     }),
 
     getters: {
         // doubleCount: ( state ) => state.counter * 2
+        getUserRol: ( state ) => state.user.rol,
+        getUserGroup: ( state ) => state.userGroupRol,
+        getStatusForMultiselect: ( state ): IMultiselectBasic[] => mapCertStatus2Multiselect(Cert_Status),
+        getValidatePermission: (state) => (status: number) : boolean => {
+            if(state.user.rol === Roles.secretary && status === 1)
+            {
+                return true
+            }
+            else if(state.user.rol === Roles.dean && status === 2)
+            {
+                return true
+            }
+            else if(state.user.rol === Roles.rector && status === 3)
+            {
+                return true
+            }
+            return false
+        }
     },
 
     actions: {
@@ -47,13 +70,25 @@ export const useAuthStore = defineStore({
          * Set the current user info in the system
          * @param user The User Profile
          */
-         setUserInfo( userInfo: UserInfo ) : void {
+        setUserInfo( userInfo: UserInfo ) : void {
             this.user.email = userInfo.email
             this.user.firstname = userInfo.firstname
             this.user.username = userInfo.username
             this.user.lastname = userInfo.lastname
             this.user.id = userInfo.id
             this.user.rol = userInfo.rol
+
+            if(this.getUserRol === Roles.certadmin)
+            {
+                this.showSearchByState = true
+                this.userGroupRol = GroupRoles.CertAdmin
+            }
+            else if ([Roles.dean,Roles.secretary,Roles.rector].includes(this.getUserRol))
+            {
+                this.showSearchByState = true
+                this.userGroupRol = GroupRoles.SDR
+            }
+
         },
 
         // --- async calls actions ---
@@ -105,7 +140,7 @@ export const useAuthStore = defineStore({
         },
 
         /**
-         * Trys to get the logged user in the backend with the JWT Authentication token, with the help of a defined axios apis
+         * Tries to get the logged user in the backend with the JWT Authentication token, with the help of a defined axios apis
          * to make the actual request
          *
          */
@@ -137,6 +172,9 @@ interface IAuthState {
     isLoggedIn: boolean
     authTk: string
     user: UserInfo
+    showSearchByState: boolean
+    userGroupRol: GroupRoles
+    validatePermission: boolean
 }
 
 //endregion =============================================================================

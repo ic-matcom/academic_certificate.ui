@@ -24,33 +24,6 @@
             <!-- ELEMENTS -->
             <div class="collapse navbar-collapse show" v-show="showMenu">
                 <ul class="navbar-nav ml-auto">
-                    <!-- SEARCH COMPONENT -->
-                    <div class="search-bar input-group" @click="searchModalVisible = true">
-                        <button class="btn btn-link"
-                                id="search-button"
-                                data-toggle="modal"
-                                data-target="#searchModal"
-                        >
-                            <i class="tim-icons icon-zoom-split"></i>
-                        </button>
-                    </div>
-                    <CmpModal
-                            v-model:show="searchModalVisible"
-                            class="modal-search"
-                            id="searchModal"
-                            :centered="false"
-                            :show-close="true"
-                    >
-                        <template v-slot:header>
-                            <input v-model="searchQuery"
-                                   type="text"
-                                   class="form-control"
-                                   id="inlineFormInputGroup"
-                                   :placeholder="$t('form.placeholders.search').toUpperCase()"
-                            />
-                        </template>
-                    </CmpModal>
-
                     <!-- BUTTONS -->
 
                     <!-- NOTIFICATIONS BTN DROPDOWN -->
@@ -110,7 +83,7 @@
                                </a>
                         </li>
                         <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Settings</a>
+                            <a href="#" class="nav-item dropdown-item">{{ common.cap( $t( 'routes.settings' )) }}</a>
                         </li>
                         <div class="dropdown-divider"></div>
                         <li class="nav-link">

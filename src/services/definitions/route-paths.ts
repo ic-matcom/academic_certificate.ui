@@ -37,11 +37,12 @@ export const RoutePathNames = {
 
     // Certificates section
     certificates:          'certificates',
+    certificatesToValidate:'certificates-to-validate',
     certificatesCreate:    'certificates-create',
     certificatesModify:    'certificates-update',
     certificatesValidate:  'certificates-validate', 
     certificatesDetails:   'certificates-details',
-    certificatesInvalidate:'certificates-validate',
+    certificatesInvalidate:'certificates-invalidate',
 
     // PEOPLE section
 
