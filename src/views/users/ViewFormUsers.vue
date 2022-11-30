@@ -3,46 +3,56 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard :hasFormBackBtn="true" v-on:doClick="h_Back">
-                    <template v-if="fmode === 'create'">
+                    <template v-if="cmptdFmode === 'create' || cmptdFmode === 'edit'">
                         <form>
                             <div class="form-group">
                                 <CmpBasicInput
+                                        :key="componentKey"
                                         id="email"
                                         name="email"
                                         type="text"               
                                         :placeholder="$t('form.placeholders.email')"
+                                        v-model="iniFormData.email"
                                 />
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
+                                        :key="componentKey"
                                         id="firstname"
                                         name="firstname"
                                         type="text"                                        
                                         :placeholder="$t('form.placeholders.user-firstname')"
+                                        v-model="iniFormData.firstname"
                                 />
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
+                                        :key="componentKey"
                                         id="lastname"
                                         name="lastname"
                                         type="text"                                        
                                         :placeholder="$t('form.placeholders.user-lastname')"
+                                        v-model="iniFormData.lastname"
                                 />
                             </div>
                             <div class="form-group has-label">
                                 <CmpBasicInput
+                                        :key="componentKey"
                                         id="passphrase"
                                         name="passphrase"
                                         type="password"                                        
                                         :placeholder="$t('form.placeholders.pass')"
+                                        v-model="iniFormData.passphrase"
                                 />
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
+                                        :key="componentKey"
                                         id="username"
                                         name="username"
                                         type="text"
                                         :placeholder="$t('form.placeholders.user')"
+                                        v-model="iniFormData.username"
                                 />
                             </div>
                             <!-- role -->
@@ -67,82 +77,8 @@
                             </div>
                         </form>
                     </template>
-                    
-                    <template v-else-if="fmode === 'edit'">
-                        <form>
-                            <div class="form-group">
-                                <CmpBasicInput
-                                        :key="componentKey"
-                                        id="email"
-                                        name="email"
-                                        type="text"
-                                        :value="user.email"
-                                        :placeholder="$t('form.placeholders.email')"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <CmpBasicInput
-                                        :key="componentKey"
-                                        id="firstname"
-                                        name="firstname"
-                                        type="text"
-                                        :value="user.firstname"
-                                        :placeholder="$t('form.placeholders.user-firstname')"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <CmpBasicInput
-                                        :key="componentKey"
-                                        id="lastname"
-                                        name="lastname"
-                                        type="text"
-                                        :value="user.lastname"
-                                        :placeholder="$t('form.placeholders.user-lastname')"
-                                />
-                            </div>
-                            <div class="form-group has-label">
-                                <CmpBasicInput
-                                        :key="componentKey"
-                                        id="passphrase"
-                                        name="passphrase"
-                                        type="password"
-                                        :value="user.passphrase"
-                                        :placeholder="$t('form.placeholders.pass')"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <CmpBasicInput
-                                        :key="componentKey"
-                                        id="username"
-                                        name="username"
-                                        type="text"
-                                        :value="user.username"
-                                        :placeholder="$t('form.placeholders.user')"
-                                />
-                            </div>
-                            <div class="form-group">
-                                    <CmpMultiselectField placeholder="- rol - "
-                                                         :options="usersStore.getRolesForMultiselect"
-                                                         name="rol"
-                                                         class="mb-2"
-                                                         :label="user.rol"
-                                                         mode="single"
-                                                         closeOnSelect>
-                                        <!--option coming from slot child component ('slots props') [option] -->
-                                        <template #customOption="{option}">
-                                            {{  option.label }}
-                                        </template>
-                                        <!-- option coming from slot child component ('slots props') [value] -->
-                                        <template #customSingleLabel="{value}">
-                                            <div class="multiselect-placeholder">
-                                                {{ value.label }}
-                                            </div>
-                                        </template>
-                                    </CmpMultiselectField>
-                            </div>
-                        </form>
-                    </template>
-                    <template v-else-if="fmode === 'details'">
+
+                    <template v-else-if="cmptdFmode === 'details'">
                         <fieldset disabled>
                             <form>
                                 <div class="form-group">
@@ -152,7 +88,7 @@
                                             id="email"
                                             name="email"
                                             type="text"
-                                            :value="user.email"
+                                            v-model="iniFormData.email"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -162,7 +98,7 @@
                                             id="firstname"
                                             name="firstname"
                                             type="text"
-                                            :value="user.firstname"
+                                            v-model="iniFormData.firstname"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -172,7 +108,7 @@
                                             id="lastname"
                                             name="lastname"
                                             type="text"
-                                            :value="user.lastname"
+                                            v-model="iniFormData.lastname"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -182,7 +118,7 @@
                                             id="username"
                                             name="username"
                                             type="text"
-                                            :value="user.username"
+                                            v-model="iniFormData.username"
                                     />
                                 </div>
                                 <div class="form-group">
@@ -192,21 +128,17 @@
                                             id="rol"
                                             name="rol"
                                             type="text"
-                                            :value="user.rol"
+                                            v-model="iniFormData.rol"
                                     />
                                 </div>
                             </form>
                         </fieldset>                       
                     </template>
                     <!-- FORM ACTION BUTTONS -->
-                    <template v-slot:footer v-if="fmode === 'create'">
+                    <template v-slot:footer v-if="cmptdFmode === 'create' || cmptdFmode === 'edit'">
                         <CmpFormActionsButton
-                                v-on:saveIntent="hCreateIntent"
-                        />
-                    </template>
-                    <template v-slot:footer v-else-if="fmode === 'edit'">
-                        <CmpFormActionsButton
-                                v-on:saveIntent="hEditIntent"
+                                v-on:saveIntent="h_submit"
+                                v-on:cancelIntent="h_Cancel"
                         />
                     </template>
                 </CmpCard>
@@ -216,10 +148,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref, type ComputedRef } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBasicInput, CmpCard, CmpBasicCheckbox, CmpMultiselectField, CmpFormActionsButton } from '@/components'
-import { RoutePathNames } from '@/services/definitions'
+import { RoutePathNames, VSchemaUserCreate, VSchemaUserEdit} from '@/services/definitions'
+import type { TFormMode, TOPSKind } from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { useUsersStore } from '@/stores/users'
@@ -229,9 +162,7 @@ import type { IUserFormData } from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
-import { storeToRefs } from 'pinia';
-import { number } from '@intlify/core-base';
-
+import useFactory from '@/services/composables/useFactory';
 
 export default defineComponent({
     name: 'ViewFormUsers',
@@ -252,23 +183,17 @@ export default defineComponent({
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
-        const userId = Number.parseInt(id as string, 10)
+        //const userId = Number.parseInt(id as string, 10)
         
-
         const toast = useToast() // The toast lib interface
 
         const { tfyBasicFail } = useToastify(toast)
         const { cap } = useCommon()
-        const { handleSubmit } = useForm<IUserFormData>({ validationSchema: VSCHEMA })
+
+        const { mkUser } = useFactory()
+        let iniFormData = reactive<IUserFormData>(mkUser())                 // initial form data
 
         const componentKey = ref(0);
-
-        let user:any = null;
-        
-        if(id)
-        {
-            ({ user } = storeToRefs(usersStore))
-        }
 
         //endregion ===========================================================================
 
@@ -277,13 +202,13 @@ export default defineComponent({
         const aReqUserCreation = ( data: IUserFormData ) => {
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'users','addition') })
+            .catch(error => { tfyBasicFail(error, 'Users','addition') })
         }
 
-        const aReqUserUpdate = ( id: number, data: IUserFormData ) => {
-            usersStore.reqUserUpdate(id, data)
+        const aReqUserUpdate = ( data: IUserFormData ) => {
+            usersStore.reqUserUpdate(+id, data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'users','update') })
+            .catch(error => { tfyBasicFail(error, 'Users','update') })
         }
 
         //#endregion ==========================================================================
@@ -297,14 +222,28 @@ export default defineComponent({
         //endregion ===========================================================================
 
         //region ======= COMPUTATIONS & GETTERS ===============================================
+
+        // compute the form mode: creation mode or edition mode
+        const cmptdFmode: ComputedRef<string | string[]> = computed(() => fmode)
+
+        // getting the vee validate method to manipulate the form related actions from the view
+        const { handleSubmit, meta, setValues, resetForm } = useForm<IUserFormData>({
+            //validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
+            validationSchema: VSCHEMA,
+            initialValues:    iniFormData
+        })
+
         //endregion ===========================================================================
         
         //region ======== HOOKS ===============================================================
         
         onMounted(() => {            
-            if(id)
-            {
-                usersStore.reqUserById(userId).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'User','request') })
+            if (cmptdFmode.value === 'edit' as TFormMode || cmptdFmode.value === 'details' as TFormMode) {
+                usersStore.reqUserById(+id)
+                .then(() => {
+                    setValues(usersStore.user)
+                    forceRerender()})
+                .catch(error => { tfyBasicFail(error, 'User','request') })
             }
         })
 
@@ -312,15 +251,21 @@ export default defineComponent({
 
         //region ======= EVENTS HANDLERS ======================================================
 
-        const hCreateIntent = handleSubmit(formData => {
-            aReqUserCreation(formData)
-        })
-
-        const hEditIntent = handleSubmit(formData => {
-            aReqUserUpdate(userId, formData)
-        })
+        const h_submit = (event: Event) => {
+            event.preventDefault()
+            // handling the submission with vee-validate method
+            handleSubmit(formData => {
+                if (cmptdFmode.value == ("create" as TFormMode)) aReqUserCreation(formData);
+                if (cmptdFmode.value == ("edit" as TFormMode) && meta.value.dirty) aReqUserUpdate(formData);
+                if (cmptdFmode.value == ("edit" as TFormMode) && !meta.value.dirty) h_Back();               // was no changes (no dirty) with the data, so going back normally
+            }).call(this)
+        }
 
         const h_Back = () => {
+            router.push({ name: RoutePathNames.users });
+        }
+
+        const h_Cancel = () => {
             router.push({ name: RoutePathNames.users });
         }
 
@@ -328,11 +273,11 @@ export default defineComponent({
 
         return {
             h_Back,
-            hCreateIntent,
-            hEditIntent,
+            h_submit,
+            h_Cancel,
             cap,
-            fmode,
-            user,
+            cmptdFmode,
+            iniFormData,
             componentKey,
             usersStore
         }
