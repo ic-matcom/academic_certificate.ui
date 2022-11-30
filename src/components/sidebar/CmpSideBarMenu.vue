@@ -35,17 +35,17 @@ export default {
                     icon: 'fa fa-id-card',
                     child: [
                         {
-                            href: { path: RoutePaths.certificatesList },
+                            href: { path: RoutePaths.dashboard },
                             title: this.$t( 'nav.sidebar-query-certificates'),
                             icon: 'tim-icons icon-credit-card',
                         },
                         {
-                            href: { path: RoutePaths.certificatesCreate },
+                            href: { name: RoutePathNames.certificatesCreate, params: {fmode: 'create' as TFormMode } },
                             title: this.$t('nav.sidebar-create-certificates'),
                             icon: 'tim-icons icon-paper',
                         },
                         {
-                            href: { path: RoutePaths.certificatesForm },
+                            href: { name: RoutePathNames.certificatesToValidate },
                             title: this.$t('nav.sidebar-validate-certificates'),
                             icon: 'tim-icons icon-bank',
                         }
@@ -61,11 +61,11 @@ export default {
                             title: this.$t('entities.users.name'),
                             icon: 'tim-icons icon-single-02',
                         },
-                        {
-                            href: { path: RoutePaths.authList },
+                        /*{
+                            href: { path: RoutePaths.dashboard },
                             title: this.$t('nav.sidebar-authorization'),
                             icon: 'tim-icons icon-badge',
-                        }
+                        }*/
                     ]
                 }
             ],

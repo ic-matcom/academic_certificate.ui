@@ -6,3 +6,9 @@ export const Roles = {
     dean:     'Decano de Facultad',
     rector:   'Rector de Universidad'
 }
+
+export enum GroupRoles {
+    Normal = 0,
+    CertAdmin = 1,
+    SDR = 2
+}

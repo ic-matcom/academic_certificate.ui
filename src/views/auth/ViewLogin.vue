@@ -82,6 +82,7 @@ export default defineComponent({
             authStore.reqLogin(data)
             .then(() => { goToDashboard() })
             .catch(error => { 
+                data.password =""
                 forceRerender()
                 tfyAuthFail(error) })
         }

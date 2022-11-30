@@ -1,4 +1,5 @@
 import type { ICertificateDto, IStaffDto } from '@/services/definitions'
+import type { IUserFormData } from '../definitions/types-forms'
 
 
 export default function useFactory() {
@@ -42,11 +43,23 @@ export default function useFactory() {
         }
     }
 
+    const mkUser = (): IUserFormData => {
+        return {
+            username: '',
+            passphrase: '',
+            rol: '',
+            lastname: '',
+            firstname: '',
+            email: ''
+        }
+    }
+
     //#endregion ==========================================================================
 
     return {
         mkStaff,
-        mkCertificate
+        mkCertificate,
+        mkUser
     }
 }
 

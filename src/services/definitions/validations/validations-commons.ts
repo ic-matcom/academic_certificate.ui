@@ -42,6 +42,7 @@ export const VSchemaCommon = {
         return true
     },
     lastName:  ( value: string ): boolean | string => {
+        if (!required(value)) return t('validation.required')
         if (!regex(value, { regex: regAlphaNSpaces })) return t('validation.only-alpha-spaces')
         if (!min(value, { length: 6 })) return t('validation.min-length', { length: 6 })
         if (!max(value, { length: 30 })) return t('validation.max-length', { length: 30 })

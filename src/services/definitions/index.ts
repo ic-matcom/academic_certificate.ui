@@ -1,11 +1,13 @@
 import { ALIGN_POSITION} from './types-common'
 import { RoutePaths, RoutePathNames } from './route-paths'
-import { Roles } from './users-roles'
+import { Roles, GroupRoles } from './users-roles'
 import { HCatalogsTable, PAGE_SIZE, queryBase } from './data-datatables'
 import { EntityTypes } from '@/services/definitions/enums-entities'
 import { HTTP_RESPONSES, Chaincode } from '@/services/definitions/enums-common'
 
 import { VSchemaStaffCreate, VSchemaStaffEdit } from '@/services/definitions/validations/validations-people'
+import { VSchemaUserCreate, VSchemaUserEdit } from '@/services/definitions/validations/validations-users'
+import { VSchemaCertificateInvalidate } from '@/services/definitions/validations/validations-certificates'
 import { VSchemaCommon } from '@/services/definitions/validations/validations-commons'
 import { VSchemaAuth } from '@/services/definitions/validations/validations-auth'
 
@@ -43,7 +45,8 @@ export {
     ALIGN_POSITION,
 
     // Validations ... VSchema == validations schema
-    VSchemaAuth, VSchemaCommon, VSchemaStaffCreate, VSchemaStaffEdit,
+    VSchemaAuth, VSchemaCommon, VSchemaStaffCreate, VSchemaStaffEdit, 
+    VSchemaUserCreate, VSchemaUserEdit, VSchemaCertificateInvalidate,
 
     // =====  ENTITIES =====
 
@@ -54,7 +57,7 @@ export {
     IUsersPage, IUsersRow, UserInfo,
 
     //roles
-    IRol, Roles,
+    IRol, Roles, GroupRoles,
 
     //certificates
     ICertificatesPage, ICertificatesRow, ICertificateDto

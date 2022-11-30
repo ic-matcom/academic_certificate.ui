@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { IDataTableQuery, IBasicPageState, IdsArray, ICertificatesRow, ICertificateDto } from '@/services/definitions'
-import type { ICertificateFormData, IUserFormData } from '@/services/definitions/types-forms'
+import type { ICertificateFormData } from '@/services/definitions/types-forms'
 import type { ICertificateResponseData } from '@/services/definitions/types-api'
 import { ApiCertificates } from '@/services/api/api-certificates'
 import { transformCertificateResponse } from '@/services/helpers/help-forms'
@@ -39,7 +39,8 @@ export const useCertificatesStore = defineStore({
     getters: {
 
         getCertificatesList: ( state ) : Array<ICertificatesRow> => state.entityPage,
-        getEntitiesCount: ( state ) : number => state.totalRecords
+        getEntitiesCount: ( state ) : number => state.totalRecords,
+        getCertificateStatus: ( state ) : number => state.certificate.certificate_status
     },
 
     actions: {
@@ -69,15 +70,6 @@ export const useCertificatesStore = defineStore({
                 ApiCertificates.insertCertificate(payload)
                 .then((response:any) => {
 
-                    /*// we are going request the page to the backend to keep the data sync after the new successfully insertion
-                    const queryData: IDataTableQuery = {
-                        Offset : this.pageNumber,
-                        Limit  : this.pageSize,
-                        Orderer: 'id'
-                    }
-
-                    this.reqCertificatesPages(queryData)               // making the request*/
-
                     resolve(response.data)
 
                 }).catch(error => {reject(error)})
@@ -95,10 +87,7 @@ export const useCertificatesStore = defineStore({
                 ApiCertificates.getCertificatesPageById(payload)
                 .then((response:any) => {
                     this.entityPage = transformCertificateResponse([response.data.responsePayload])
-                    this.certificate = {
-                        ...this.entityPage[0],
-                        invalid_reason: response.data.responsePayload.invalid_reason
-                    }           
+                    this.certificate = this.entityPage[0]
                     this.totalRecords = 1
                     this.pageSize = 1
                     this.pageNumber = 1

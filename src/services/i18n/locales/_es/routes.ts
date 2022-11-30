@@ -5,10 +5,12 @@ export default {
     [ RoutePathNames.dashboard ]: "inicio",
     [ RoutePathNames.profile   ]: 'perfil de usuario',
     logout: 'salir',
+    settings: 'configuración',
     //endregion =============================================================================
 
     //region ======== Certificates ==============================================================
     [ RoutePathNames.certificates ]: "@:{'entities.certificates.section-name'}",
+    [ RoutePathNames.certificatesToValidate]: "@:{'entities.certificates.section-name'} por validar",
     [ RoutePathNames.certificatesCreate ]: '@:crud-actions.create @:entities.certificates.section-name',
     [ RoutePathNames.certificatesDetails ]: '@:crud-actions.details @:entities.certificates.section-name',
     [ RoutePathNames.certificatesModify ]: '@:crud-actions.edit @:entities.certificates.section-name',
