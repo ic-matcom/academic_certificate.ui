@@ -87,9 +87,8 @@ export class ApiCertificates {
         const payload = {
             ID  : id,
             signed_by: signed_by,
-            ...Chaincode
         }
-        return axios.put(`api/v${ version }/dapp/validate_certificate`, payload)
+        return axios.put(`api/v${ version }/dapp/validate_certificate?channel=mychannel&chaincode=certificate&signer=User1`, payload)
     }
 
     /**
@@ -100,9 +99,8 @@ export class ApiCertificates {
         const payload = {
             ID  : id,
             description: description,
-            ...Chaincode
         }
-        return axios.put(`api/v${ version }/dapp/invalidate_certificate`, payload)
+        return axios.put(`api/v${ version }/dapp/invalidate_certificate?channel=mychannel&chaincode=certificate&signer=User1`, payload)
     }
 
     /**

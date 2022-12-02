@@ -7,7 +7,7 @@
                         <fieldset disabled>
                             <form>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
                                         {{ $t('form.fields-common.certification') }}
                                     </label>
                                     <div class="col-md-6">
@@ -21,7 +21,7 @@
                                     </div>                                    
                             </div>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
                                         {{ $t('form.fields-common.emitter') }}
                                     </label>
                                     <div class="col-md-6">
@@ -35,7 +35,7 @@
                                     </div>                                    
                             </div>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
                                         {{ $t('form.fields-common.accredited') }}
                                     </label>
                                     <div class="col-md-6">
@@ -181,9 +181,23 @@
                                         />
                                     </div>
                             </div>
+                            <div class="row" v-if="fmode === 'validate' ||  (fmode === 'invalidate' && certificatesStore.certificate.certificate_status === 0)" >
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                        {{ $t('form.fields-common.invalid_reason') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        <CmpBasicInput
+                                            :key="componentKey"
+                                            id="invalid_reason"
+                                            name="invalid_reason"
+                                            type="text"
+                                            :value="certificatesStore.certificate.invalid_reason"
+                                        />
+                                    </div>                                    
+                            </div>
                         </form>
                         </fieldset>
-                        <form v-if="fmode === 'invalidate'">
+                        <form v-if="(fmode === 'invalidate' && certificatesStore.certificate.certificate_status !== 0)">
                             <div class="row">
                                     <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.invalid_reason') }}
@@ -210,7 +224,7 @@
                             </div>             
                         </div>          
                     </template>
-                    <template v-slot:footer v-else-if="fmode === 'invalidate'">
+                    <template v-slot:footer v-else-if="fmode === 'invalidate' && certificatesStore.certificate.certificate_status !== 0">
                         <div class="row">
                             <div class="col-3"></div>
                             <div class="col-md-6">
