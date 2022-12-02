@@ -42,7 +42,7 @@ export default {
                         {
                             href: { name: RoutePathNames.certificatesCreate, params: {fmode: 'create' as TFormMode } },
                             title: this.$t('nav.sidebar-create-certificates'),
-                            icon: 'tim-icons icon-paper',
+                            icon: 'tim-icons icon-send',
                         },
                         {
                             href: { name: RoutePathNames.certificatesToValidate },

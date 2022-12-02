@@ -6,6 +6,7 @@
         <CmpTableActionBar
                 :subject="this.$props.subject"
                 :entityMode="eMode"
+                :groupRolMode="gRMode"
                 :chkCount="Object.keys(ls_selections.selected).length"
                 v-on:navCreateIntent="$emit('navCreateIntent')"
                 v-on:enableChkCollIntent="h_EnableChkCollection"
@@ -245,6 +246,7 @@
 
                 <!--<CmpTableRowActions v-if="entityTypes.Store === entityMode || entityTypes.Menu === entityMode"-->
                 <CmpTableRowActions :mode="eMode"
+                                    :rmode="gRMode"
                                     :identifier="rowObj['id']"
                                     v-on:deleteIntent="$emit('deleteIntent', $event)"
                                     v-on:detailsIntent="$emit('detailsIntent', $event)"
@@ -269,7 +271,7 @@ import CmpTableEmpty from './CmpTableEmpty.vue'
 import CmpTableChkbox from './CmpTableChkbox.vue'
 import CmpTableRowActions from './CmpTableRowActions.vue'
 import CmpTableActionBar from './CmpTableActionBar.vue'
-import { PAGE_SIZE } from '@/services/definitions'
+import { GroupRoles, PAGE_SIZE } from '@/services/definitions'
 import { CmpBaseButton } from '@/components'
 import { watch } from '@vue/runtime-core'
 import useCommon from '@/services/composables/useCommon'
@@ -302,6 +304,11 @@ export default defineComponent({
             type:        Number,
             description: 'The type of the entity that indicate the component how to adapt according with the given entity type',
             required:    true
+        },
+        groupRolMode:          {
+            type:        Number,
+            default:     GroupRoles.Normal,
+            description: 'The type of permissions that indicate the component how to adapt according with the given group rol type',
         },
         columns:             {
             type:        Array,
@@ -402,7 +409,8 @@ export default defineComponent({
             Search: '',
             OrderDir: 'ASC'
         }
-        const eMode = toRaw(props.entityMode)                                                           // Returns the raw, original object of a reactive or readonly proxy. This is an escape hatch that can be used to temporarily read without incurring proxy access/tracking overhead or write without triggering changes.
+        const eMode = toRaw(props.entityMode)                                                       // Returns the raw, original object of a reactive or readonly proxy. This is an escape hatch that can be used to temporarily read without incurring proxy access/tracking overhead or write without triggering changes.
+        const gRMode = toRaw(props.groupRolMode)
         const search = ref('')
         const { cap } = useCommon()
         const dtFilters = reactive<any>({})                                                      // Store the datatable filters
@@ -705,6 +713,7 @@ export default defineComponent({
         return {
 
             eMode,
+            gRMode,
             ls_pageSize,
             ls_selections,
             ls_rootChkBoxState,
