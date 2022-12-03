@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { IDataTableQuery, IBasicPageState, IdsArray, ICertificatesRow, ICertificateDto } from '@/services/definitions'
+import { type IDataTableQuery, type IBasicPageState, type IdsArray, type ICertificatesRow, type ICertificateDto, SearchTypes } from '@/services/definitions'
 import type { ICertificateFormData } from '@/services/definitions/types-forms'
 import type { ICertificateResponseData } from '@/services/definitions/types-api'
 import { ApiCertificates } from '@/services/api/api-certificates'
@@ -29,7 +29,9 @@ export const useCertificatesStore = defineStore({
             volume_folio_university:"",
             certificate_status:0,
             invalid_reason:""
-        }
+        },
+        searchType: SearchTypes.Status,
+        param: '4'
     }),
 
     /**
@@ -37,10 +39,11 @@ export const useCertificatesStore = defineStore({
      * as a convention, we name all the getter with a 'get' prefix
      */
     getters: {
-
         getCertificatesList: ( state ) : Array<ICertificatesRow> => state.entityPage,
         getEntitiesCount: ( state ) : number => state.totalRecords,
-        getCertificateStatus: ( state ) : number => state.certificate.certificate_status
+        getCertificateStatus: ( state ) : number => state.certificate.certificate_status,
+        getSearchType: ( state ) : number => state.searchType,
+        getParam: ( state ): string => state.param
     },
 
     actions: {
@@ -56,6 +59,17 @@ export const useCertificatesStore = defineStore({
             this.entityPage = this.entityPage.filter(certificateRow => payload != certificateRow.id)
             this.totalRecords -= 1
             //this.pageSize -= payload.ids.length
+        },
+
+        /**
+         * Change the values of the search
+         * @param searchType Type of the search (ID/Status/Accredited)
+         * @param param Value to be searched
+         */
+        mutSearch( searchType: SearchTypes , param: string = '')
+        {
+            this.searchType = searchType
+            this.param = param
         },
 
         // --- async calls actions ---
@@ -75,6 +89,26 @@ export const useCertificatesStore = defineStore({
                 }).catch(error => {reject(error)})
             })
         },
+
+        /**
+         * Tries to get a datatable page of certificates entities from backend
+         *
+         * @param query query of filters and order criteria from datatable UI controls
+         */
+         async reqCertificatesSearch (query: IDataTableQuery) : Promise<void> {
+
+            if(this.searchType === SearchTypes.ID)
+            {
+                return await this.reqCertificatesById(this.param)
+            }
+            else if(this.searchType == SearchTypes.Accredited)
+            {
+                return await this.reqCertificatesByAccredited(query, this.param)
+            }
+            else {
+                return await this.reqCertificatesByStatus(query, +this.param)
+            }
+       },
 
         /**
          * Tries to get a datatable page of certificates entities by id from backend
@@ -254,7 +288,9 @@ export const useCertificatesStore = defineStore({
 
 interface ICertificatesState extends IBasicPageState {
     entityPage: Array<ICertificatesRow>,
-    certificate: ICertificateDto
+    certificate: ICertificateDto,
+    searchType: SearchTypes,
+    param:    string,
 }
 
 //endregion =============================================================================

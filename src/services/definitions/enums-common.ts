@@ -19,3 +19,10 @@ export const Cert_Status: Array<ICertStatus> = [
     {name: "SignedByDean", value: 3}, 
     {name: "Valid", value: 4} 
 ]
+
+export enum SearchTypes {
+    Status = 0,
+    Accredited = 1,
+    ID = 2,
+    ToValidate = 3
+}

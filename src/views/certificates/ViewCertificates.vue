@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard :hasFormBackBtn="true" v-on:doClick="h_Back">
-                    <template v-if="fmode === 'validate' || fmode === 'invalidate'"> 
+                    <template> 
                         <fieldset disabled>
                             <form>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.certification') }}
                                     </label>
                                     <div class="col-md-6">
@@ -16,12 +16,12 @@
                                             id="certification"
                                             name="certification"
                                             type="text"                                        
-                                            :value="certificatesStore.certificate.certification"
+                                            v-model="iniFormData.certification"
                                         />
                                     </div>                                    
                             </div>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.emitter') }}
                                     </label>
                                     <div class="col-md-6">
@@ -30,12 +30,12 @@
                                             id="emitter"
                                             name="emitter"
                                             type="text"
-                                            :value="certificatesStore.certificate.emitter"
+                                            v-model="iniFormData.emitter"
                                         />
                                     </div>                                    
                             </div>
                             <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label-lg">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.accredited') }}
                                     </label>
                                     <div class="col-md-6">
@@ -44,7 +44,7 @@
                                             id="accredited"
                                             name="accredited"
                                             type="text"
-                                            :value="certificatesStore.certificate.accredited"
+                                            v-model="iniFormData.accredited"
                                         />
                                     </div>                                    
                             </div>
@@ -58,7 +58,7 @@
                                             id="created_by"
                                             name="created_by"
                                             type="text"
-                                            :value="certificatesStore.certificate.created_by"
+                                            v-model="iniFormData.created_by"
                                         />
                                     </div>                                    
                             </div>
@@ -72,7 +72,7 @@
                                         id="volume_folio_faculty"
                                         name="volume_folio_faculty"
                                         type="text"
-                                        :value="certificatesStore.certificate.volume_folio_faculty"
+                                        v-model="iniFormData.volume_folio_faculty"
                                         />
                                     </div>
                                     <div class="col-md-3">
@@ -81,7 +81,7 @@
                                         id="volume_folio_university"
                                         name="volume_folio_university"
                                         type="text"
-                                        :value="certificatesStore.certificate.volume_folio_university"
+                                        v-model="iniFormData.volume_folio_university"
                                         />
                                     </div>
                             </div>
@@ -95,17 +95,31 @@
                                         id="date"
                                         name="date"
                                         type="text"
-                                        :value="certificatesStore.certificate.date"
+                                        v-model="iniFormData.date"
                                     />
                                     </div>
                         
                                     <div class="col-md-3">
                                         <CmpBasicCheckbox name="gold_certificate"
                                                       :key="componentKey"
-                                                      :checked="certificatesStore.certificate.gold_certificate"
+                                                      :checked="iniFormData.gold_certificate"
                                                       :labels="[$t('form.fields-common.gold_certificate'), $t('btn.val-no')]"
                                          />
                                      </div>                          
+                            </div>
+                            <div class="row">
+                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
+                                        {{ $t('form.fields-common.invalid_reason') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        <CmpBasicInput
+                                            :key="componentKey"
+                                            id="invalid_reason"
+                                            name="invalid_reason"
+                                            type="text"                                        
+                                            v-model="iniFormData.invalid_reason"
+                                        />
+                                    </div>                                    
                             </div>
                             <div class="row">
                                     <label class="text-sm-left text-md-right col-md-3 col-form-label">
@@ -117,7 +131,7 @@
                                             id="secretary_validating"
                                             name="secretary_validating"
                                             type="text"
-                                            :value="certificatesStore.certificate.secretary_validating"
+                                            v-model="iniFormData.secretary_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -131,7 +145,7 @@
                                             id="dean_validating"
                                             name="dean_validating"
                                             type="text"
-                                            :value="certificatesStore.certificate.dean_validating"
+                                            v-model="iniFormData.dean_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -145,7 +159,7 @@
                                             id="rector_validating"
                                             name="rector_validating"
                                             type="text"
-                                            :value="certificatesStore.certificate.rector_validating"
+                                            v-model="iniFormData.rector_validating"
                                         />
                                     </div>                                    
                             </div>
@@ -153,22 +167,22 @@
                                 <label class="text-sm-left text-md-right col-md-3 col-form-label">
                                         {{ $t('form.fields-common.data') }}
                                     </label>
-                                    <div class="col-md-1">
+                                    <div class="col-md-3">
                                         <CmpBasicInput
                                         :key="componentKey"
                                         id="id"
                                         name="id"
                                         type="text"
-                                        :value="certificatesStore.certificate.id"
+                                        v-model="iniFormData.id"
                                         />
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <CmpBasicInput
                                         :key="componentKey"
                                         id="docType"
                                         name="docType"
                                         type="text"
-                                        :value="certificatesStore.certificate.docType"
+                                        v-model="iniFormData.docType"
                                         />
                                     </div>
                                     <div class="col-md-1">
@@ -176,63 +190,13 @@
                                         :key="componentKey"
                                         id="certificate_status"
                                         name="certificate_status"
-                                        type="number"
-                                        :value="certificatesStore.certificate.certificate_status"
+                                        type="text"
+                                        v-model="iniFormData.certificate_status"
                                         />
                                     </div>
                             </div>
-                            <div class="row" v-if="fmode === 'validate' ||  (fmode === 'invalidate' && certificatesStore.certificate.certificate_status === 0)" >
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.invalid_reason') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="invalid_reason"
-                                            name="invalid_reason"
-                                            type="text"
-                                            :value="certificatesStore.certificate.invalid_reason"
-                                        />
-                                    </div>                                    
-                            </div>
                         </form>
-                        </fieldset>
-                        <form v-if="(fmode === 'invalidate' && certificatesStore.certificate.certificate_status !== 0)">
-                            <div class="row">
-                                    <label class="text-sm-left text-md-right col-md-3 col-form-label">
-                                        {{ $t('form.fields-common.invalid_reason') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                        <CmpBasicInput
-                                            :key="componentKey"
-                                            id="param"
-                                            name="param"
-                                            type="text" 
-                                        />
-                                    </div>                                    
-                            </div>
-                        </form>          
-                    </template>
-                    <!-- FORM ACTION BUTTONS -->
-                    <template v-slot:footer v-if="(fmode === 'validate' && authStore.getValidatePermission(certificatesStore.certificate.certificate_status))">
-                        <div class="row">
-                            <div class="col-3"></div>
-                            <div class="col-md-6">
-                                <CmpBaseButton block button-type="success" @doClick.prevent="hValidateIntent">
-                                    {{ cap($t("btn.val-validate")) }}
-                                </CmpBaseButton>
-                            </div>             
-                        </div>          
-                    </template>
-                    <template v-slot:footer v-else-if="fmode === 'invalidate' && certificatesStore.certificate.certificate_status !== 0">
-                        <div class="row">
-                            <div class="col-3"></div>
-                            <div class="col-md-6">
-                                <CmpBaseButton block button-type="success" @doClick.prevent="hInvalidateIntent">
-                                    {{ cap($t("btn.val-invalidate")) }}
-                                </CmpBaseButton>
-                            </div>             
-                        </div>     
+                        </fieldset>                   
                     </template>
                 </CmpCard>
             </div>
@@ -241,19 +205,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, reactive, ref, type ComputedRef } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBaseButton, CmpBasicInput, CmpCard, CmpFormActionsButton, CmpBasicCheckbox } from '@/components'
-import { RoutePathNames, SearchTypes, VSchemaCertificateInvalidate } from '@/services/definitions'
+import { RoutePathNames, SearchTypes, type TFormMode} from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
+import { VSCHEMA } from '@/views/auth/validation'
 
-import type { IValidateFormData } from '@/services/definitions/types-forms'
+import type { ICertificateFormData} from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
 import { useCertificatesStore } from '@/stores/certificates';
-import { useAuthStore } from '@/stores/auth';
+import useFactory from '@/services/composables/useFactory';
 
 export default defineComponent({
     name: 'ViewFormCertificates',
@@ -270,34 +235,24 @@ export default defineComponent({
 
         //region ======= DECLARATIONS & LOCAL STATE ===========================================
         const certificatesStore = useCertificatesStore()
-        const authStore = useAuthStore()
 
         const route = useRoute()
         const router = useRouter()
-        const { fmode, id } = route.params
-
+        const { id } = route.params
+        
         const toast = useToast() // The toast lib interface
 
         const { tfyBasicFail } = useToastify(toast)
         const { cap } = useCommon()
+        
+        const { mkCertificate } = useFactory()
+        let iniFormData = reactive<ICertificateFormData>(mkCertificate())                 // initial form data
 
         const componentKey = ref(0);
 
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
-
-        const aReqValidateCertificate = () => {
-            certificatesStore.reqValidateCertificate(id as string, `${authStore.user.firstname} ${authStore.user.lastname}`)
-            .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
-        }
-
-        const aReqInvalidateCertificate = (data: IValidateFormData ) => {
-            certificatesStore.reqInvalidateCertificate(id as string, data.param)
-            .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
-        }
 
         //#endregion ==========================================================================
 
@@ -312,65 +267,47 @@ export default defineComponent({
         //region ======= COMPUTATIONS & GETTERS ===============================================
 
         // getting the vee validate method to manipulate the form related actions from the view
-        const { handleSubmit, resetForm } = useForm<IValidateFormData>({
-            validationSchema: VSchemaCertificateInvalidate,
+        const { setValues } = useForm<ICertificateFormData>({
+            //validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
+            validationSchema: VSCHEMA,
+            initialValues:    iniFormData
         })
-
+        
         //endregion ===========================================================================
         
         //region ======== HOOKS ===============================================================
         
         onMounted(() => {
-            if(id)
-            {
-                certificatesStore.reqCertificatesById(id as string).then(() => {forceRerender()}).catch(error => { tfyBasicFail(error, 'Certificate','request') })
+            console.log('apoa')
+            console.log(id)
+            if(id){
+                certificatesStore.reqCertificatesById(id as string)
+                .then(() => {
+                    setValues(certificatesStore.certificate)
+                    forceRerender()
+                })
+                .catch(error => { tfyBasicFail(error, 'Certificates','request') })
             }
         })
 
         //endregion ===========================================================================
 
         //region ======= EVENTS HANDLERS ======================================================
-
-        const hValidateIntent = () => {
-            aReqValidateCertificate()
-        }
-
-        const hInvalidateIntent= handleSubmit(formData => {
-            aReqInvalidateCertificate(formData)
-        })
         
         const h_Back = () => {
-            if(certificatesStore.getSearchType === SearchTypes.ToValidate)
-            {
                 router.push({
-                    name: RoutePathNames.certificatesToValidate,
-                    params: { 
-                        searchtype: SearchTypes.ToValidate
-                    }})
-            }
-            else
-            {
-                router.push({
-                    name: RoutePathNames.certificates,
-                    params: {
-                        searchtype: certificatesStore.getSearchType,
-                        param: certificatesStore.getParam
-                    } 
-                })
-            }; 
+                    name: RoutePathNames.login,
+            })
         }
 
         //endregion ===========================================================================
 
         return {
             h_Back,
-            hValidateIntent,
-            hInvalidateIntent,
             cap,
-            fmode,
-            authStore,
             certificatesStore,
             componentKey,
+            iniFormData
         }
     }
 })

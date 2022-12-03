@@ -26,36 +26,6 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- BUTTONS -->
 
-                    <!-- NOTIFICATIONS BTN DROPDOWN -->
-                    <CmpDropdown tag="li" class="nav-item" title-tag="a" :menu-on-right="true">
-                        <template v-slot:title>
-                            <a href="#"
-                               class="dropdown-toggle nav-link"
-                               data-toggle="dropdown"
-                               aria-expanded="true"
-                            >
-                                <div class="notification d-none d-lg-block d-xl-block"></div>
-                                <i class="tim-icons icon-sound-wave"></i>
-                                <p class="d-lg-none">
-                                    New Notifications
-                                </p>
-                            </a>
-                        </template>
-
-                        <!-- Notifications -->
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item"
-                            >Mike John responded to your email</a
-                            >
-                        </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">You have 5 more tasks</a>
-                        </li>
-                        <li class="nav-link">
-                            <a href="#" class="nav-item dropdown-item">Another notification</a>
-                        </li>
-                    </CmpDropdown>
-
                     <!--  -->
                     <CmpDropdown tag="li"
                                    class="nav-item"
@@ -75,17 +45,17 @@
                         </template>
 
                         <!-- Menu Links -->
-                        <li class="nav-link">
+                        <li class="nav-link" v-if="showSubMenu">
                             <a href="#" 
                                class="nav-item dropdown-item"
                                @click="hGetProfileIntent">
                                {{ common.cap( $t( 'routes.profile' )) }}
                                </a>
                         </li>
-                        <li class="nav-link">
+                        <li class="nav-link" v-if="showSubMenu">
                             <a href="#" class="nav-item dropdown-item">{{ common.cap( $t( 'routes.settings' )) }}</a>
                         </li>
-                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider" v-if="showSubMenu"></div>
                         <li class="nav-link">
                             <a href="#"
                                class="nav-item dropdown-item"
@@ -105,7 +75,7 @@ import { useAuthStore } from '@/stores/auth'
 import { defineComponent } from 'vue'
 import { mapActions } from 'pinia'
 import { CmpModal, CmpDropdown } from '../components'
-import { RoutePaths } from '@/services/definitions'
+import { GroupRoles, RoutePaths } from '@/services/definitions'
 import useCommon from '@/services/composables/useCommon'
 
 
@@ -126,6 +96,15 @@ export default defineComponent({
         CmpModal,
         CmpDropdown
     },
+    props: {
+        
+        rmode: {
+            type: Number,
+            default: 0,
+            description: "The rmode (sets of buttons) to show in actions buttons according to the specified group roles type",
+        },
+
+    },
     data(): INavData {
         return {
             showMenu: false,
@@ -133,7 +112,7 @@ export default defineComponent({
 
             searchQuery: '',
             searchModalVisible: false,
-            common: useCommon()
+            common: useCommon(),
         }
     },
     computed: {
@@ -141,6 +120,14 @@ export default defineComponent({
             const { name } = this.$route
             
             return this.$t('routes.' + String(name))
+        },
+        showSubMenu(): boolean {
+            if(this.rmode === GroupRoles.Normal)
+            {
+                return false
+            }
+
+            return true
         }
     },
     methods: {

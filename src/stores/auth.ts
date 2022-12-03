@@ -88,6 +88,10 @@ export const useAuthStore = defineStore({
                 this.showSearchByState = true
                 this.userGroupRol = GroupRoles.SDR
             }
+            else if (this.getUserRol === Roles.sysadmin)
+            {
+                this.userGroupRol = GroupRoles.UserAdmin
+            }
 
         },
 

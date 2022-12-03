@@ -185,7 +185,7 @@
                             </div>
                         </form>
                     </template>
-                    <template v-else-if="cmptdFmode === 'details'"> 
+                    <template v-else> 
                         <fieldset disabled>
                             <form>
                             <div class="row">
@@ -397,18 +397,16 @@
 import { computed, defineComponent, onMounted, reactive, ref, type ComputedRef } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 import { CmpBaseButton, CmpBasicInput, CmpCard, CmpFormActionsButton, CmpBasicCheckbox } from '@/components'
-import { RoutePathNames, type TFormMode} from '@/services/definitions'
+import { RoutePathNames, SearchTypes, type TFormMode} from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { VSCHEMA } from '@/views/auth/validation'
 
-import type { ICertificateFormData, IUserFormData } from '@/services/definitions/types-forms'
+import type { ICertificateFormData} from '@/services/definitions/types-forms'
 
 import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
-import { storeToRefs } from 'pinia';
 import { useCertificatesStore } from '@/stores/certificates';
-import type { ICertificateDto } from '@/services/definitions';
 import useFactory from '@/services/composables/useFactory';
 
 export default defineComponent({
@@ -430,7 +428,7 @@ export default defineComponent({
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
-        //const userId = Number.parseInt(id as string, 10)
+        console.log(fmode)
         
         const toast = useToast() // The toast lib interface
 
@@ -448,30 +446,13 @@ export default defineComponent({
 
         const aReqCertificateCreation = ( data: ICertificateFormData ) => {
             certificatesStore.reqInsertCertificate(data)
-            .then(() => { 
-                
-                router.push({ 
-                name: RoutePathNames.certificates,
-                params: {
-                    param: 1,
-                    searchType: "status",
-                }
-             }); })
+            .then(() => { h_Back() })
             .catch(error => { tfyBasicFail(error, 'Certificates','addition') })
         }
 
         const aReqCertificateUpdate = (data: ICertificateFormData ) => {
             certificatesStore.reqModifyCertificate(data)
-            .then(() => { 
-                
-                router.push({ 
-                    name: RoutePathNames.certificates,
-                    params: {
-                        searchType: "status", 
-                        param: certificatesStore.certificate.certificate_status
-                    }
-                }); 
-            })
+            .then(() => { h_Back() })
             .catch(error => { tfyBasicFail(error, 'Certificates','update') })
         }
 
@@ -509,7 +490,34 @@ export default defineComponent({
                     forceRerender()
                 })
                 .catch(error => { tfyBasicFail(error, 'Certificates','request') })
-            }  
+            }
+            else if (cmptdFmode.value === 'validate' as TFormMode){
+                router.push({
+                name  : RoutePathNames.certificatesValidate,
+                params: {
+                    fmode: 'validate' as TFormMode,
+                    id   : id,
+                }
+                })
+            }
+            else if (cmptdFmode.value === 'invalidate' as TFormMode){
+                router.push({
+                name  : RoutePathNames.certificatesValidate,
+                params: {
+                    fmode: 'invalidate' as TFormMode,
+                    id   : id,
+                }
+                })
+            }
+            else if (cmptdFmode.value !== 'create' as TFormMode){
+                
+                certificatesStore.reqCertificatesById(cmptdFmode.value as string)
+                .then(() => {
+                    setValues(certificatesStore.certificate)
+                    forceRerender()
+                })
+                .catch(error => { tfyBasicFail(error, 'Certificates','request') })
+            }
         })
 
         //endregion ===========================================================================
@@ -527,9 +535,28 @@ export default defineComponent({
         }
         
         const h_Back = () => {
-            router.push({ 
-                name: RoutePathNames.dashboard,
-            });
+            if(!['create','edit','details','validate','invalidate'].includes(cmptdFmode.value as TFormMode))
+            {
+                router.push({name:RoutePathNames.login})
+            }
+            else if(certificatesStore.getSearchType === SearchTypes.ToValidate)
+            {
+                router.push({
+                    name: RoutePathNames.certificatesToValidate,
+                    params: { 
+                        searchtype: SearchTypes.ToValidate
+                    }})
+            }
+            else
+            {
+                router.push({
+                    name: RoutePathNames.certificates,
+                    params: {
+                        searchtype: certificatesStore.getSearchType,
+                        param: certificatesStore.getParam
+                    } 
+                })
+            };
         }
 
         //endregion ===========================================================================

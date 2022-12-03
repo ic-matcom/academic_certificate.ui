@@ -3,7 +3,7 @@ import { RoutePaths, RoutePathNames } from './route-paths'
 import { Roles, GroupRoles } from './users-roles'
 import { HCatalogsTable, PAGE_SIZE, queryBase } from './data-datatables'
 import { EntityTypes } from '@/services/definitions/enums-entities'
-import { HTTP_RESPONSES, Chaincode } from '@/services/definitions/enums-common'
+import { HTTP_RESPONSES, Chaincode, SearchTypes } from '@/services/definitions/enums-common'
 
 import { VSchemaStaffCreate, VSchemaStaffEdit } from '@/services/definitions/validations/validations-people'
 import { VSchemaUserCreate, VSchemaUserEdit } from '@/services/definitions/validations/validations-users'
@@ -32,6 +32,7 @@ export {
     EntityTypes,
     HTTP_RESPONSES,
     Chaincode,
+    SearchTypes,
 
     // Functions & other Types
     TOPSKind,

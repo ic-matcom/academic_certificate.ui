@@ -10,5 +10,6 @@ export const Roles = {
 export enum GroupRoles {
     Normal = 0,
     CertAdmin = 1,
-    SDR = 2
+    SDR = 2,
+    UserAdmin = 3
 }
