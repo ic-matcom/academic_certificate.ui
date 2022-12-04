@@ -218,7 +218,7 @@
                         <div class="row">
                             <div class="col-3"></div>
                             <div class="col-md-6">
-                                <CmpBaseButton block button-type="success" @doClick.prevent="hValidateIntent">
+                                <CmpBaseButton block button-type="success" @doClick.prevent="hValidateIntent" :loading="loading">
                                     {{ cap($t("btn.val-validate")) }}
                                 </CmpBaseButton>
                             </div>             
@@ -228,7 +228,7 @@
                         <div class="row">
                             <div class="col-3"></div>
                             <div class="col-md-6">
-                                <CmpBaseButton block button-type="success" @doClick.prevent="hInvalidateIntent">
+                                <CmpBaseButton block button-type="success" @doClick.prevent="hInvalidateIntent" :loading="loading">
                                     {{ cap($t("btn.val-invalidate")) }}
                                 </CmpBaseButton>
                             </div>             
@@ -282,21 +282,24 @@ export default defineComponent({
         const { cap } = useCommon()
 
         const componentKey = ref(0);
+        const loading = ref(false);
 
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         const aReqValidateCertificate = () => {
+            loading.value = true
             certificatesStore.reqValidateCertificate(id as string, `${authStore.user.firstname} ${authStore.user.lastname}`)
             .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
+            .catch(error => { tfyBasicFail(error, 'Certificates','update'); loading.value = false})
         }
 
         const aReqInvalidateCertificate = (data: IValidateFormData ) => {
+            loading.value = true
             certificatesStore.reqInvalidateCertificate(id as string, data.param)
             .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
+            .catch(error => { tfyBasicFail(error, 'Certificates','update'); loading.value = false})
         }
 
         //#endregion ==========================================================================
@@ -371,6 +374,7 @@ export default defineComponent({
             authStore,
             certificatesStore,
             componentKey,
+            loading
         }
     }
 })

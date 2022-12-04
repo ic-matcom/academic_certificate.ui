@@ -139,6 +139,7 @@
                         <CmpFormActionsButton
                                 v-on:saveIntent="h_submit"
                                 v-on:cancelIntent="h_Cancel"
+                                :loading="loading"
                         />
                     </template>
                 </CmpCard>
@@ -194,21 +195,24 @@ export default defineComponent({
         let iniFormData = reactive<IUserFormData>(mkUser())                 // initial form data
 
         const componentKey = ref(0);
+        const loading = ref(false);
 
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         const aReqUserCreation = ( data: IUserFormData ) => {
+            loading.value = true
             usersStore.reqUserCreation(data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'Users','addition') })
+            .catch(error => { tfyBasicFail(error, 'Users','addition'); loading.value = false })
         }
 
         const aReqUserUpdate = ( data: IUserFormData ) => {
+            loading.value = true
             usersStore.reqUserUpdate(+id, data)
             .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'Users','update') })
+            .catch(error => { tfyBasicFail(error, 'Users','update'); loading.value = false })
         }
 
         //#endregion ==========================================================================
@@ -279,7 +283,8 @@ export default defineComponent({
             cmptdFmode,
             iniFormData,
             componentKey,
-            usersStore
+            usersStore,
+            loading
         }
     }
 })

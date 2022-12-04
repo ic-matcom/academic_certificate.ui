@@ -383,8 +383,10 @@
                     <!-- FORM ACTION BUTTONS -->
                     <template v-slot:footer v-if="cmptdFmode === 'create' || cmptdFmode === 'edit'">
                         <CmpFormActionsButton
+                                :key="componentKey"
                                 v-on:saveIntent="h_submit"
                                 v-on:cancel-intent="h_Back"
+                                :loading="loading"
                         />
                     </template>
                 </CmpCard>
@@ -439,21 +441,24 @@ export default defineComponent({
         let iniFormData = reactive<ICertificateFormData>(mkCertificate())                 // initial form data
 
         const componentKey = ref(0);
+        const loading = ref(false);
 
         //endregion ===========================================================================
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         const aReqCertificateCreation = ( data: ICertificateFormData ) => {
+            loading.value = true
             certificatesStore.reqInsertCertificate(data)
             .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','addition') })
+            .catch(error => { tfyBasicFail(error, 'Certificates','addition'); loading.value = false })
         }
 
         const aReqCertificateUpdate = (data: ICertificateFormData ) => {
+            loading.value = true
             certificatesStore.reqModifyCertificate(data)
             .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update') })
+            .catch(error => { tfyBasicFail(error, 'Certificates','update'); loading.value = false})
         }
 
         //#endregion ==========================================================================
@@ -568,7 +573,8 @@ export default defineComponent({
             cmptdFmode,
             certificatesStore,
             componentKey,
-            iniFormData
+            iniFormData,
+            loading
         }
     }
 })
