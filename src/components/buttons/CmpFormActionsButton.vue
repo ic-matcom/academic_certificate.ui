@@ -25,26 +25,20 @@
                            @click.prevent="$emit('cancelIntent', $event)"
                            class="mr-sm0 mr-sm-2"
                            buttonType="default"
-                           :title="$t('btn.tip-cancel')">
+                           :title="$t('btn.tip-cancel')"
+                           :disabled="loading">
                 <i class="tim-icons icon-simple-remove" style="padding-bottom: 2px; padding-right: 4px;" />
                 {{ $t( 'btn.val-cancel' ) }}
             </CmpBaseButton>
 
-            <!-- save and stay in the form -->
-            <button @click.prevent="$emit('saveIntent', $event, true)"
-                    class="btn btn-success ml-sm-0 ml-sm-2"
-                    :title="$t('btn.tip-save-stay')">
-                <i class="tim-icons icon-double-right" style="padding-bottom: 2px; padding-right: 4px;" />
-                {{ $t( 'btn.val-apply' ) }}
-            </button>
-
             <!-- save -->
-            <button @click.prevent="$emit('saveIntent', $event, false)"
+            <CmpBaseButton @click.prevent="$emit('saveIntent', $event, false)"
                     class="btn btn-success ml-sm-0 ml-sm-2"
-                    :title="$t('btn.tip-save')">
+                    :title="$t('btn.tip-save')"
+                    :loading="loading">
                 <i class="tim-icons icon-check-2" style="padding-bottom: 2px; padding-right: 4px;" />
                 {{ $t( 'btn.val-save' ) }}
-            </button>
+            </CmpBaseButton>
         </div>
     </div>
 
@@ -100,7 +94,8 @@ export default defineComponent({
         showCancel: {
             type:    Boolean,
             default: true
-        }
+        },
+        loading:  Boolean,
     },
     emits:      [ 'deleteIntent', 'cancelIntent', 'saveIntent' ]
     // 'saveIntent' return the event and a binary state (boolean) for saying (doWeNeedToStay) if the call is from the apply button or the conventional save button. That allows to know if we need to stay in the form, o move on back to other view

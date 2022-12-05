@@ -10,9 +10,10 @@ export const RoutePaths = {
 
     //Certificates section
 
-    certificatesList: '/certificates/list',
+    certificatesList: '/certificates/list/:searchtype?/:param?',
     certificatesCreate: '/certificates/:fmode',
     certificatesForm: '/certificates/:fmode/:id?',
+    certificatesLink: '/certificates/:id',
 
     // PEOPLE section
 
@@ -43,6 +44,7 @@ export const RoutePathNames = {
     certificatesValidate:  'certificates-validate', 
     certificatesDetails:   'certificates-details',
     certificatesInvalidate:'certificates-invalidate',
+    certificatesLink:   'certificates-link',
 
     // PEOPLE section
 

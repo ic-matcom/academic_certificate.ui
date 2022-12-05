@@ -7,6 +7,7 @@
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
+                                  :groupRolMode="groupRoles.CertAdmin"
                                   :columns="columns"
                                   :data="certificatesStore.getCertificatesList"
                                   :count="certificatesStore.getEntitiesCount"
@@ -25,6 +26,7 @@
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
+                                  :groupRolMode="groupRoles.SDR"
                                   :columns="columns"
                                   :data="certificatesStore.getCertificatesList"
                                   :count="certificatesStore.getEntitiesCount"
@@ -42,6 +44,7 @@
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
+                                  :groupRolMode="groupRoles.Normal"
                                   :columns="columns"
                                   :data="certificatesStore.getCertificatesList"
                                   :count="certificatesStore.getEntitiesCount"
@@ -63,12 +66,12 @@
 
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, onUpdated } from 'vue'
 import { useCertificatesStore } from '@/stores/certificates'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'vue-toastification'
 import { HCertificatesTable } from '@/services/definitions/data-datatables'
-import { EntityTypes, queryBase, RoutePathNames, GroupRoles, Roles } from '@/services/definitions'
+import { EntityTypes, queryBase, RoutePathNames, GroupRoles, Roles, SearchTypes } from '@/services/definitions'
 import { CmpCard, CmpDataTable } from '@/components'
 import useDialogfy from '@/services/composables/useDialogfy'
 import useToastify from '@/services/composables/useToastify'
@@ -101,8 +104,8 @@ export default defineComponent({
         const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
         const { dialogfyConfirmation } = useDialogfy()
 
-        const { param, searchType } = route.params 
-
+        const { searchtype, param } = route.params
+        certificatesStore.mutSearch(+searchtype as SearchTypes, param as string)
 
         //#endregion ==========================================================================
 
@@ -114,36 +117,23 @@ export default defineComponent({
          */
         onMounted(() => {
             // populate certificates datatable
-            if(searchType)
-            {
-                if(searchType === "id")
-                {
-                    certificatesStore.reqCertificatesById(param as string).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
-                }
-                else if (searchType === "accredited")
-                {
-                    certificatesStore.reqCertificatesByAccredited(queryBase, param as string).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
-                }
-                else
-                {
-                    certificatesStore.reqCertificatesByStatus(queryBase,+param).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
-                }
-            }
-            else
+            if(+searchtype === SearchTypes.ToValidate)
             {
                 if(authStore.getUserRol == Roles.secretary)
                 {
-                    certificatesStore.reqCertificatesByStatus(queryBase, 1).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                    certificatesStore.mutSearch(SearchTypes.ToValidate,'1')
                 }
                 else if (authStore.getUserRol == Roles.dean)
                 {
-                    certificatesStore.reqCertificatesByStatus(queryBase, 2).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                    certificatesStore.mutSearch(SearchTypes.ToValidate,'2')
                 }
                 else 
                 {
-                    certificatesStore.reqCertificatesByStatus(queryBase, 3).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+                    certificatesStore.mutSearch(SearchTypes.ToValidate,'3')
                 }
-            }        
+            }
+            
+            certificatesStore.reqCertificatesSearch(queryBase).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
         })
 
         //endregion ===========================================================================
@@ -181,7 +171,6 @@ export default defineComponent({
                 name  : RoutePathNames.certificatesCreate,
                 params: {
                     fmode: 'create' as TFormMode,
-                    //id   : '',
                 }
             })
         }
@@ -231,32 +220,6 @@ export default defineComponent({
         }
 
         async function h_BulkActionIntent( bulkData: IBulkData ) {
-
-            /*// This is a somewhat hacky way of cast string to int in typescript. It has to do with type coercion, and
-            // it is a pain to deal with in JS. I use this way because is visually placement and beautiful, in some way;
-            // for a more readable form, use v => parseInt (v)
-            const dataIds = bulkData.ids.map(v => +v)
-            if (bulkData.actionType === 'REMOVE') {
-                const wasConfirmed = await dialogfyConfirmation('delete', 'staff')
-                if (wasConfirmed) a_reqDelete(dataIds)
-            }
-            else if (bulkData.actionType === 'ENABLE') {
-                const wasConfirmed = await dialogfyConfirmation('activate', 'staff', true)
-                if (wasConfirmed) {
-                    // need to enable all selected disabled stores. Filter the staff to find whether Id from the staff in the local store
-                    // actually is in the given Id list ... and also check the Staff isn't active already in the local store
-                    let ids = usersStore.entityPage.filter(s => dataIds.indexOf(s.id) !== -1 && !s.isActive).map(s => s.id)
-                    if (ids.length > 0) a_bulkSwitchState(ids)
-                }
-            }
-            else {
-                const wasConfirmed = await dialogfyConfirmation('deactivate', 'staff', true)
-                if (wasConfirmed) {
-                    // disable case, same as enable but with the disable state ... and also check the Staff isn't disabled already in the local store
-                    let ids = usersStore.entityPage.filter(s => dataIds.indexOf(s.id) !== -1 &&  s.isActive).map(s => s.id)
-                    if (ids.length > 0) a_bulkSwitchState(ids)
-                }
-            }*/
         }
 
         //#endregion ==========================================================================

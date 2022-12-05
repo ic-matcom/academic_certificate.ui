@@ -9,6 +9,11 @@ interface IConfig {
     auth: {
         grand_type: string;
     };
+    chaincode: {
+        name: string;
+        channel: string;
+        signer: string; 
+    };
 }
 
 function getConfig (): IConfig {
@@ -21,6 +26,11 @@ function getConfig (): IConfig {
         auth: {
             grand_type: 'password',                     // Oauth2 flow
         },
+        chaincode: {
+            name: 'certificate',
+            channel: 'mychannel',
+            signer: 'User1'
+        }
     };
 }
 

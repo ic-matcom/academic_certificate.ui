@@ -75,8 +75,9 @@
     import useCommon from '@/services/composables/useCommon'
     import { CmpBaseButton, CmpBasicInput, CmpMultiselectField } from '@/components'
     import { useForm } from 'vee-validate'
-    import { VSchemaAuth } from '@/services/definitions'
-import type { IQueryFormData } from '@/services/definitions/types-forms'
+    import { SearchTypes, VSchemaAuth } from '@/services/definitions'
+    import type { IQueryFormData } from '@/services/definitions/types-forms'
+    import { useCertificatesStore } from '@/stores/certificates'
 
     export default defineComponent({
         name: 'ViewDashboard',
@@ -90,6 +91,7 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
         //region ======== DECLARATIONS & LOCAL STATE ============================================
 
         const authStore = useAuthStore()
+        const certificateStore = useCertificatesStore()
         const router = useRouter()
         const toast = useToast() // The toast lib interface
 
@@ -104,12 +106,13 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
 
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
-        const aReqQueryCertificates = ( data: any, searchType:string ="accredited" ) => {
+        const aReqQueryCertificates = ( data: any, searchType:SearchTypes = SearchTypes.Accredited ) => {
+            certificateStore.mutSearch(searchType, data)
             router.push({
                 name  : RoutePathNames.certificates,
                 params: {
-                    param: data,
-                    searchType: searchType,
+                    searchtype: searchType,
+                    param: data
                 }
             })
         }
@@ -144,11 +147,11 @@ import type { IQueryFormData } from '@/services/definitions/types-forms'
         })
 
         const hQueryIntentById = handleSubmit(formData => {
-            aReqQueryCertificates(formData.id, "id")
+            aReqQueryCertificates(formData.id, SearchTypes.ID)
         })
 
         const hQueryIntentByStatus = handleSubmit(formData => {
-            aReqQueryCertificates(formData.status, "status")
+            aReqQueryCertificates(formData.status, SearchTypes.Status)
         })
 
         //endregion ===========================================================================

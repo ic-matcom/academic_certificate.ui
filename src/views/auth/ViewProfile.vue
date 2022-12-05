@@ -15,7 +15,7 @@
                                    <div class="block block-four"></div>
                                    <img src="../../assets/imgs/anime3.png" alt="..." class="avatar">
                                    <h4 class="title">{{user.username}}</h4>
-                                   <divider/>
+                                   <div class="dropdown-divider"></div>
                                    <h3 class="title">{{user.firstname}} {{user.lastname}}</h3>
                                    <h4 class="subtitle">{{user.rol}}</h4>
                                    <p class="description">{{user.email}}</p>
