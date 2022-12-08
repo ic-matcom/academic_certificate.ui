@@ -87,13 +87,13 @@ export type IShell<T> = {
  * Definition for API operations that requieres a UI toast feedback
  * T = type
  */
-export type TOPSKind = 'deletion' | 'addition' | 'update' | 'enable' | 'disable' | 'request'
+export type TOPSKind = 'deletion' | 'addition' | 'update' | 'enable' | 'disable' | 'request' | 'validation' | 'invalidation'
 
 /***
  * Definition for UI actions that requieres a dialog confirmations or UI feedback
  * T = type
  */
-export type TActionKind = 'delete' | 'create' | 'update' | 'activate' | 'deactivate'
+export type TActionKind = 'delete' | 'create' | 'update' | 'activate' | 'deactivate' | 'invalidate'
 
 /**
  * Definition for entities forms view mode

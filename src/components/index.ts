@@ -9,6 +9,7 @@ import CmpBasicCheckbox from '@/components/inputs/CmpBasicCheckbox.vue'
 import CmpButtonBackTop from '@/components/buttons/CmpButtonBackTop.vue'
 import CmpMultiselectField from '@/components/inputs/CmpMultiselectField.vue'
 import CmpFormActionsButton from '@/components/buttons/CmpFormActionsButton.vue'
+import CmpBreadCrumb from '@/components/CmpBreadCrumb.vue'
 
 
 export {
@@ -33,5 +34,6 @@ export {
 
     // others
     CmpModal,
-    CmpDropdown
+    CmpDropdown,
+    CmpBreadCrumb
 }

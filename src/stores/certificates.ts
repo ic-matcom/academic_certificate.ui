@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
-import { type IDataTableQuery, type IBasicPageState, type IdsArray, type ICertificatesRow, type ICertificateDto, SearchTypes } from '@/services/definitions'
+import { type IDataTableQuery, type IBasicPageState, type IdsArray, type ICertificatesRow, type ICertificateDto, SearchTypes, Roles } from '@/services/definitions'
 import type { ICertificateFormData } from '@/services/definitions/types-forms'
 import type { ICertificateResponseData } from '@/services/definitions/types-api'
 import { ApiCertificates } from '@/services/api/api-certificates'
 import { transformCertificateResponse } from '@/services/helpers/help-forms'
+import { useAuthStore } from './auth'
 
 export const useCertificatesStore = defineStore({
     id: 'certificates',
 
+    persist: true,
     state: () : ICertificatesState => ({
         pageNumber:    0,
         pageSize:      0,
@@ -95,7 +97,7 @@ export const useCertificatesStore = defineStore({
          *
          * @param query query of filters and order criteria from datatable UI controls
          */
-         async reqCertificatesSearch (query: IDataTableQuery) : Promise<void> {
+        async reqCertificatesSearch (query: IDataTableQuery) : Promise<void> {
 
             if(this.searchType === SearchTypes.ID)
             {
@@ -108,6 +110,26 @@ export const useCertificatesStore = defineStore({
             else {
                 return await this.reqCertificatesByStatus(query, +this.param)
             }
+       },
+
+       async reqCertificatesToValidateByRol(query: IDataTableQuery) : Promise<void> {
+
+            const authStore = useAuthStore()
+
+            if(authStore.getUserRol == Roles.secretary)
+            {
+                this.mutSearch(SearchTypes.ToValidate,'1')
+            }
+            else if (authStore.getUserRol == Roles.dean)
+            {
+                this.mutSearch(SearchTypes.ToValidate,'2')
+            }
+            else 
+            {
+                this.mutSearch(SearchTypes.ToValidate,'3')
+            }
+
+            return await this.reqCertificatesByStatus(query, +this.param)
        },
 
         /**

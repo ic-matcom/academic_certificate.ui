@@ -3,26 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <CmpCard>
-                    <template v-if="authStore.getUserGroup === groupRoles.CertAdmin">
-                        <CmpDataTable table-type="hover"
-                                  :subject="$t('entities.certificates.name')"
-                                  :entityMode="eMode"
-                                  :groupRolMode="groupRoles.CertAdmin"
-                                  :columns="columns"
-                                  :data="certificatesStore.getCertificatesList"
-                                  :count="certificatesStore.getEntitiesCount"
-                                  :has-actions="true"
-                                  :filters="filters"
-
-                                  @navCreateIntent="h_navCreateCertificate"
-                                  @requestIntent="h_reqQuery"
-                                  @editIntent="h_navModifyCertificate"
-                                  @detailsIntent="h_navCertificatesDetails"
-                                  @deleteIntent="h_reqDeleteCertificate"
-                        >
-                        </CmpDataTable>
-                    </template>
-                    <template v-else-if="authStore.getUserGroup === groupRoles.SDR">
+                    <template v-if="authStore.getUserGroup === groupRoles.SDR">
                         <CmpDataTable table-type="hover"
                                   :subject="$t('entities.certificates.name')"
                                   :entityMode="eMode"
@@ -39,23 +20,7 @@
                                   @deleteIntent="h_navInvalidateCertificate"
                         >
                         </CmpDataTable>
-                    </template>
-                    <template v-else>
-                        <CmpDataTable table-type="hover"
-                                  :subject="$t('entities.certificates.name')"
-                                  :entityMode="eMode"
-                                  :groupRolMode="groupRoles.Normal"
-                                  :columns="columns"
-                                  :data="certificatesStore.getCertificatesList"
-                                  :count="certificatesStore.getEntitiesCount"
-                                  :has-actions="true"
-                                  :filters="filters"
-
-                                  @requestIntent="h_reqQuery"
-                                  @detailsIntent="h_navCertificatesDetails"
-                        >
-                        </CmpDataTable>
-                    </template>                  
+                    </template>                
                 </CmpCard>
             </div>
         </div>
@@ -65,21 +30,20 @@
 <script lang="ts">
 
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
-import { defineComponent, onMounted} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { defineComponent, onMounted, onUpdated } from 'vue'
 import { useCertificatesStore } from '@/stores/certificates'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'vue-toastification'
 import { HCertificatesTable } from '@/services/definitions/data-datatables'
-import { EntityTypes, queryBase, RoutePathNames, GroupRoles } from '@/services/definitions'
+import { EntityTypes, queryBase, RoutePathNames, GroupRoles, Roles, SearchTypes } from '@/services/definitions'
 import { CmpCard, CmpDataTable } from '@/components'
-import useDialogfy from '@/services/composables/useDialogfy'
 import useToastify from '@/services/composables/useToastify'
 
 import type { TFormMode, IDataTableQuery, IBulkData } from '@/services/definitions'
 
 export default defineComponent({
-    name: 'ViewListCertificates',
+    name: 'ViewValidateListCertificates',
     components: {
         CmpCard,
         CmpDataTable
@@ -101,7 +65,6 @@ export default defineComponent({
         const filters = [ 'storeType', 'isActive' ]
 
         const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
-        const { dialogfyConfirmation } = useDialogfy()
 
         //#endregion ==========================================================================
 
@@ -112,8 +75,8 @@ export default defineComponent({
          * invoke data population method through web API request.
          */
         onMounted(() => {
-            // populate certificates datatable            
-            certificatesStore.reqCertificatesSearch(queryBase).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
+            // populate certificates datatable
+            certificatesStore.reqCertificatesToValidateByRol(queryBase).catch(err => tfyBasicFail(err, 'Certificates', 'request'))
         })
 
         //endregion ===========================================================================
@@ -124,45 +87,12 @@ export default defineComponent({
         function a_reqQuery( queryData: IDataTableQuery ) {
         }
 
-        function a_reqDelete( id: string ) {
-
-            certificatesStore.reqDeleteCertificate(id).then(() => {
-
-                tfyBasicSuccess(`${id}`, 'deletion')
-
-            }).catch(err => tfyBasicFail(err, `${id}`, 'deletion'))
-        }
-
         //#endregion ==========================================================================
 
         //#region ======= COMPUTATIONS & GETTERS ==============================================
         //#endregion ==========================================================================
 
         //#region ======= EVENTS HANDLERS =====================================================
-
-        async function h_reqDeleteCertificate( objectId: string ) {
-            const wasConfirmed = await dialogfyConfirmation('delete', 'certificates')
-            if (wasConfirmed) a_reqDelete(objectId)
-        }
-
-        function h_navCreateCertificate() {
-            router.push({
-                name  : RoutePathNames.certificatesCreate,
-                params: {
-                    fmode: 'create' as TFormMode,
-                }
-            })
-        }
-
-        async function h_navModifyCertificate( objectId: any ) {
-            router.push({
-                name  : RoutePathNames.certificatesModify,
-                params: {
-                    fmode: 'edit' as TFormMode,
-                    id   : objectId.id,
-                }
-            })
-        }
 
         async function h_navValidateCertificate( objectId: any ) {
             router.push({
@@ -212,9 +142,6 @@ export default defineComponent({
             groupRoles,
 
             h_reqQuery,
-            h_reqDeleteCertificate,
-            h_navCreateCertificate,
-            h_navModifyCertificate,
             h_navCertificatesDetails,
             h_navValidateCertificate,
             h_navInvalidateCertificate,

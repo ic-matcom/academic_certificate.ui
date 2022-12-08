@@ -254,9 +254,10 @@ import useToastify from '@/services/composables/useToastify'
 import useCommon from '@/services/composables/useCommon'
 import { useCertificatesStore } from '@/stores/certificates';
 import { useAuthStore } from '@/stores/auth';
+import useDialogfy from '@/services/composables/useDialogfy';
 
 export default defineComponent({
-    name: 'ViewFormCertificates',
+    name: 'ViewFormValidateCertificates',
 
     components: {
         CmpCard,
@@ -278,7 +279,8 @@ export default defineComponent({
 
         const toast = useToast() // The toast lib interface
 
-        const { tfyBasicFail } = useToastify(toast)
+        const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
+        const { dialogfyConfirmation } = useDialogfy()
         const { cap } = useCommon()
 
         const componentKey = ref(0);
@@ -291,15 +293,24 @@ export default defineComponent({
         const aReqValidateCertificate = () => {
             loading.value = true
             certificatesStore.reqValidateCertificate(id as string, `${authStore.user.firstname} ${authStore.user.lastname}`)
-            .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update'); loading.value = false})
+            .then(() => {
+                tfyBasicSuccess('Certificates', 'validation')
+                h_Back() })
+            .catch(error => { loading.value = false;
+                tfyBasicFail(error, 'certificates','validation'); 
+                resetForm();})
         }
 
         const aReqInvalidateCertificate = (data: IValidateFormData ) => {
             loading.value = true
             certificatesStore.reqInvalidateCertificate(id as string, data.param)
-            .then(() => { h_Back() })
-            .catch(error => { tfyBasicFail(error, 'Certificates','update'); loading.value = false})
+            .then(() => {
+                tfyBasicSuccess('Certificates', 'invalidation')
+                h_Back() })
+            .catch(error => { 
+                loading.value = false;
+                tfyBasicFail(error, 'certificates','invalidation'); 
+                resetForm();})
         }
 
         //#endregion ==========================================================================
@@ -338,8 +349,16 @@ export default defineComponent({
             aReqValidateCertificate()
         }
 
+        const hInvalidate = async (formData: IValidateFormData) => {
+            const isOk = await dialogfyConfirmation('invalidate', 'certificates')
+            if(isOk)
+            {
+                aReqInvalidateCertificate(formData)
+            }
+        }
+
         const hInvalidateIntent= handleSubmit(formData => {
-            aReqInvalidateCertificate(formData)
+            hInvalidate(formData)
         })
         
         const h_Back = () => {
@@ -347,18 +366,12 @@ export default defineComponent({
             {
                 router.push({
                     name: RoutePathNames.certificatesToValidate,
-                    params: { 
-                        searchtype: SearchTypes.ToValidate
-                    }})
+                })
             }
             else
             {
                 router.push({
                     name: RoutePathNames.certificates,
-                    params: {
-                        searchtype: certificatesStore.getSearchType,
-                        param: certificatesStore.getParam
-                    } 
                 })
             }; 
         }

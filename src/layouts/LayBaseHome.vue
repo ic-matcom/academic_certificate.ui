@@ -1,25 +1,47 @@
 <template>
 
     <!-- SIDEBAR -->
-    <CmpSideBarMenu :key="componentKey" :rmode="authStore.getUserGroup">
-        <div id="topper-border-cont" class="mp-stylized main-panel" >
+    <template v-if="authStore.isLoggedIn">
+        <CmpSideBarMenu :key="componentKey" :rmode="authStore.getUserGroup">
+            <div id="topper-border-cont" class="mp-stylized main-panel" >
 
-            <!-- NAV BAR -->
-            <LayBaseTopNav :key="componentKey" :rmode="authStore.getUserGroup"></LayBaseTopNav>
-            <!--<notifications />-->
+                <!-- NAV BAR -->
+                <LayBaseTopNav :key="componentKey" :rmode="authStore.getUserGroup"></LayBaseTopNav>
+                <!--<notifications />-->
 
-             <!--CONTENT-->
-            <div class="content">
-                <slot></slot>
+                 <!--CONTENT-->
+                <div class="content">
+                    <slot></slot>
+                </div>
+
+                <!-- BACK 2 TOP BUTTON -->
+                <CmpButtonBackTop class="position-sticky" :global="true" :pivot="160"/>
+
+                <!-- FOOTER -->
+                <LayFooterContent />
             </div>
+        </CmpSideBarMenu>
+    </template>
 
-            <!-- BACK 2 TOP BUTTON -->
-            <CmpButtonBackTop class="position-sticky" :global="true" :pivot="160"/>
-
-            <!-- FOOTER -->
-            <LayFooterContent />
-        </div>
-    </CmpSideBarMenu>
+    <template v-else>
+            <div id="topper-border-cont" class="mp-stylized main-panel" >
+            
+                <!-- NAV BAR -->
+                <LayBaseTopNav :key="componentKey" :rmode="authStore.getUserGroup"></LayBaseTopNav>
+                <!--<notifications />-->
+            
+                 <!--CONTENT-->
+                <div class="content">
+                    <slot></slot>
+                </div>
+            
+                <!-- BACK 2 TOP BUTTON -->
+                <CmpButtonBackTop class="position-sticky" :global="true" :pivot="160"/>
+            
+                <!-- FOOTER -->
+                <LayFooterContent />
+            </div>
+    </template>
 
 </template>
 
@@ -29,12 +51,11 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import LayFooterContent from './LayFooterContent.vue'
 import LayBaseTopNav from './LayBaseTopNav.vue'
 import { CmpSideBarMenu, CmpButtonBackTop } from '@/components'
-import { GroupRoles, RoutePaths } from '@/services/definitions'
 import { useAuthStore } from '@/stores/auth'
-import { mapActions, mapState, mapStores } from 'pinia'
+import { mapStores } from 'pinia'
 
 export default defineComponent({
-    name: 'LayBaseDashboard',
+    name: 'LayBaseHome',
     components: {
         LayBaseTopNav,
         LayFooterContent,

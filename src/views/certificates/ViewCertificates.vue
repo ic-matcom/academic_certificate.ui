@@ -211,7 +211,6 @@ import { CmpBaseButton, CmpBasicInput, CmpCard, CmpFormActionsButton, CmpBasicCh
 import { RoutePathNames, SearchTypes, type TFormMode} from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
-import { VSCHEMA } from '@/views/auth/validation'
 
 import type { ICertificateFormData} from '@/services/definitions/types-forms'
 
@@ -269,7 +268,6 @@ export default defineComponent({
         // getting the vee validate method to manipulate the form related actions from the view
         const { setValues } = useForm<ICertificateFormData>({
             //validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
-            validationSchema: VSCHEMA,
             initialValues:    iniFormData
         })
         
@@ -278,8 +276,6 @@ export default defineComponent({
         //region ======== HOOKS ===============================================================
         
         onMounted(() => {
-            console.log('apoa')
-            console.log(id)
             if(id){
                 certificatesStore.reqCertificatesById(id as string)
                 .then(() => {
