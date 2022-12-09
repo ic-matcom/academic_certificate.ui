@@ -46,7 +46,13 @@
         "footer-description": "Mostrando del {start} al {end} de {total} total de entradas",
         "Description":        "Descripción",
         "Active":             "Estado",
-        "Store Type":         "Tipo"
+        "Store Type":         "Tipo",
+        "certificates-title": "Certificados Académicos",
+        "certificates-subtitle": "Plataforma de Credenciales Digitales",
+        "accredited-search":    "por el nombre del acreditado",
+        "status-search":        "por el estado del certificado",
+        "id-search":            "por el identificador del certificado",
+        "home-message":         "puedes realizar la búsqueda de certificados por cualquiera de estos métodos:"
     },
     "others":       {
         "enable":           "Activo",
@@ -200,6 +206,12 @@
             "name": "Certificados",
             "section-name": "@:entities.certificates.name"
         }
+    },
+    "query":         {
+        "status":             "Estado del certificado",
+        "id":                 "Identificador del certificado",
+        "accredited":         "Nombre del acreditado del certificado",
+        "message":         "Consulta de Certificados"
     },
     "Invalid": "Inválido",
     "Created": "Creado",

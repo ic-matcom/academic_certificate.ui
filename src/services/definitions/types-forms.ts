@@ -4,9 +4,7 @@ export type IAuthFormData = {
 }
 
 export type IQueryFormData = {
-    id: string
-    accredited: string
-    status: string
+    param: string | number
 }
 
 export type IUserFormData = {

@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router'
 import { ApiAuth } from '@/services/api/api-auth'
-import { LayBasePage, LayBaseDashboard } from '@/layouts'
+import { LayBasePage, LayBaseHome } from '@/layouts'
 import { RoutePaths, RoutePathNames } from '@/services/definitions'
 import { PeopleRoutes } from '@/router/people-routes'
 import { UsersRoutes } from '@/router/users-routes'
@@ -18,16 +18,40 @@ const router = createRouter({
             meta:      { layout: LayBasePage }
         },
         {
-            path:      RoutePaths.dashboard,
-            name:      RoutePathNames.dashboard,
-            component: () => import('../views/ViewDashboard.vue'),
-            meta:      { layout: LayBaseDashboard }
+            path:      RoutePaths.home,
+            name:      RoutePathNames.home,
+            component: () => import('../views/ViewHome.vue'),
+            meta:      { 
+                layout: LayBaseHome,
+                breadCrumb: [
+                    {
+                      text: RoutePathNames.home,
+                      to: { path: RoutePaths.home }
+                    }
+                  ] 
+            }
         },
         {
             path:      RoutePaths.profile,
             name:      RoutePathNames.profile,
             component: () => import('../views/auth/ViewProfile.vue'),
-            meta:      { layout: LayBaseDashboard , reqAuth: true,}
+            meta:      { 
+                layout: LayBaseHome, 
+                reqAuth: true,
+                breadCrumb() {
+                    return [
+                      {
+                        text: RoutePathNames.home,
+                        to: { path: RoutePaths.home }
+                      },
+                      {
+                        text: RoutePathNames.profile,
+                        to: { name: RoutePaths.profile }
+                      }
+            
+                    ]
+                  }
+            }
         },
         ...PeopleRoutes,
         ...UsersRoutes,
@@ -48,7 +72,7 @@ router.beforeEach(( to, _, next ) => {
     else if (to.name === RoutePathNames.login && store.isLoggedIn) {            // Not logged / auth
         // Try to login but the user is logged in already
         ApiAuth.setAccessToken(store.authTk)                                    // As the user is logged in already the access_token has to be in the store
-        next(RoutePaths.dashboard)
+        next(RoutePaths.home)
     }
     else if (to.meta.authorize)
     {
@@ -56,7 +80,7 @@ router.beforeEach(( to, _, next ) => {
         const role = store.user?.rol
         if(!authorize.includes(role))
         {
-          next(RoutePaths.dashboard)
+          next(RoutePaths.home)
         }
         else{
             next()
