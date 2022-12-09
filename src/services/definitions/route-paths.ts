@@ -10,7 +10,7 @@ export const RoutePaths = {
 
     //Certificates section
 
-    certificatesSearch:   '/certificates/search/:searchType',
+    certificatesSearch:   '/certificates/search/',
     certificatesList:     '/certificates/list',
     certificatesToValidateList: '/certificates/to-validate',
     certificatesCreate:   '/certificates/:fmode',

@@ -742,7 +742,7 @@ $navbar-nav-link-letter-spacing:    0 !default;
 $navbar-nav-link-border-radius:     $border-radius !default;
 
 /* navbar color */
-$navbar-color:                      #1a1e34 !default;
+$navbar-color:                      #00cca4;
 $navbar-dark-bg:                    transparent !default;
 $navbar-dark-hover-bg:              rgba(255, 255, 255, .1);
 $navbar-dark-active-bg:             rgba(255, 255, 255, .1);
@@ -753,7 +753,7 @@ $navbar-dark-disabled-color:        rgba($white, .25);
 $navbar-dark-toggler-border-color:  transparent !default;
 
 $navbar-light-bg:                   transparent !default;
-$navbar-light-hover-bg:             rgba(0, 0, 0, .1);
+$navbar-light-hover-bg:             rgba(0, 0, 0, 0.1);
 $navbar-light-active-bg:            rgba(0, 0, 0, .1);
 $navbar-light-color:                rgba($black, .5);
 $navbar-light-hover-color:          rgba($black, .7);
@@ -762,7 +762,7 @@ $navbar-light-disabled-color:       rgba($black, .3);
 $navbar-light-toggler-icon-bg:      str-replace(url("data:image/svg+xml !default;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{$navbar-light-color}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"), "#", "%23") !default;
 $navbar-light-toggler-border-color: transparent !default;
 $full-width:                        100% !default;
-$navbar-padding:                    10px 15px !default;
+$navbar-padding:                    10px 8px !default;
 
 
 // Alerts
@@ -839,9 +839,9 @@ $popover-arrow-outer-color:         transparent !default;
 
 // Breadcrumbs
 
-$breadcrumb-bg:                     $black-states !default;
-$breadcrumb-divider-color:          $white !default;
-$breadcrumb-active-color:           $white !default;
+$breadcrumb-bg:                     transparent !default;
+$breadcrumb-divider-color:          $black-states !default;
+$breadcrumb-active-color:           $black-states !default;
 
 
 

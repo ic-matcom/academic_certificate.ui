@@ -294,7 +294,7 @@ export default defineComponent({
             loading.value = true
             certificatesStore.reqValidateCertificate(id as string, `${authStore.user.firstname} ${authStore.user.lastname}`)
             .then(() => {
-                tfyBasicSuccess('Certificates', 'validation')
+                tfyBasicSuccess('certificates', 'validation')
                 h_Back() })
             .catch(error => { loading.value = false;
                 tfyBasicFail(error, 'certificates','validation'); 
@@ -305,7 +305,7 @@ export default defineComponent({
             loading.value = true
             certificatesStore.reqInvalidateCertificate(id as string, data.param)
             .then(() => {
-                tfyBasicSuccess('Certificates', 'invalidation')
+                tfyBasicSuccess('certificates', 'invalidation')
                 h_Back() })
             .catch(error => { 
                 loading.value = false;
@@ -371,7 +371,7 @@ export default defineComponent({
             else
             {
                 router.push({
-                    name: RoutePathNames.certificates,
+                    name: RoutePathNames.certificatesSearch,
                 })
             }; 
         }

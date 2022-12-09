@@ -59,6 +59,7 @@ export default function useToastify( toast: ToastInterface ) {
                 : t('toasts.e404-single', { subject: subject, name: subjectName })
         else if (eCode === 400) details = makeErrorString(error.response.data)
         else if (eCode === 401) details = t('toasts.e401')
+        else if (eCode === 502) details = t('toasts.e502', {subject: t(`entities.${subject}.name`)})
 
         return details
     }
@@ -148,7 +149,7 @@ export default function useToastify( toast: ToastInterface ) {
         let details = _getDetails(error, subject, subjectName)
         _mkError(
             t('toasts.ops-fail-details', {
-                subject: subject,
+                subject: t(`entities.${subject}.name`),
                 opsKind: kind,
                 name: subjectName,
                 status: error.response.status,

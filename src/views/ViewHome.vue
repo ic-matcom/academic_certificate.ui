@@ -51,6 +51,7 @@
     import useCommon from '@/services/composables/useCommon'
     import { CmpBaseButton } from '@/components'
     import { SearchTypes } from '@/services/definitions'
+import { useCertificatesStore } from '@/stores/certificates'
 
     export default defineComponent({
         name: 'ViewHome',
@@ -62,6 +63,7 @@
         //#region ======== DECLARATIONS & LOCAL STATE ============================================
 
         const authStore = useAuthStore()
+        const certificatesStore = useCertificatesStore()
         const router = useRouter()
 
         const { cap } = useCommon()
@@ -75,11 +77,9 @@
         //#region ======== NAVIGATION ============================================================
 
         const goToCertificatesSearch = (searchType:SearchTypes = SearchTypes.Accredited ) => {
+            certificatesStore.mutSearchType(searchType)
             router.push({
                 name  : RoutePathNames.certificatesSearch,
-                params: {
-                    searchType: searchType,
-                }
             })
         }
         //#endregion ==========================================================================

@@ -41,6 +41,15 @@
                                         v-model="iniFormData.passphrase"
                                 />
                             </div>
+                            <div class="form-group has-label">
+                                <CmpBasicInput
+                                        id="passphraseConf"
+                                        name="passphraseConf"
+                                        type="password"                                        
+                                        :placeholder="$t('form.placeholders.passConf')"
+                                        v-model="iniFormData.passphrase"
+                                />
+                            </div>
                             <div class="form-group">
                                 <CmpBasicInput
                                         id="username"
@@ -142,7 +151,7 @@ import { computed, defineComponent, onMounted, reactive, ref, type ComputedRef }
 import { useRoute, useRouter } from "vue-router";
 import { CmpBasicInput, CmpCard, CmpBasicCheckbox, CmpMultiselectField, CmpFormActionsButton } from '@/components'
 import { RoutePathNames, VSchemaUserCreate, VSchemaUserEdit} from '@/services/definitions'
-import type { TFormMode, TOPSKind } from '@/services/definitions'
+import type { TFormMode } from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { useUsersStore } from '@/stores/users'
@@ -226,7 +235,8 @@ export default defineComponent({
 
         // getting the vee validate method to manipulate the form related actions from the view
         const { handleSubmit, meta, setValues, resetForm } = useForm<IUserFormData>({
-            validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
+            validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : 
+                              fmode === 'edit' as TFormMode ? VSchemaUserEdit : {},
             initialValues:    iniFormData
         })
 
