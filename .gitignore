@@ -108,3 +108,5 @@ dist
 
 # Project config files
 src/**/config.ts
+/.vscode/
+/.idea/
