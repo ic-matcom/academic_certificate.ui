@@ -33,7 +33,8 @@
 @include input-base-padding($padding-input-vertical, $padding-input-horizontal);
 
 .input-group-append, .input-group-prepend .input-group-text, .input-group-prepend .input-group-text {
-    background-color: $card-black-background !important;
+//     background-color: $card-black-background !important;
+    background-color: $card-cap-bg !important;
 }
 
 .search-icon-hover:hover {
