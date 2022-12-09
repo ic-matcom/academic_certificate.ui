@@ -531,11 +531,11 @@ export default defineComponent({
             loading.value = true
             certificatesStore.reqInsertCertificate(data)
             .then(() => {
-                tfyBasicSuccess('Certificates', 'addition')
+                tfyBasicSuccess('certificates', 'addition')
                 h_Back() })
             .catch(error => { 
                 loading.value = false;
-                tfyBasicFail(error, 'Certificates','addition'); 
+                tfyBasicFail(error, 'certificates','addition'); 
                 })
         }
 
@@ -547,7 +547,7 @@ export default defineComponent({
                 h_Back() })
             .catch(error => { 
                 loading.value = false;
-                tfyBasicFail(error, 'Certificates','update');
+                tfyBasicFail(error, 'certificates','update');
                 })
         }
 
@@ -578,7 +578,7 @@ export default defineComponent({
                 .then(() => {
                     setValues(certificatesStore.certificate)
                 })
-                .catch(error => { tfyBasicFail(error, 'Certificates','request') })
+                .catch(error => { tfyBasicFail(error, 'certificates','request') })
             }
             else if (cmptdFmode.value !== 'create' as TFormMode){
                 
@@ -586,7 +586,7 @@ export default defineComponent({
                 .then(() => {
                     setValues(certificatesStore.certificate)
                 })
-                .catch(error => { tfyBasicFail(error, 'Certificates','request') })
+                .catch(error => { tfyBasicFail(error, 'certificates','request') })
             }
         })
 
@@ -614,7 +614,7 @@ export default defineComponent({
             else
             {
                 router.push({
-                    name: RoutePathNames.certificates,
+                    name: RoutePathNames.certificatesSearch,
                 })
             };
         }

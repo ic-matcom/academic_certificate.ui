@@ -37,6 +37,8 @@ export default function useToastify( toast: ToastInterface ) {
         else if (ops === 'disable') opsKind = isPresentTense ? t('crud-actions.disable-gerund') : t('crud-actions.disable-pas')
         else if (ops === 'update') opsKind = isPresentTense ? t('crud-actions.update-gerund') : t('crud-actions.update-pas')
         else if (ops === 'request') opsKind = isPresentTense ? t('crud-actions.request-gerund') : t('crud-actions.request-pas')
+        else if (ops === 'validation') opsKind = isPresentTense ? t('crud-actions.validate-gerund') : t('crud-actions.validate-pas')
+        else if (ops === 'invalidation') opsKind = isPresentTense ? t('crud-actions.invalidate-gerund') : t('crud-actions.invalidate-pas')
 
         return opsKind
     }
@@ -57,6 +59,7 @@ export default function useToastify( toast: ToastInterface ) {
                 : t('toasts.e404-single', { subject: subject, name: subjectName })
         else if (eCode === 400) details = makeErrorString(error.response.data)
         else if (eCode === 401) details = t('toasts.e401')
+        else if (eCode === 502) details = t('toasts.e502', {subject: t(`entities.${subject}.name`)})
 
         return details
     }
@@ -146,7 +149,7 @@ export default function useToastify( toast: ToastInterface ) {
         let details = _getDetails(error, subject, subjectName)
         _mkError(
             t('toasts.ops-fail-details', {
-                subject: subject,
+                subject: t(`entities.${subject}.name`),
                 opsKind: kind,
                 name: subjectName,
                 status: error.response.status,

@@ -47,6 +47,7 @@ export default function useFactory() {
         return {
             username: '',
             passphrase: '',
+            passphraseConf: '',
             rol: '',
             lastname: '',
             firstname: '',

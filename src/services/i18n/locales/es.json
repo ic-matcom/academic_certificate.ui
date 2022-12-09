@@ -88,7 +88,11 @@
         "request-gerund":  "de solicitud",
         "details":         "detalles de",
         "validate":        "validar",
-        "invalidate":      "invalidar"
+        "validate-pas":    "validado",
+        "validate-gerund": "de validacion",
+        "invalidate":      "invalidar",
+        "invalidate-pas":  "invalidado",
+        "invalidate-gerund": "de invalidación"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",
@@ -98,8 +102,9 @@
         "auth-fail-4xx":         "Credenciales inválidas.",
         "auth-fail-unknown":     "Algo no fue bien en la autenticación.",
         "e404":                  "Uno o varios identificadores de {subject} no fueron encontrados en el servidor.",
-        "e404-single":           "Identifier de {subject} {name} no fue encontrado en el servidor.",
+        "e404-single":           "Identificador de {subject} {name} no fue encontrado en el servidor.",
         "e401":                  "No autenticado o la autenticación ha expirado.",
+        "e502":                  "Identificador de {subject} no fue encontrado en el servidor.",
         "ops-fail":              "Operación {opsKind} falló para {subject}. Algo ocurrió en el servidor.",
         "ops-fail-details":      "Operación {opsKind} falló para {subject} {name}. Error {status}. {details}",
         "ops-ok":                "{subject} {name} {opsKind} correctamente",
@@ -166,6 +171,7 @@
             "reset-filters":   "Restablecer filtros",
             "user":            "usuario",
             "pass":            "contraseña",
+            "passConf":        "confirmar contraseña",
             "search":          "buscar",
             "email":           "correo.del.usuario{'@'}.dominio.que",
             "volume_folio_faculty": "volumen y folio de la facultad",

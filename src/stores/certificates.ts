@@ -32,8 +32,10 @@ export const useCertificatesStore = defineStore({
             certificate_status:0,
             invalid_reason:""
         },
-        searchType: SearchTypes.Status,
-        param: '4'
+        searchType: SearchTypes.Accredited,
+        param: '',
+        showTable: false,
+        bookmark: ''
     }),
 
     /**
@@ -45,7 +47,8 @@ export const useCertificatesStore = defineStore({
         getEntitiesCount: ( state ) : number => state.totalRecords,
         getCertificateStatus: ( state ) : number => state.certificate.certificate_status,
         getSearchType: ( state ) : number => state.searchType,
-        getParam: ( state ): string => state.param
+        getParam: ( state ): string => state.param,
+        getShowTable: ( state ): boolean => state.showTable
     },
 
     actions: {
@@ -64,14 +67,36 @@ export const useCertificatesStore = defineStore({
         },
 
         /**
-         * Change the values of the search
+         * Change the values of the search type
          * @param searchType Type of the search (ID/Status/Accredited)
+         */
+        mutSearchType( searchType: SearchTypes)
+        {
+            if(searchType !== this.searchType){
+                this.searchType = searchType
+                if(this.showTable){
+                    this.mutShowValue(false)
+                }
+            }
+            
+        },
+
+        /**
+         * Change the values of the param used in the search
          * @param param Value to be searched
          */
-        mutSearch( searchType: SearchTypes , param: string = '')
+        mutSearchParam(param: string)
         {
-            this.searchType = searchType
             this.param = param
+        },
+
+        /**
+         * Change the value of the boolean showTable
+         * @param showTable indicates wether if possible or not to show the certificates table to the user
+         */
+        mutShowValue( showTable: boolean)
+        {
+            this.showTable = showTable
         },
 
         // --- async calls actions ---
@@ -118,15 +143,18 @@ export const useCertificatesStore = defineStore({
 
             if(authStore.getUserRol == Roles.secretary)
             {
-                this.mutSearch(SearchTypes.ToValidate,'1')
+                this.mutSearchType(SearchTypes.ToValidate)
+                this.mutSearchParam('1')
             }
             else if (authStore.getUserRol == Roles.dean)
             {
-                this.mutSearch(SearchTypes.ToValidate,'2')
+                this.mutSearchType(SearchTypes.ToValidate)
+                this.mutSearchParam('2')
             }
             else 
             {
-                this.mutSearch(SearchTypes.ToValidate,'3')
+                this.mutSearchType(SearchTypes.ToValidate)
+                this.mutSearchParam('3')
             }
 
             return await this.reqCertificatesByStatus(query, +this.param)
@@ -147,6 +175,7 @@ export const useCertificatesStore = defineStore({
                     this.totalRecords = 1
                     this.pageSize = 1
                     this.pageNumber = 1
+                    this.bookmark = ''
                     
                     resolve()
 
@@ -172,12 +201,20 @@ export const useCertificatesStore = defineStore({
          async reqCertificatesByStatus (payload: IDataTableQuery, status: number) : Promise<void> {
 
             return await new Promise<void>((resolve, reject) => {
-               ApiCertificates.getCertificatesPageByStatus(payload, status)
+               ApiCertificates.getCertificatesPageByStatus(payload, this.bookmark, status)
                .then((response:any) => {
-                this.entityPage = transformCertificateResponse(response.data.records)              
-                this.totalRecords = response.data.records.length
-                this.pageSize = 1
-                this.pageNumber = 1
+                const data = response.data.responsePayload
+                if(data.fetchedRecordsCount !== 0)
+                {
+                    this.entityPage = transformCertificateResponse(data.records)              
+                    this.totalRecords = data.records.length
+                    this.pageSize = data.fetchedRecordsCount
+                    this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
+                    this.bookmark = data.bookmark
+                }
+                else{
+                    this.bookmark = ''
+                }
                    
                 resolve()
 
@@ -203,14 +240,22 @@ export const useCertificatesStore = defineStore({
         async reqCertificatesByAccredited (payload: IDataTableQuery, accredited: string) : Promise<void> {
 
             return await new Promise<void>((resolve, reject) => {
-               ApiCertificates.getCertificatesPageByAccredited(payload, accredited)
+               ApiCertificates.getCertificatesPageByAccredited(payload, this.bookmark, accredited)
                .then((response:any) => {
-                   this.entityPage = transformCertificateResponse(response.data.records)              
-                   this.totalRecords = response.data.records.length
-                   this.pageSize = 1
-                   this.pageNumber = 1
+                const data = response.data.responsePayload
+                if(data.fetchedRecordsCount !== 0)
+                {
+                    this.entityPage = transformCertificateResponse(data.records)              
+                    this.totalRecords = data.records.length
+                    this.pageSize = data.fetchedRecordsCount
+                    this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
+                    this.bookmark = data.bookmark
+                }
+                else{
+                    this.bookmark = ''
+                }       
                    
-                   resolve()
+                resolve()
 
                }).catch(error => {
                    if (error.response.status === 404)
@@ -313,6 +358,8 @@ interface ICertificatesState extends IBasicPageState {
     certificate: ICertificateDto,
     searchType: SearchTypes,
     param:    string,
+    showTable: boolean
+    bookmark: string
 }
 
 //endregion =============================================================================

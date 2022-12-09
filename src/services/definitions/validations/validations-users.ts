@@ -20,6 +20,16 @@ export const VSchemaUserCreate = {
 
         return true
     },
+    passphraseConf: ( value: string, validationInstance: any ): boolean | string => {
+        if (!required(value)) return t('validation.required')
+
+        // The second parameter vee-validate pass to the validation function is a sort of validation object instance containing the entire form
+        // The thing with the firs check, if for not showing any error in 'passwordConf' field  when 'password' field is empty
+
+        if (validationInstance.form.passphrase === undefined || validationInstance.form.passphrase === '') return true
+        if (validationInstance.form.passphrase !== value) return t('validation.password-confirmation')                // We could use vee-validate 's 'confirmed' rule here, but it isn't working for some reason
+        return true
+    },
     rol: (value: string): boolean | string => 
     {
         if (!required(value)) return t('validation.required')
@@ -33,9 +43,13 @@ export const VSchemaUserEdit = {
     username:  VSchemaCommon.username,
     email:     VSchemaCommon.email,
     passphrase:  ( value: string ): boolean | string => {
-        if (!required(value)) return t('validation.required')
         if (!min(value, { length: 6 })) return t('validation.min-length', { length: 6 })
 
+        return true
+    },
+    passphraseConf: ( value: string, validationInstance: any ): boolean | string => {
+        if (validationInstance.form.passphrase === undefined || validationInstance.form.passphrase === '') return true
+        if (validationInstance.form.passphrase !== value) return t('validation.password-confirmation')                // We could use vee-validate 's 'confirmed' rule here, but it isn't working for some reason
         return true
     },
     rol: (value: string): boolean | string => 

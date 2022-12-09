@@ -8,12 +8,13 @@ export type IQueryFormData = {
 }
 
 export type IUserFormData = {
-    email:      string
-    firstname:  string
-    lastname:   string
-    passphrase: string
-    username:   string
-    rol:        string
+    email:          string
+    firstname:      string
+    lastname:       string
+    passphrase:     string
+    passphraseConf: string
+    username:       string
+    rol:            string
 }
 
 export type ICertificateFormData = {

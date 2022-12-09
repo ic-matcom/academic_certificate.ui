@@ -1,11 +1,11 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-absolute"
-         :class="{ 'bg-white': showMenu, 'navbar-transparent': !showMenu }">
+    <nav class="navbar navbar-light navbar-expand-lg navbar-absolute"
+         :class="{ 'bg-white': showMenu, 'navbar-transparent': showMenu }">
         <div class="container-fluid">
             <CmpBreadCrumb v-if="!showSubMenu"/>
             <!-- KEBAB & BURGER BUTTONS -->
             <div class="navbar-wrapper" v-if="showSubMenu">
-                <a class="navbar-brand" href="#">{{ routeName }}</a>
+                <a class="nav-link navbar-brand text-body" href="#">{{ routeName }}</a>
             </div>
             <button
                     class="navbar-toggler"
