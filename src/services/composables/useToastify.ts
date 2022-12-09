@@ -37,6 +37,8 @@ export default function useToastify( toast: ToastInterface ) {
         else if (ops === 'disable') opsKind = isPresentTense ? t('crud-actions.disable-gerund') : t('crud-actions.disable-pas')
         else if (ops === 'update') opsKind = isPresentTense ? t('crud-actions.update-gerund') : t('crud-actions.update-pas')
         else if (ops === 'request') opsKind = isPresentTense ? t('crud-actions.request-gerund') : t('crud-actions.request-pas')
+        else if (ops === 'validation') opsKind = isPresentTense ? t('crud-actions.validate-gerund') : t('crud-actions.validate-pas')
+        else if (ops === 'invalidation') opsKind = isPresentTense ? t('crud-actions.invalidate-gerund') : t('crud-actions.invalidate-pas')
 
         return opsKind
     }

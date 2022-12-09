@@ -88,7 +88,11 @@
         "request-gerund":  "de solicitud",
         "details":         "detalles de",
         "validate":        "validar",
-        "invalidate":      "invalidar"
+        "validate-pas":    "validado",
+        "validate-gerund": "de validacion",
+        "invalidate":      "invalidar",
+        "invalidate-pas":  "invalidado",
+        "invalidate-gerund": "de invalidación"
     },
     "dialogs":      {
         "confirm":      "Por favor, confirme",
