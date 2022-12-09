@@ -7,7 +7,7 @@ import { HTTP_RESPONSES, Chaincode, SearchTypes } from '@/services/definitions/e
 
 import { VSchemaStaffCreate, VSchemaStaffEdit } from '@/services/definitions/validations/validations-people'
 import { VSchemaUserCreate, VSchemaUserEdit } from '@/services/definitions/validations/validations-users'
-import { VSchemaCertificateInvalidate } from '@/services/definitions/validations/validations-certificates'
+import { VSchemaCertificateCreate, VSchemaCertificateEdit, VSchemaCertificateInvalidate, VSchemaQueryCertificateByAccredited, VSchemaQueryCertificateById, VSchemaQueryCertificateByStatus } from '@/services/definitions/validations/validations-certificates'
 import { VSchemaCommon } from '@/services/definitions/validations/validations-commons'
 import { VSchemaAuth } from '@/services/definitions/validations/validations-auth'
 
@@ -48,6 +48,8 @@ export {
     // Validations ... VSchema == validations schema
     VSchemaAuth, VSchemaCommon, VSchemaStaffCreate, VSchemaStaffEdit, 
     VSchemaUserCreate, VSchemaUserEdit, VSchemaCertificateInvalidate,
+    VSchemaQueryCertificateByAccredited, VSchemaQueryCertificateById, VSchemaQueryCertificateByStatus,
+    VSchemaCertificateCreate, VSchemaCertificateEdit,
 
     // =====  ENTITIES =====
 

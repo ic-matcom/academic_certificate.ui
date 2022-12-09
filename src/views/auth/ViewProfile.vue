@@ -88,7 +88,7 @@ export default defineComponent({
         //region ======= EVENTS HANDLERS ======================================================
 
         const h_Back = () => {
-            router.push({ name: RoutePathNames.dashboard });
+            router.push({ name: RoutePathNames.home });
         }
 
         //endregion ===========================================================================

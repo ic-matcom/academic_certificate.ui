@@ -1,14 +1,13 @@
 <template>
     <div class="label-container">
-        <h1 class="label-justify main-title">Certificados Académicos </h1>
-        <h5 class="label-justify main-title-description" style="font-style: italic">Plataforma de Credenciales Digitales</h5>
+        <h1 class="label-justify main-title">{{$t('data.certificates-title')}}</h1>
+        <h5 class="label-justify main-title-description" style="font-style: italic">{{$t('data.certificates-subtitle')}}</h5>
     </div>
 
     <CmpCard card-type="auto-margin">
         <form>
             <div class="form-group">
                 <CmpBasicInput
-                        :key="componentKey"
                         id="user"
                         name="username"
                         type="text"
@@ -17,7 +16,6 @@
             </div>
             <div class="form-group has-label">
                 <CmpBasicInput
-                        :key="componentKey"
                         id="password"
                         name="password"
                         type="password"
@@ -70,9 +68,7 @@ export default defineComponent({
 
         const { tfyAuthFail } = useToastify(toast)
         const { cap } = useCommon()
-        const { handleSubmit } = useForm<IAuthFormData>({ validationSchema: VSchemaAuth })
-
-        const componentKey = ref(0);
+        const { handleSubmit, resetForm } = useForm<IAuthFormData>({ validationSchema: VSchemaAuth })
 
         //endregion =============================================================================
 
@@ -80,10 +76,9 @@ export default defineComponent({
 
         const aReqAccess = ( data: IAuthFormData ) => {
             authStore.reqLogin(data)
-            .then(() => { goToDashboard() })
-            .catch(error => { 
-                data.password =""
-                forceRerender()
+            .then(() => { goToHome() })
+            .catch(error => {
+                resetForm()
                 tfyAuthFail(error) })
         }
 
@@ -91,16 +86,12 @@ export default defineComponent({
 
         //region ======= HELPERS ==============================================================
 
-        const forceRerender = () => {
-            componentKey.value += 1;
-        };
-
         //endregion ===========================================================================
 
         //region ======== NAVIGATION ============================================================
 
-        const goToDashboard = () => {
-            router.push({ name: RoutePathNames.dashboard })
+        const goToHome = () => {
+            router.push({ name: RoutePathNames.home })
         }
 
         //endregion =============================================================================
@@ -111,17 +102,14 @@ export default defineComponent({
             aReqAccess(formData)
         })
 
-        const hAnonymousLoginIntent = handleSubmit(formData => {
-            goToDashboard()
-        })
+        const hAnonymousLoginIntent = () => goToHome()
 
         //endregion =============================================================================
 
         return {
             hLoginIntent,
             hAnonymousLoginIntent,
-            cap,
-            componentKey
+            cap
         }
     }
 })

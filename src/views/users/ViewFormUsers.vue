@@ -7,7 +7,6 @@
                         <form>
                             <div class="form-group">
                                 <CmpBasicInput
-                                        :key="componentKey"
                                         id="email"
                                         name="email"
                                         type="text"               
@@ -17,7 +16,6 @@
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
-                                        :key="componentKey"
                                         id="firstname"
                                         name="firstname"
                                         type="text"                                        
@@ -27,7 +25,6 @@
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
-                                        :key="componentKey"
                                         id="lastname"
                                         name="lastname"
                                         type="text"                                        
@@ -37,7 +34,6 @@
                             </div>
                             <div class="form-group has-label">
                                 <CmpBasicInput
-                                        :key="componentKey"
                                         id="passphrase"
                                         name="passphrase"
                                         type="password"                                        
@@ -47,7 +43,6 @@
                             </div>
                             <div class="form-group">
                                 <CmpBasicInput
-                                        :key="componentKey"
                                         id="username"
                                         name="username"
                                         type="text"
@@ -57,24 +52,23 @@
                             </div>
                             <!-- role -->
                             <div class="form-group">
-                                    <CmpMultiselectField placeholder="- rol - "
-                                                         :options="usersStore.getRolesForMultiselect"
-                                                         name="rol"
-                                                         class="mb-2"
-                                                         mode="single"
-                                                         closeOnSelect>
-                                        <!--option coming from slot child component ('slots props') [option] -->
-                                        <template #customOption="{option}">
-                                            {{  option.label }}
-                                        </template>
-                                        <!-- option coming from slot child component ('slots props') [value] -->
-                                        <template #customSingleLabel="{value}">
-                                            <div class="multiselect-placeholder">
-                                                {{ value.label }}
-                                            </div>
-                                        </template>
-                                    </CmpMultiselectField>
-                            </div>
+                                <CmpMultiselectField placeholder="- rol - "
+                                                     :options="usersStore.getRolesForMultiselect"
+                                                     name="rol"
+                                                     class="mb-2"
+                                                     closeOnSelect>
+                                    <!--option coming from slot child component ('slots props') [option] -->
+                                    <template #customOption="{option}">
+                                        {{  option.label }}
+                                    </template>
+                                    <!-- option coming from slot child component ('slots props') [value] -->
+                                    <template #customSingleLabel="{value}">
+                                        <div class="multiselect-placeholder">
+                                            {{ value.label }}
+                                        </div>
+                                    </template>
+                                </CmpMultiselectField>
+                            </div>                          
                         </form>
                     </template>
 
@@ -83,7 +77,6 @@
                             <form>
                                 <div class="form-group">
                                     <CmpBasicInput
-                                            :key="componentKey"
                                             :label="$t('form.fields-common.email')"
                                             id="email"
                                             name="email"
@@ -93,7 +86,6 @@
                                 </div>
                                 <div class="form-group">
                                     <CmpBasicInput
-                                            :key="componentKey"
                                             :label="$t('form.fields-common.firstname')"
                                             id="firstname"
                                             name="firstname"
@@ -103,7 +95,6 @@
                                 </div>
                                 <div class="form-group">
                                     <CmpBasicInput
-                                            :key="componentKey"
                                             :label="$t('form.fields-common.lastname')"
                                             id="lastname"
                                             name="lastname"
@@ -113,7 +104,6 @@
                                 </div>
                                 <div class="form-group">
                                     <CmpBasicInput
-                                            :key="componentKey"
                                             :label="$t('form.fields-common.username')"
                                             id="username"
                                             name="username"
@@ -123,7 +113,6 @@
                                 </div>
                                 <div class="form-group">
                                     <CmpBasicInput
-                                            :key="componentKey"
                                             label="Rol"
                                             id="rol"
                                             name="rol"
@@ -157,7 +146,6 @@ import type { TFormMode, TOPSKind } from '@/services/definitions'
 import { useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import { useUsersStore } from '@/stores/users'
-import { VSCHEMA } from '@/views/auth/validation'
 
 import type { IUserFormData } from '@/services/definitions/types-forms'
 
@@ -184,17 +172,15 @@ export default defineComponent({
         const route = useRoute()
         const router = useRouter()
         const { fmode, id } = route.params
-        //const userId = Number.parseInt(id as string, 10)
         
         const toast = useToast() // The toast lib interface
 
-        const { tfyBasicFail } = useToastify(toast)
+        const { tfyBasicSuccess, tfyBasicFail } = useToastify(toast)
         const { cap } = useCommon()
 
         const { mkUser } = useFactory()
         let iniFormData = reactive<IUserFormData>(mkUser())                 // initial form data
 
-        const componentKey = ref(0);
         const loading = ref(false);
 
         //endregion ===========================================================================
@@ -204,24 +190,32 @@ export default defineComponent({
         const aReqUserCreation = ( data: IUserFormData ) => {
             loading.value = true
             usersStore.reqUserCreation(data)
-            .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'Users','addition'); loading.value = false })
+            .then(() => {
+                tfyBasicSuccess('users', 'addition')
+                h_Back() })
+            .catch(error => { 
+                loading.value = false
+                tfyBasicFail(error, 'Users','addition') 
+                resetForm();
+            })
         }
 
         const aReqUserUpdate = ( data: IUserFormData ) => {
             loading.value = true
             usersStore.reqUserUpdate(+id, data)
-            .then(() => { router.push({ name: RoutePathNames.users }); })
-            .catch(error => { tfyBasicFail(error, 'Users','update'); loading.value = false })
+            .then(() => {
+                tfyBasicSuccess(`${id}`, 'update')
+                h_Back() })
+            .catch(error => { 
+                loading.value = false;
+                tfyBasicFail(error, 'Users','update');
+                resetForm();
+             })
         }
 
         //#endregion ==========================================================================
 
         //region ======= HELPERS ==============================================================
-
-        const forceRerender = () => {
-                componentKey.value += 1;
-        };
 
         //endregion ===========================================================================
 
@@ -232,8 +226,7 @@ export default defineComponent({
 
         // getting the vee validate method to manipulate the form related actions from the view
         const { handleSubmit, meta, setValues, resetForm } = useForm<IUserFormData>({
-            //validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
-            validationSchema: VSCHEMA,
+            validationSchema: fmode === 'create' as TFormMode ? VSchemaUserCreate : VSchemaUserEdit,
             initialValues:    iniFormData
         })
 
@@ -246,7 +239,7 @@ export default defineComponent({
                 usersStore.reqUserById(+id)
                 .then(() => {
                     setValues(usersStore.user)
-                    forceRerender()})
+                })
                 .catch(error => { tfyBasicFail(error, 'User','request') })
             }
         })
@@ -282,7 +275,6 @@ export default defineComponent({
             cap,
             cmptdFmode,
             iniFormData,
-            componentKey,
             usersStore,
             loading
         }

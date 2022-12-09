@@ -2,7 +2,7 @@ import { RoutePathNames } from '@/services/definitions'
 
 export default {
     //region ======== ROOTS =================================================================
-    [ RoutePathNames.dashboard ]: "inicio",
+    [ RoutePathNames.home ]: "inicio",
     [ RoutePathNames.profile   ]: 'perfil de usuario',
     logout: 'salir',
     settings: 'configuración',
@@ -10,6 +10,7 @@ export default {
 
     //region ======== Certificates ==============================================================
     [ RoutePathNames.certificates ]: "@:{'entities.certificates.section-name'}",
+    [ RoutePathNames.certificatesSearch ]: "Consultar @:{'entities.certificates.section-name'}",
     [ RoutePathNames.certificatesToValidate]: "@:{'entities.certificates.section-name'} por validar",
     [ RoutePathNames.certificatesCreate ]: '@:crud-actions.create @:entities.certificates.section-name',
     [ RoutePathNames.certificatesDetails ]: '@:crud-actions.details @:entities.certificates.section-name',

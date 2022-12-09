@@ -1,6 +1,6 @@
 export const RoutePaths = {
     login:     '/',
-    dashboard: '/dashboard',
+    home: '/home',
     profile:   '/profile',
 
     //Users section
@@ -10,10 +10,13 @@ export const RoutePaths = {
 
     //Certificates section
 
-    certificatesList: '/certificates/list/:searchtype?/:param?',
-    certificatesCreate: '/certificates/:fmode',
-    certificatesForm: '/certificates/:fmode/:id?',
-    certificatesLink: '/certificates/:id',
+    certificatesSearch:   '/certificates/search/:searchType',
+    certificatesList:     '/certificates/list',
+    certificatesToValidateList: '/certificates/to-validate',
+    certificatesCreate:   '/certificates/:fmode',
+    certificatesForm:     '/certificates/:fmode/:id?',
+    certificatesValidate: '/certificates/sign/:fmode/:id',
+    certificatesLink:     '/certificates/:id',
 
     // PEOPLE section
 
@@ -27,7 +30,7 @@ export const RoutePaths = {
 
 export const RoutePathNames = {
     login:     'login',
-    dashboard: 'dashboard',
+    home:      'home',
     profile:   'profile',
 
     // Users section
@@ -38,13 +41,14 @@ export const RoutePathNames = {
 
     // Certificates section
     certificates:          'certificates',
+    certificatesSearch:    'certificates-search',
     certificatesToValidate:'certificates-to-validate',
     certificatesCreate:    'certificates-create',
     certificatesModify:    'certificates-update',
     certificatesValidate:  'certificates-validate', 
     certificatesDetails:   'certificates-details',
     certificatesInvalidate:'certificates-invalidate',
-    certificatesLink:   'certificates-link',
+    certificatesLink:      'certificates-link',
 
     // PEOPLE section
 

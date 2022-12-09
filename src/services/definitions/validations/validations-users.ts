@@ -1,6 +1,6 @@
 import { i18n } from '@/services/i18n'
-import { min, regex, required } from '@vee-validate/rules'
-import { regStrongPassword, VSchemaCommon } from '@/services/definitions/validations/validations-commons'
+import { min, required } from '@vee-validate/rules'
+import { VSchemaCommon } from '@/services/definitions/validations/validations-commons'
 
 const { t } = i18n.global
 
@@ -10,14 +10,14 @@ const { t } = i18n.global
  * be required as we are creating a new User, so we need a password
  */
 export const VSchemaUserCreate = {
-    firstName: VSchemaCommon.firstName,
-    lastName:  VSchemaCommon.lastName,
+    firstname: VSchemaCommon.firstName,
+    lastname:  VSchemaCommon.lastName,
     username:  VSchemaCommon.username,
     email:     VSchemaCommon.email,
-    password:  ( value: string ): boolean | string => {
+    passphrase:  ( value: string ): boolean | string => {
         if (!required(value)) return t('validation.required')
         if (!min(value, { length: 6 })) return t('validation.min-length', { length: 6 })
-        if (!regex(value, { regex: regStrongPassword })) return t('validation.password-complexity')
+
         return true
     },
     rol: (value: string): boolean | string => 
@@ -28,12 +28,19 @@ export const VSchemaUserCreate = {
 }
 
 export const VSchemaUserEdit = {
-    firstName: VSchemaCommon.firstName,
-    lastName:  VSchemaCommon.lastName,
+    firstname: VSchemaCommon.firstName,
+    lastname:  VSchemaCommon.lastName,
     username:  VSchemaCommon.username,
     email:     VSchemaCommon.email,
-    password:  ( value: string ): boolean | string => {
-        if (!regex(value, { regex: regStrongPassword })) return t('validation.password-complexity')
+    passphrase:  ( value: string ): boolean | string => {
+        if (!required(value)) return t('validation.required')
+        if (!min(value, { length: 6 })) return t('validation.min-length', { length: 6 })
+
         return true
     },
+    rol: (value: string): boolean | string => 
+    {
+        if (!required(value)) return t('validation.required')
+        return true
+    }
 }

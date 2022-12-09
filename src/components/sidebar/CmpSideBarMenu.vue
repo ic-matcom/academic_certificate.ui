@@ -43,8 +43,8 @@ export default {
             {
                 return [
                     {
-                        href: { path: RoutePaths.dashboard },
-                        title: this.$t( 'routes.' + RoutePathNames.dashboard ).toUpperCase(),
+                        href: { path: RoutePaths.home },
+                        title: this.$t( 'routes.' + RoutePathNames.home ).toUpperCase(),
                         icon: 'tim-icons icon-chart-pie-36',
                     },
                     {
@@ -53,7 +53,7 @@ export default {
                         icon: 'fa fa-id-card',
                         child: [
                             {
-                                href: { path: RoutePaths.dashboard },
+                                href: { path: RoutePaths.home },
                                 title: this.$t( 'nav.sidebar-query-certificates'),
                                 icon: 'tim-icons icon-credit-card',
                             },
@@ -70,8 +70,8 @@ export default {
             {
                 return [
                     {
-                        href: { path: RoutePaths.dashboard },
-                        title: this.$t( 'routes.' + RoutePathNames.dashboard ).toUpperCase(),
+                        href: { path: RoutePaths.home },
+                        title: this.$t( 'routes.' + RoutePathNames.home ).toUpperCase(),
                         icon: 'tim-icons icon-chart-pie-36',
                     },
                     {
@@ -80,7 +80,7 @@ export default {
                         icon: 'fa fa-id-card',
                         child: [
                             {
-                                href: { path: RoutePaths.dashboard },
+                                href: { path: RoutePaths.home },
                                 title: this.$t( 'nav.sidebar-query-certificates'),
                                 icon: 'tim-icons icon-credit-card',
                             },
@@ -97,7 +97,7 @@ export default {
                                 icon: 'tim-icons icon-single-02',
                             },
                             /*{
-                                href: { path: RoutePaths.dashboard },
+                                href: { path: RoutePaths.home },
                                 title: this.$t('nav.sidebar-authorization'),
                                 icon: 'tim-icons icon-badge',
                             }*/
@@ -109,8 +109,8 @@ export default {
             {
                 return [
                     {
-                        href: { path: RoutePaths.dashboard },
-                        title: this.$t( 'routes.' + RoutePathNames.dashboard ).toUpperCase(),
+                        href: { path: RoutePaths.home },
+                        title: this.$t( 'routes.' + RoutePathNames.home ).toUpperCase(),
                         icon: 'tim-icons icon-chart-pie-36',
                     },
                     {
@@ -119,12 +119,12 @@ export default {
                         icon: 'fa fa-id-card',
                         child: [
                             {
-                                href: { path: RoutePaths.dashboard },
+                                href: { path: RoutePaths.home },
                                 title: this.$t( 'nav.sidebar-query-certificates'),
                                 icon: 'tim-icons icon-credit-card',
                             },
                             {
-                                href: { name: RoutePathNames.certificatesToValidate, params: { searchtype: SearchTypes.ToValidate } },
+                                href: { path: RoutePaths.certificatesToValidateList},
                                 title: this.$t('nav.sidebar-validate-certificates'),
                                 icon: 'tim-icons icon-bank',
                             }
@@ -136,8 +136,8 @@ export default {
             {
                 return [
                     {
-                        href: { path: RoutePaths.dashboard },
-                        title: this.$t( 'routes.' + RoutePathNames.dashboard ).toUpperCase(),
+                        href: { path: RoutePaths.home },
+                        title: this.$t( 'routes.' + RoutePathNames.home ).toUpperCase(),
                         icon: 'tim-icons icon-chart-pie-36',
                     },
                     {
@@ -146,7 +146,7 @@ export default {
                         icon: 'fa fa-id-card',
                         child: [
                             {
-                                href: { path: RoutePaths.dashboard },
+                                href: { path: RoutePaths.home },
                                 title: this.$t( 'nav.sidebar-query-certificates'),
                                 icon: 'tim-icons icon-credit-card',
                             },

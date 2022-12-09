@@ -19,7 +19,7 @@ export const useUsersStore = defineStore({
         totalRecords: 0,
         entityPage:   [] as IUsersRow[],
         roles: [] as IRol[],
-        user: {id: 0, email:'',firstname:'',lastname:'',username:'', rol:''} 
+        user: {id: 0, email:'',firstname:'',lastname:'',username:'', rol:''}
     }),
 
     /**
@@ -136,8 +136,12 @@ export const useUsersStore = defineStore({
                     this.user.firstname = response.data.firstname
                     this.user.lastname = response.data.lastname
                     this.user.username =  response.data.username
-                    this.user.rol = response.data.rol
-
+                    this.roles.forEach(rol => {
+                        if(rol.name == response.data.rol)
+                        {
+                            this.user.rol = rol.label                  
+                        }
+                    });
                     resolve()
                     
                 }).catch(error => { reject(error) })
@@ -221,7 +225,7 @@ export const useUsersStore = defineStore({
 //region ======== STATE INTERFACE =======================================================
 
 interface IUsersState extends IBasicPageState {
-    entityPage: Array<IUsersRow>,
+    entityPage: Array<IUsersRow>
     roles: Array<IRol>
     user: IUserResponseData
 }

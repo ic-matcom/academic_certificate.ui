@@ -2,8 +2,9 @@
     <nav class="navbar navbar-expand-lg navbar-absolute"
          :class="{ 'bg-white': showMenu, 'navbar-transparent': !showMenu }">
         <div class="container-fluid">
+            <CmpBreadCrumb v-if="!showSubMenu"/>
             <!-- KEBAB & BURGER BUTTONS -->
-            <div class="navbar-wrapper">
+            <div class="navbar-wrapper" v-if="showSubMenu">
                 <a class="navbar-brand" href="#">{{ routeName }}</a>
             </div>
             <button
@@ -74,7 +75,7 @@
 import { useAuthStore } from '@/stores/auth'
 import { defineComponent } from 'vue'
 import { mapActions } from 'pinia'
-import { CmpModal, CmpDropdown } from '../components'
+import { CmpModal, CmpDropdown, CmpBreadCrumb } from '../components'
 import { GroupRoles, RoutePaths } from '@/services/definitions'
 import useCommon from '@/services/composables/useCommon'
 
@@ -94,7 +95,8 @@ export default defineComponent({
     name: 'LayBaseTopNav',
     components: {
         CmpModal,
-        CmpDropdown
+        CmpDropdown,
+        CmpBreadCrumb
     },
     props: {
         
