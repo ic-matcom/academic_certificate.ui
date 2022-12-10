@@ -8,7 +8,8 @@ export const queryBase: IDataTableQuery = {
     Offset:  0,
     Limit:   PAGE_SIZE,
     Orderer: 'id',
-    OrderDir: 'ASC'
+    OrderDir: 'ASC',
+    nextPage: '',
 }
 
 export const HCatalogsTable: Partial<IColumnHeader>[] = [

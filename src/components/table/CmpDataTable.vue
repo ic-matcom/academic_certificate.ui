@@ -260,7 +260,8 @@
     <CmpTableEmpty v-else />
 
     <!-- PAGINATION -->
-    <CmpTablePagination v-if="data.length > 0" :size="ls_pageSize" :total="count" v-on:next="h_computePaginationData" />
+    <CmpTablePagination v-if="data.length > 0 && eMode === entityTypes.Users" :size="ls_pageSize" :total="count" :mode="eMode" v-on:next="h_computePaginationData" />
+    <CmpTablePagination v-else-if="eMode === entityTypes.Certificates" :size="ls_pageSize" :total="count" :dataCount="data.length" :mode="eMode" v-on:next="h_computePaginationData" />
 </template>
 
 <script lang="ts">
@@ -271,7 +272,7 @@ import CmpTableEmpty from './CmpTableEmpty.vue'
 import CmpTableChkbox from './CmpTableChkbox.vue'
 import CmpTableRowActions from './CmpTableRowActions.vue'
 import CmpTableActionBar from './CmpTableActionBar.vue'
-import { GroupRoles, PAGE_SIZE } from '@/services/definitions'
+import { EntityTypes, GroupRoles, PAGE_SIZE } from '@/services/definitions'
 import { CmpBaseButton } from '@/components'
 import { watch } from '@vue/runtime-core'
 import useCommon from '@/services/composables/useCommon'
@@ -407,7 +408,8 @@ export default defineComponent({
             Limit: PAGE_SIZE,
             Orderer: 'id',
             Search: '',
-            OrderDir: 'ASC'
+            OrderDir: 'ASC',
+            nextPage: ''
         }
         const eMode = toRaw(props.entityMode)                                                       // Returns the raw, original object of a reactive or readonly proxy. This is an escape hatch that can be used to temporarily read without incurring proxy access/tracking overhead or write without triggering changes.
         const gRMode = toRaw(props.groupRolMode)
@@ -725,6 +727,7 @@ export default defineComponent({
             pageSizeOptions,
             search,
             searchHasText,
+            entityTypes: EntityTypes,
 
             getNavKey,
             chkHasValue,

@@ -45,11 +45,11 @@ export class ApiCertificates {
      * @param queryParams Parameterized request for the entities. Contains query params such as pagination details and filter options for searching.
      * @param status status of the certificates to be fetched
      */
-     public static getCertificatesPageByStatus( queryParams: IDataTableQuery, bookmark: string, status: number ): AxiosPromise<ICertificatesPage> {
+     public static getCertificatesPageByStatus( queryParams: IDataTableQuery, status: number ): AxiosPromise<ICertificatesPage> {
 
         const payload = {
-            page_limit  : queryParams.Limit - 5,
-            bookmark: bookmark
+            page_limit  : queryParams.Limit,
+            bookmark: queryParams.nextPage
         }
 
         return axios.get(url + "_by_state/" + `${status}` + chaincode, { params: payload })
@@ -60,10 +60,10 @@ export class ApiCertificates {
      * @param queryParams Parameterized request for the entities. Contains query params such as pagination details and filter options for searching.
      * @param accredited Accredited's full name
      */
-     public static getCertificatesPageByAccredited( queryParams: IDataTableQuery, bookmark: string, accredited: string ): AxiosPromise<ICertificatesPage> {
+     public static getCertificatesPageByAccredited( queryParams: IDataTableQuery, accredited: string ): AxiosPromise<ICertificatesPage> {
         const payload = {
-            page_limit  : queryParams.Limit - 5,
-            bookmark: bookmark
+            page_limit  : queryParams.Limit,
+            bookmark: queryParams.nextPage
         }
         return axios.get(url + "_by_accredited/" + `${accredited}` + chaincode, { params: payload })
     }

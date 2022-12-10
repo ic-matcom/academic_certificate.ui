@@ -214,6 +214,11 @@
         //#region ======= FETCHING DATA & ACTIONS =============================================
 
         function a_reqQuery( queryData: IDataTableQuery ) {
+            certificatesStore.reqCertificatesSearch(queryData)
+                .catch(err => {
+                    tfyBasicFail(err, 'certificates', 'request')
+                    certificatesStore.mutShowValue(false)
+                })
         }
 
         async function a_ReqQueryCertificates ( data: number | string) {

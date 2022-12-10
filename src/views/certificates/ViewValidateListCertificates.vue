@@ -85,6 +85,11 @@ export default defineComponent({
         // ❗ this functions here for fetching data could be async await functions easily, if is needed
 
         function a_reqQuery( queryData: IDataTableQuery ) {
+            certificatesStore.reqCertificatesSearch(queryData)
+                .catch(err => {
+                    tfyBasicFail(err, 'certificates', 'request')
+                    certificatesStore.mutShowValue(false)
+                })
         }
 
         //#endregion ==========================================================================
