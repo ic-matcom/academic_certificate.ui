@@ -14,7 +14,7 @@
             <CmpBaseButton icon
                            id="back2top-btn"
                            class="ml-1"
-                           buttonType="primary"
+                           buttonType="default"
                            @doClick="hBackToTop"
                            :title="$t('btn.tip-back-top')">
                 <b-icon-arrow-up />
