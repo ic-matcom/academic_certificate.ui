@@ -26,10 +26,10 @@
         </form>
 
         <template v-slot:footer>
-            <CmpBaseButton block button-type="success" @doClick.prevent="hLoginIntent">
+            <CmpBaseButton block button-type="default" @doClick.prevent="hLoginIntent">
                 {{ cap($t("btn.val-login")) }}
             </CmpBaseButton>
-            <CmpBaseButton block button-type="success" @doClick.prevent="hAnonymousLoginIntent">
+            <CmpBaseButton block button-type="default" @doClick.prevent="hAnonymousLoginIntent">
                 {{ cap($t("btn.val-guest-login")) }}
             </CmpBaseButton>
         </template>
