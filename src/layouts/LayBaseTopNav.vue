@@ -5,7 +5,7 @@
             <CmpBreadCrumb v-if="!showSubMenu"/>
             <!-- KEBAB & BURGER BUTTONS -->
             <div class="navbar-wrapper" v-if="showSubMenu">
-                <a class="nav-link navbar-brand text-body" href="#">{{ routeName }}</a>
+                <a class="nav-link navbar-brand" href="#">{{ routeName }}</a>
             </div>
             <button
                     class="navbar-toggler"
