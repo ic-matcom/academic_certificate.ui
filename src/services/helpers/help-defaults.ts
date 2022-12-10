@@ -5,7 +5,8 @@ export function makeDefaultMenuQuery( pLimit = Number.MAX_VALUE ): IDataTableQue
     return {
         Orderer: 'id',
         Offset : 0,
-        Limit  : pLimit
+        Limit  : pLimit,
+        nextPage: '',
     }
 }
 

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { type IDataTableQuery, type IBasicPageState, type IdsArray, type ICertificatesRow, type ICertificateDto, SearchTypes, Roles } from '@/services/definitions'
 import type { ICertificateFormData } from '@/services/definitions/types-forms'
-import type { ICertificateResponseData } from '@/services/definitions/types-api'
 import { ApiCertificates } from '@/services/api/api-certificates'
 import { transformCertificateResponse } from '@/services/helpers/help-forms'
 import { useAuthStore } from './auth'
+import type { IBookmark } from '@/services/definitions/types-common'
 
 export const useCertificatesStore = defineStore({
     id: 'certificates',
@@ -35,7 +35,9 @@ export const useCertificatesStore = defineStore({
         searchType: SearchTypes.Accredited,
         param: '',
         showTable: false,
-        bookmark: ''
+        bookmarks: [{currentPage:'', nextPage: '', prevPage: ''}] as Array<IBookmark>,
+        pageLimit: 10
+
     }),
 
     /**
@@ -48,7 +50,21 @@ export const useCertificatesStore = defineStore({
         getCertificateStatus: ( state ) : number => state.certificate.certificate_status,
         getSearchType: ( state ) : number => state.searchType,
         getParam: ( state ): string => state.param,
-        getShowTable: ( state ): boolean => state.showTable
+        getShowTable: ( state ): boolean => state.showTable,
+        getNextPage: ( state ) => ( pageNumber: number): string  => 
+        {
+            if(pageNumber > state.pageNumber || (pageNumber === 0 && state.pageNumber ===1))
+            {
+                return state.bookmarks[state.bookmarks.length - 1].nextPage
+            }
+            else
+            {
+                const lastElement = state.bookmarks.pop()
+                state.bookmarks.pop()  
+                return lastElement.prevPage
+                         
+            }
+        }
     },
 
     actions: {
@@ -62,8 +78,8 @@ export const useCertificatesStore = defineStore({
          */
         mutDeleteCertificate( payload: string ): void {
             this.entityPage = this.entityPage.filter(certificateRow => payload != certificateRow.id)
-            this.totalRecords -= 1
-            //this.pageSize -= payload.ids.length
+            //this.totalRecords -= 1
+            this.pageSize -= 1
         },
 
         /**
@@ -87,7 +103,12 @@ export const useCertificatesStore = defineStore({
          */
         mutSearchParam(param: string)
         {
+            if(this.searchType !== SearchTypes.ID && this.param !== param)
+            {
+                this.mutRestartBookmarks()
+            }
             this.param = param
+            
         },
 
         /**
@@ -99,6 +120,13 @@ export const useCertificatesStore = defineStore({
             this.showTable = showTable
         },
 
+        /**
+         * Restart the bookmarks list
+         */
+        mutRestartBookmarks(){
+            this.bookmarks =  [{currentPage:'', nextPage: '', prevPage: ''}] as Array<IBookmark>
+        },
+
         // --- async calls actions ---
 
         /**
@@ -108,6 +136,7 @@ export const useCertificatesStore = defineStore({
          async reqInsertCertificate (payload: ICertificateFormData) : Promise<void> {
 
             return await new Promise<void>((resolve, reject) => {
+                this.mutRestartBookmarks()
                 ApiCertificates.insertCertificate(payload)
                 .then((response:any) => {
 
@@ -138,7 +167,6 @@ export const useCertificatesStore = defineStore({
        },
 
        async reqCertificatesToValidateByRol(query: IDataTableQuery) : Promise<void> {
-
             const authStore = useAuthStore()
 
             if(authStore.getUserRol == Roles.secretary)
@@ -156,26 +184,24 @@ export const useCertificatesStore = defineStore({
                 this.mutSearchType(SearchTypes.ToValidate)
                 this.mutSearchParam('3')
             }
-
             return await this.reqCertificatesByStatus(query, +this.param)
        },
 
         /**
          * Tries to get a datatable page of certificates entities by id from backend
          *
-         * @param payload query of filters and order criteria from datatable UI controls
+         * @param id identifier of the certificate to be fetched
          */
-        async reqCertificatesById (payload: string) : Promise<void> {
-
+        async reqCertificatesById (id: string) : Promise<void> {
+            this.mutRestartBookmarks()
              return await new Promise<void>((resolve, reject) => {
-                ApiCertificates.getCertificatesPageById(payload)
+                ApiCertificates.getCertificatesPageById(id)
                 .then((response:any) => {
                     this.entityPage = transformCertificateResponse([response.data.responsePayload])
                     this.certificate = this.entityPage[0]
                     this.totalRecords = 1
                     this.pageSize = 1
                     this.pageNumber = 1
-                    this.bookmark = ''
                     
                     resolve()
 
@@ -197,24 +223,30 @@ export const useCertificatesStore = defineStore({
          * Tries to get a datatable page of certificates entities by status from backend
          *
          * @param payload query of filters and order criteria from datatable UI controls
+         * @param status status of the certificates to be fetched
          */
          async reqCertificatesByStatus (payload: IDataTableQuery, status: number) : Promise<void> {
-
+            if(payload.Limit !== this.pageLimit)
+            {
+                this.mutRestartBookmarks()
+            }
+            payload.nextPage = this.getNextPage(payload.Offset)
             return await new Promise<void>((resolve, reject) => {
-               ApiCertificates.getCertificatesPageByStatus(payload, this.bookmark, status)
+               ApiCertificates.getCertificatesPageByStatus(payload, status)
                .then((response:any) => {
                 const data = response.data.responsePayload
-                if(data.fetchedRecordsCount !== 0)
-                {
-                    this.entityPage = transformCertificateResponse(data.records)              
-                    this.totalRecords = data.records.length
-                    this.pageSize = data.fetchedRecordsCount
-                    this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
-                    this.bookmark = data.bookmark
-                }
-                else{
-                    this.bookmark = ''
-                }
+                this.entityPage = transformCertificateResponse(data.records)              
+                this.totalRecords = 1000
+                this.pageSize = data.fetchedRecordsCount
+                this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
+                this.pageLimit = payload.Limit
+                if(data.bookmark){
+                    this.bookmarks.push({
+                        currentPage:payload.nextPage,
+                        nextPage:data.bookmark,
+                        prevPage:this.bookmarks[this.bookmarks.length - 1].currentPage
+                    })
+                }                   
                    
                 resolve()
 
@@ -238,22 +270,27 @@ export const useCertificatesStore = defineStore({
          * @param payload query of filters and order criteria from datatable UI controls
          */
         async reqCertificatesByAccredited (payload: IDataTableQuery, accredited: string) : Promise<void> {
-
+            if(payload.Limit !== this.pageLimit)
+            {
+                this.mutRestartBookmarks()
+            }
+            payload.nextPage = this.getNextPage(payload.Offset)
             return await new Promise<void>((resolve, reject) => {
-               ApiCertificates.getCertificatesPageByAccredited(payload, this.bookmark, accredited)
+               ApiCertificates.getCertificatesPageByAccredited(payload, accredited)
                .then((response:any) => {
                 const data = response.data.responsePayload
-                if(data.fetchedRecordsCount !== 0)
-                {
-                    this.entityPage = transformCertificateResponse(data.records)              
-                    this.totalRecords = data.records.length
-                    this.pageSize = data.fetchedRecordsCount
-                    this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
-                    this.bookmark = data.bookmark
-                }
-                else{
-                    this.bookmark = ''
-                }       
+                this.entityPage = transformCertificateResponse(data.records)              
+                this.totalRecords = 1000
+                this.pageSize = data.fetchedRecordsCount
+                this.pageNumber = payload.Offset !==0 ? payload.Offset : 1
+                this.pageLimit = payload.Limit
+                if(data.bookmark){
+                    this.bookmarks.push({
+                        currentPage:payload.nextPage,
+                        nextPage:data.bookmark,
+                        prevPage:this.bookmarks[this.bookmarks.length - 1].currentPage
+                    })
+                }                   
                    
                 resolve()
 
@@ -279,15 +316,11 @@ export const useCertificatesStore = defineStore({
          * @param signed_by name of the person that is validating the certificate
          */
         async reqValidateCertificate (id: string, signed_by: string) : Promise<void> {
-
+            this.mutRestartBookmarks()
             return await new Promise<void>((resolve, reject) => {
                ApiCertificates.reqValidateCertificate(id,signed_by)
-               .then((response:any) => {
-
-                   const at = response.data
-
+               .then((response:any) => {                  
                    resolve()
-
                }).catch(error => { reject(error) })
            })
        },
@@ -300,15 +333,11 @@ export const useCertificatesStore = defineStore({
          * @param description causes of the invalidation
          */
         async reqInvalidateCertificate (id: string, description: string) : Promise<void> {
-
+            this.mutRestartBookmarks()
             return await new Promise<void>((resolve, reject) => {
                ApiCertificates.reqInvalidateCertificate(id,description)
                .then((response:any) => {
-
-                   const at = response.data
-
                    resolve()
-
                }).catch(error => { reject(error) })
            })
        },
@@ -320,14 +349,11 @@ export const useCertificatesStore = defineStore({
          * @param payload new user data 
          */
         async reqModifyCertificate (data:any) : Promise<void> {
+            this.mutRestartBookmarks()
             return await new Promise<void>((resolve, reject) => {
                ApiCertificates.modifyCertificate(data)
                .then((response:any) => {
-
-                   const at = response.data
-
                    resolve()
-
                }).catch(error => { reject(error) })
            })
        },
@@ -354,12 +380,40 @@ export const useCertificatesStore = defineStore({
 //region ======== STATE INTERFACE =======================================================
 
 interface ICertificatesState extends IBasicPageState {
+    /**
+     * List of certificates obtained through the query made by the user
+     */
     entityPage: Array<ICertificatesRow>,
+
+    /**
+     * Information about the certificate requested for either its edition or visualization.
+     */
     certificate: ICertificateDto,
+
+    /**
+     * Type of search performed by the user (ID/Accredited/Status/To Validate)
+     */
     searchType: SearchTypes,
+
+    /**
+     * Parameter set by the user for the query he wishes to perform
+     */
     param:    string,
+
+    /**
+     * Defines if the certificate table with the search results is shown to the user
+     */
     showTable: boolean
-    bookmark: string
+
+    /**
+     * Bookmark needed to fetch group of data from blockchain
+     */
+    bookmarks: Array<IBookmark>
+
+    /**
+     * Current limit of certificates per page
+     */
+    pageLimit: number
 }
 
 //endregion =============================================================================

@@ -6,7 +6,7 @@
         <div><p class="card-pagination">{{ $t('data.footer-description', { start: ls.start, end: ls.end, total: total }) }}</p></div>
 
         <!-- BUTTONS [RIGHT] -->
-        <ul class="pagination pagination-no-border">
+        <ul class="pagination pagination-no-border" v-if="entityMode === entityTypes.Users">
 
             <!-- START ARROW -->
             <li :class="[{'disabled': ls.currentPage === 1}]"
@@ -36,13 +36,38 @@
             </li>
 
         </ul>
+
+        <!-- BUTTONS [RIGHT] -->
+        <ul class="pagination pagination-no-border" v-else-if="entityMode === entityTypes.Certificates">
+
+            <!-- START ARROW -->
+            <li :class="[{'disabled': ls.currentPage === 1}]"
+                class="page-item prev-page">
+                <a aria-label="Previous" class="page-link" @click="h_arrowClick(0)">
+                    <i aria-hidden="true" class="tim-icons icon-double-left"></i>
+                </a>
+            </li>
+
+            <div v-if="ls.currentGroup > 1" class="pt-1"><p class="mb-0">...</p></div>
+
+            <div v-if="ls.currentGroup < totalGroups" class="pt-1"><p class="mb-0">...</p></div>
+
+            <!-- END ARROW -->
+            <li :class="[{'disabled': (count === 0 || size - count !== 0)}]"
+                class="page-item page-pre next-page">
+                <a aria-label="Next" class="page-link" @click="h_arrowClick(4)">
+                    <i aria-hidden="true" class="tim-icons icon-double-right"></i>
+                </a>
+            </li>
+
+        </ul>
     </div>
 </template>
 
 <script lang="ts">
     import { computed, defineComponent, reactive, watch } from 'vue'
     import type { ComputedRef, SetupContext } from 'vue'
-
+import { EntityTypes } from '@/services/definitions'
 
     export default defineComponent({
         name: 'CmpTablePagination',
@@ -55,7 +80,16 @@
             total: {
                 type: Number,
                 description: 'The total amount of data of all records'
-            }
+            },
+            mode: {
+                type: Number,
+                description: "The mode (sets of buttons) to show in actions buttons according to the specified entity type",
+            },
+            dataCount: {
+                type: Number,
+                default: 1,
+                description: 'Amount of data displayed.'
+            },
         },
         setup (props: any, ctx: SetupContext) {
             //region ======== LOCAL TYPES ===========================================================
@@ -75,6 +109,15 @@
             )
             const totalGroups: ComputedRef<number> = computed(() =>
                 totalPages.value % 5 === 0 ? totalPages.value / 5 : Math.floor(totalPages.value / 5) + 1
+            )
+            const entityMode: ComputedRef<number> = computed(() =>
+                props.mode
+            )
+            const count: ComputedRef<number> = computed(() =>
+                props.dataCount
+            )
+            const size: ComputedRef<number> = computed(() =>
+                props.size
             )
             //endregion =============================================================================
 
@@ -186,12 +229,15 @@
 
             return {
                 ls,
+                entityTypes: EntityTypes,
 
                 totalGroups,
                 totalPages,
+                entityMode,
+                count,
 
                 h_pageClick,
-                h_arrowClick
+                h_arrowClick,
             }
         },
         emits: ['next']

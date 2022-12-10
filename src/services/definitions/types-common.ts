@@ -172,6 +172,11 @@ export interface IDataTableQuery {
     Offset: number
 
     /**
+     * Bookmark needed to fetch next group of data from blockchain
+     */
+    nextPage: string
+
+    /**
      * Size (limit) of the page, count of element to be included
      */
     Limit: number
@@ -196,6 +201,24 @@ export interface IDataTableQuery {
      * Key-Value collection of filters for the query
      */
     Filters?: Filter
+}
+
+export interface IBookmark {
+    /**
+     * Bookmark needed to fetch current group of data from blockchain
+     */
+    currentPage: string
+
+    /**
+     * Bookmark needed to fetch next group of data from blockchain
+     */
+    nextPage: string
+
+    /**
+     * Bookmark needed to fetch previous group of data from blockchain
+     */
+    prevPage: string
+
 }
 
 /**
